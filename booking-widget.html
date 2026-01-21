@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Strategy Session | Delray.Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="config.js"></script>
+    <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .booking-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .time-slot {
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            transform: scale(1.05);
+        }
+
+        .time-slot.selected {
+            background: #d4af37 !important;
+            color: #0f172a !important;
+        }
+
+        .day-btn.selected {
+            background: #d4af37 !important;
+            color: #0f172a !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="booking-card rounded-3xl shadow-2xl max-w-md w-full overflow-hidden">
+        <!-- Header -->
+        <div class="p-8 text-center border-b border-white/10">
+            <div class="text-[10px] font-bold tracking-[0.3em] text-gray-400 uppercase mb-2">Free Strategy Session</div>
+            <h1 class="text-3xl font-display font-bold text-white">
+                Book With <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-white">Delray</span>
+            </h1>
+            <p class="text-gray-400 text-sm mt-3">30-minute complimentary consultation</p>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="p-8">
+            <!-- Step 1: Interest -->
+            <div id="step1" class="booking-step">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">I'm interested
+                    in...</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="selectInterest('Capital Strategy')"
+                        class="interest-btn p-4 bg-white/5 border border-white/10 rounded-xl text-white text-sm hover:border-[#d4af37] transition">
+                        <i class="fas fa-chart-line text-[#d4af37] text-xl mb-2 block"></i>
+                        Capital Strategy
+                    </button>
+                    <button onclick="selectInterest('AI Infrastructure')"
+                        class="interest-btn p-4 bg-white/5 border border-white/10 rounded-xl text-white text-sm hover:border-[#d4af37] transition">
+                        <i class="fas fa-microchip text-[#0ea5e9] text-xl mb-2 block"></i>
+                        AI Infrastructure
+                    </button>
+                    <button onclick="selectInterest('Partnership')"
+                        class="interest-btn p-4 bg-white/5 border border-white/10 rounded-xl text-white text-sm hover:border-[#d4af37] transition">
+                        <i class="fas fa-handshake text-[#10b981] text-xl mb-2 block"></i>
+                        Partnership
+                    </button>
+                    <button onclick="selectInterest('Give Back Challenge')"
+                        class="interest-btn p-4 bg-white/5 border border-white/10 rounded-xl text-white text-sm hover:border-[#d4af37] transition">
+                        <i class="fas fa-heart text-[#f43f5e] text-xl mb-2 block"></i>
+                        Give Back Challenge
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Day Selection -->
+            <div id="step2" class="booking-step hidden">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
+                    <button onclick="goToStep(1)" class="mr-2 hover:text-[#d4af37]"><i
+                            class="fas fa-arrow-left"></i></button>
+                    Select a Day
+                </label>
+                <div class="grid grid-cols-5 gap-2" id="day-buttons"></div>
+            </div>
+
+            <!-- Step 3: Time Selection -->
+            <div id="step3" class="booking-step hidden">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
+                    <button onclick="goToStep(2)" class="mr-2 hover:text-[#d4af37]"><i
+                            class="fas fa-arrow-left"></i></button>
+                    Select a Time
+                </label>
+                <div class="grid grid-cols-3 gap-3" id="time-slots"></div>
+            </div>
+
+            <!-- Step 4: Contact Info -->
+            <div id="step4" class="booking-step hidden">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
+                    <button onclick="goToStep(3)" class="mr-2 hover:text-[#d4af37]"><i
+                            class="fas fa-arrow-left"></i></button>
+                    Your Information
+                </label>
+                <form id="booking-form" class="space-y-4">
+                    <input type="text" id="book-name" placeholder="Full Name" required
+                        class="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] outline-none">
+                    <input type="email" id="book-email" placeholder="Email Address" required
+                        class="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] outline-none">
+                    <input type="tel" id="book-phone" placeholder="Phone Number" required
+                        class="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] outline-none">
+                    <button type="submit"
+                        class="w-full py-4 bg-[#d4af37] text-[#0f172a] font-bold rounded-xl hover:bg-white transition">
+                        Confirm Booking <i class="fas fa-check ml-2"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 5: Confirmation -->
+            <div id="step5" class="booking-step hidden text-center py-8">
+                <div class="text-6xl mb-4">🎉</div>
+                <h2 class="text-2xl font-bold text-white mb-2">You're Booked!</h2>
+                <p class="text-gray-400 mb-6" id="confirmation-details"></p>
+                <div class="bg-white/5 p-4 rounded-xl border border-[#d4af37]/30">
+                    <p class="text-sm text-[#d4af37]">📧 Check your inbox for confirmation</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-black/20 text-center">
+            <p class="text-xs text-gray-500">
+                <i class="fas fa-shield-alt mr-1"></i> Your information is secure & confidential
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let bookingData = { interest: '', day: '', time: '', name: '', email: '', phone: '' };
+
+        // Generate next 7 business days
+        function generateDays() {
+            const container = document.getElementById('day-buttons');
+            container.innerHTML = '';
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            let count = 0;
+            let date = new Date();
+            date.setDate(date.getDate() + 1); // Start tomorrow
+
+            while (count < 5) {
+                if (date.getDay() !== 0 && date.getDay() !== 6) { // Skip weekends
+                    const d = new Date(date);
+                    const btn = document.createElement('button');
+                    btn.className = 'day-btn p-3 bg-white/5 border border-white/10 rounded-xl text-white text-center hover:border-[#d4af37] transition';
+                    btn.innerHTML = `
+                        <div class="text-[10px] text-gray-400">${days[d.getDay()]}</div>
+                        <div class="text-lg font-bold">${d.getDate()}</div>
+                        <div class="text-[10px] text-gray-400">${months[d.getMonth()]}</div>
+                    `;
+                    btn.onclick = () => selectDay(d.toISOString().split('T')[0], btn);
+                    container.appendChild(btn);
+                    count++;
+                }
+                date.setDate(date.getDate() + 1);
+            }
+        }
+
+        function selectInterest(interest) {
+            bookingData.interest = interest;
+            document.querySelectorAll('.interest-btn').forEach(b => b.classList.remove('border-[#d4af37]'));
+            event.target.closest('.interest-btn').classList.add('border-[#d4af37]');
+            setTimeout(() => goToStep(2), 300);
+        }
+
+        function selectDay(day, btn) {
+            bookingData.day = day;
+            document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            setTimeout(() => {
+                generateTimeSlots();
+                goToStep(3);
+            }, 300);
+        }
+
+        function generateTimeSlots() {
+            const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
+            const container = document.getElementById('time-slots');
+            container.innerHTML = slots.map(time => `
+                <button onclick="selectTime('${time}', this)" class="time-slot p-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm hover:border-[#d4af37] transition">
+                    ${time}
+                </button>
+            `).join('');
+        }
+
+        function selectTime(time, btn) {
+            bookingData.time = time;
+            document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            setTimeout(() => goToStep(4), 300);
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
+            document.getElementById('step' + step).classList.remove('hidden');
+
+            if (step === 2) generateDays();
+        }
+
+        document.getElementById('booking-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            bookingData.name = document.getElementById('book-name').value;
+            bookingData.email = document.getElementById('book-email').value;
+            bookingData.phone = document.getElementById('book-phone').value;
+
+            const btn = this.querySelector('button');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+            btn.disabled = true;
+
+            // Submit to Bitrix24
+            const bitrixUrl = typeof DELRAY_CONFIG !== 'undefined'
+                ? DELRAY_CONFIG.bitrix.webhookUrl + DELRAY_CONFIG.bitrix.endpoints.addLead
+                : 'https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json';
+
+            try {
+                await fetch(bitrixUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fields: {
+                            TITLE: `BOOKING: ${bookingData.name} - ${bookingData.interest}`,
+                            NAME: bookingData.name,
+                            EMAIL: [{ VALUE: bookingData.email, VALUE_TYPE: 'WORK' }],
+                            PHONE: [{ VALUE: bookingData.phone, VALUE_TYPE: 'WORK' }],
+                            COMMENTS: `Interest: ${bookingData.interest}\nDate: ${bookingData.day}\nTime: ${bookingData.time}\nSource: Booking Widget`,
+                            SOURCE_ID: 'WEB'
+                        }
+                    })
+                });
+            } catch (err) { console.log('Booking error:', err); }
+
+            // Show confirmation
+            const date = new Date(bookingData.day);
+            document.getElementById('confirmation-details').innerHTML = `
+                <strong>${bookingData.interest}</strong><br>
+                ${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} at ${bookingData.time}
+            `;
+            goToStep(5);
+        });
+    </script>
+</body>
+
+</html>

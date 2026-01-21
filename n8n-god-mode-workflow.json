@@ -1,0 +1,156 @@
+{
+  "name": "Delray.Services - God Mode Automation (Final v4)",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "delray-lead-capture",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook - Lead Capture",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "{\n  \"fields\": {\n    \"TITLE\": \"GOD MODE: {{ $json.body.name }} - {{ $json.body.interest }}\",\n    \"NAME\": \"{{ $json.body.name }}\",\n    \"EMAIL\": [{ \"VALUE\": \"{{ $json.body.email }}\", \"VALUE_TYPE\": \"WORK\" }],\n    \"PHONE\": [{ \"VALUE\": \"{{ $json.body.phone }}\", \"VALUE_TYPE\": \"WORK\" }],\n    \"COMMENTS\": \"Source: {{ $json.body.source }}\\nInterest: {{ $json.body.interest }}\\nGive Back Pledge: Accepted\",\n    \"STATUS_ID\": \"NEW\",\n    \"SOURCE_ID\": \"WEB\",\n    \"OPENED\": \"Y\"\n  }\n}"
+      },
+      "name": "Create Bitrix Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://garmn.app.n8n.cloud/mcp-server/http",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "headerAuth": {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZmViMGExOS1iODM1LTRkZmEtOGJlNi1lYmNjNTNlNzQ2MWMiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjNjYzU0ZDRiLTJmOTItNGQ3OC04OTNjLTNjZjA0Y2Q5NzE1YSIsImlhdCI6MTc2Njk3NjY5Mn0.9MF9xrU0t20MQPgZpebVq3QVO-Mv2bPy1JQPLhpNS0w"
+        },
+        "jsonParameters": true,
+        "bodyParametersJson": "{\n  \"task\": \"Analyze this lead and suggest a quick win.\",\n  \"context\": {\n    \"name\": \"{{ $node['Webhook - Lead Capture'].json.body.name }}\",\n    \"interest\": \"{{ $node['Webhook - Lead Capture'].json.body.interest }}\"\n  }\n}"
+      },
+      "name": "MCP God Mode Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.update.json",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "{\n  \"id\": \"{{ $node['Create Bitrix Lead'].json.result }}\",\n  \"fields\": {\n    \"COMMENTS\": \"🤖 MCP ANALYSIS:\\n\\n{{ $json.result || $json.text }}\"\n  }\n}"
+      },
+      "name": "Update Lead with AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.activity.add.json",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "{\n  \"fields\": {\n    \"OWNER_TYPE_ID\": 1,\n    \"OWNER_ID\": \"{{ $node['Create Bitrix Lead'].json.result }}\",\n    \"TYPE_ID\": 2,\n    \"SUBJECT\": \"📞 Call New Lead (God Mode)\",\n    \"START_TIME\": \"{{ $now.plus(2, 'hours').format('yyyy-MM-dd') }}T{{ $now.plus(2, 'hours').format('HH:mm:ss') }}\",\n    \"DESCRIPTION\": \"Lead enriched by MCP Agent. Call now.\"\n  }\n}"
+      },
+      "name": "Create Bitrix Call Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "delray@delray.services",
+        "toEmail": "={{ $node['Webhook - Lead Capture'].json.body.email }}",
+        "subject": "Welcome to the Give Back Challenge",
+        "html": "<h1>Welcome {{ $node['Webhook - Lead Capture'].json.body.name }}!</h1><p>I received your interest in {{ $node['Webhook - Lead Capture'].json.body.interest }}.</p><p>My AI Agent has already prepared some initial thoughts for our call:</p><blockquote>{{ $node['MCP God Mode Agent'].json.result }}</blockquote><p>I will call you shortly.</p>"
+      },
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1250,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook - Lead Capture": {
+      "main": [
+        [
+          {
+            "node": "Create Bitrix Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Bitrix Lead": {
+      "main": [
+        [
+          {
+            "node": "MCP God Mode Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP God Mode Agent": {
+      "main": [
+        [
+          {
+            "node": "Update Lead with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead with AI": {
+      "main": [
+        [
+          {
+            "node": "Create Bitrix Call Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Bitrix Call Task": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

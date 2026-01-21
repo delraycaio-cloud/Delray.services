@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Master Command | Delray.Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            transition: all 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .tab-active {
+            border-bottom: 2px solid #d4af37;
+            color: #d4af37;
+        }
+
+        .tab-inactive {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-8 bg-[url('delray_services_linkedin_cover_miami_tech.png')] bg-cover bg-fixed bg-no-repeat">
+    <div class="fixed inset-0 bg-[#0f172a]/90 -z-10"></div>
+
+    <div class="max-w-5xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-[#d4af37] mb-2 uppercase tracking-wide">LinkedIn Command Center</h1>
+            <div class="flex justify-center gap-4 text-sm text-gray-400">
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Personal Profile</span>
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Company Page</span>
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Assets Ready</span>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <div class="flex justify-center mb-8 border-b border-white/10">
+            <button onclick="switchTab('personal')" id="tab-personal" class="px-8 py-4 font-bold tab-active">PERSONA
+                (YOU)</button>
+            <button onclick="switchTab('company')" id="tab-company" class="px-8 py-4 font-bold tab-inactive">COMPANY
+                (ENTITY)</button>
+            <button onclick="switchTab('assets')" id="tab-assets" class="px-8 py-4 font-bold tab-inactive">BRAND
+                ASSETS</button>
+        </div>
+
+        <!-- TAB 1: PERSONAL PROFILE -->
+        <div id="content-personal" class="space-y-6">
+            <div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg flex items-start">
+                <i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i>
+                <div class="text-sm text-blue-200">
+                    <strong>Strategy:</strong> Position yourself as the "Fractional Executive" (The Expert). <br>
+                    <strong>Action:</strong> Set your current job to "Founder & Fractional CAIO" at "Delray.Services".
+                </div>
+            </div>
+
+            <!-- Headline -->
+            <section class="glass rounded-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-white"><i class="fas fa-id-card-alt mr-2 text-[#d4af37]"></i>
+                        HEADLINE (The Hook)</h2>
+                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Max 220 chars</span>
+                </div>
+                <div class="bg-black/40 p-4 rounded-lg font-mono text-gray-300 mb-4" id="p-headline">
+                    Fractional CAIO & Capital Strategist | Building SmartMarina.ai & First Look Equities | 50% Donated
+                    to GARMN | Investing in Tomorrow's CEOs | Delray.Services
+                </div>
+                <button onclick="copyToClipboard('p-headline', this)"
+                    class="btn w-full py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-bold">
+                    COPY HEADLINE
+                </button>
+            </section>
+
+            <!-- About -->
+            <section class="glass rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4 text-white"><i class="fas fa-user-circle mr-2 text-[#d4af37]"></i>
+                    ABOUT (The Story)</h2>
+                <div class="bg-black/40 p-4 rounded-lg font-mono text-gray-300 mb-4 h-64 overflow-y-auto text-sm"
+                    id="p-about">
+                    I operate at the intersection of AI Infrastructure, Capital Strategy, and Philanthropy.
+
+                    My mission is simple: Simplify the complex, fund the future, and give back radically.
+
+                    WHAT I DO (Delray.Services):
+                    🚀 Fractional CAIO: I help enterprises integrate 10x AI systems.
+                    💰 First Look Equities: Intelligent capital strategies and Section 179 optimization.
+                    🌊 SmartMarina.ai: Bringing edge data solutions to the luxury marine industry.
+
+                    THE 50/10 PROMISE:
+                    I believe in "No One Left Behind." That's why I donate 50% of my consulting time and 10% of revenue
+                    to GARMN and local mentorship programs.
+
+                    CURRENTLY LOOKING FOR:
+                    • Marina Owners & Yacht Brokers in Miami-Dade (Beta Partners)
+                    • Small Business Owners needing Capital Strategy
+                    • Veterans & Students for Mentorship
+
+                    Let's build an empire that matters.
+
+                    #AI #CapitalStrategy #MiamiTech #GiveBack
+                </div>
+                <button onclick="copyToClipboard('p-about', this)"
+                    class="btn w-full py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-bold">
+                    COPY ABOUT SECTION
+                </button>
+            </section>
+
+            <!-- Experience -->
+            <section class="glass rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4 text-white"><i class="fas fa-briefcase mr-2 text-[#d4af37]"></i> NEW
+                    EXPERIENCE ENTRY</h2>
+                <div class="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-4">
+                    <div><strong>Title:</strong> Founder & Fractional CAIO</div>
+                    <div><strong>Employment Type:</strong> Freelance / Self-employed</div>
+                    <div><strong>Company Name:</strong> Delray.Services (Create this page first!)</div>
+                    <div><strong>Start Date:</strong> Jan 2026</div>
+                </div>
+                <div class="bg-black/40 p-4 rounded-lg font-mono text-gray-300 mb-4 text-sm" id="p-job">
+                    Leading a high-performance "God Mode" enterprise consulting firm.
+                    • Architecting AI Infrastructure for Capital & Marine industries.
+                    • Beta testing SmartMarina.ai in Miami-Dade.
+                    • Managing First Look Equities capital strategies.
+                    • Executing the "Give Back Challenge" (50% mentorship / 10% GARMN).
+                </div>
+                <button onclick="copyToClipboard('p-job', this)"
+                    class="btn w-full py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-bold">
+                    COPY JOB DESCRIPTION
+                </button>
+            </section>
+        </div>
+
+        <!-- TAB 2: COMPANY PAGE -->
+        <div id="content-company" class="space-y-6 hidden">
+            <div class="bg-purple-900/20 border border-purple-500/30 p-4 rounded-lg flex items-start">
+                <i class="fas fa-building text-purple-400 mt-1 mr-3"></i>
+                <div class="text-sm text-purple-200">
+                    <strong>Strategy:</strong> This is your "Face". It validates you as a legitimate agency, not just a
+                    person. <br>
+                    <strong>Action:</strong> Click "Work" > "Create Company Page" > "Company" > Name it
+                    "Delray.Services".
+                </div>
+            </div>
+
+            <!-- Page Info -->
+            <section class="glass rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4 text-white"><i class="fas fa-store mr-2 text-[#d4af37]"></i> PAGE
+                    DETAILS</h2>
+
+                <div class="mb-4">
+                    <label class="text-xs uppercase text-gray-500 font-bold block mb-1">Tagline</label>
+                    <div class="bg-black/40 p-2 rounded flex justify-between items-center">
+                        <code
+                            id="c-tagline">Elite Capital Strategy & AI Infrastructure | Investing in Tomorrow's CEOs</code>
+                        <button onclick="copyToClipboard('c-tagline', this)"
+                            class="text-xs bg-white/10 px-2 py-1 rounded ml-2">COPY</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-xs uppercase text-gray-500 font-bold block mb-1">Website</label>
+                    <div class="bg-black/40 p-2 rounded flex justify-between items-center">
+                        <code id="c-site">https://delray.services</code>
+                        <button onclick="copyToClipboard('c-site', this)"
+                            class="text-xs bg-white/10 px-2 py-1 rounded ml-2">COPY</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-xs uppercase text-gray-500 font-bold block mb-1">Overview / Description</label>
+                    <div class="bg-black/40 p-4 rounded h-32 overflow-y-auto text-sm font-mono text-gray-300"
+                        id="c-desc">
+                        Delray.Services is the world's most advanced automated consulting interface, connecting
+                        high-net-worth capital strategy with local community impact.
+
+                        We specialize in:
+                        1. Fractional CAIO Services (AI Infrastructure)
+                        2. First Look Equities (Tax-Advantaged Capital)
+                        3. SmartMarina.ai (Luxury Marine Edge Data)
+
+                        Driven by the "Give Back Challenge": We donate 50% of consulting hours to mentorship and 10% of
+                        revenue to GARMN.
+
+                        "No man, woman, or child left behind."
+                    </div>
+                    <button onclick="copyToClipboard('c-desc', this)"
+                        class="btn w-full mt-2 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded font-bold">COPY
+                        DESCRIPTION</button>
+                </div>
+
+                <div>
+                    <label class="text-xs uppercase text-gray-500 font-bold block mb-1">Specialties (Add up to
+                        20)</label>
+                    <div class="bg-black/40 p-2 rounded text-xs text-gray-400">
+                        Artificial Intelligence, Capital Strategy, Fractional Executive, Philanthropy, Marine Industry,
+                        Data Center Infrastructure, Section 179, Business Automation.
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 3: ASSETS -->
+        <div id="content-assets" class="space-y-6 hidden">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Logo -->
+                <div class="glass rounded-xl p-6 text-center">
+                    <h2 class="text-xl font-bold mb-4 text-[#d4af37]">COMPANY LOGO</h2>
+                    <p class="text-xs text-gray-400 mb-4">Upload as Page Logo (300x300)</p>
+                    <div
+                        class="bg-navy-900 border border-gray-700 rounded-lg p-8 mb-4 flex justify-center items-center h-48">
+                        <img src="delray_services_logo_gold_navy.png"
+                            class="h-32 w-32 rounded-full shadow-lg border-2 border-[#d4af37]" alt="Logo Preview">
+                    </div>
+                    <a href="delray_services_logo_gold_navy.png" download
+                        class="block w-full py-3 bg-[#d4af37] text-black hover:bg-yellow-500 rounded-lg font-bold transition">
+                        <i class="fas fa-download mr-2"></i> DOWNLOAD LOGO
+                    </a>
+                </div>
+
+                <!-- Cover -->
+                <div class="glass rounded-xl p-6 text-center">
+                    <h2 class="text-xl font-bold mb-4 text-blue-400">COVER IMAGE</h2>
+                    <p class="text-xs text-gray-400 mb-4">Upload for Profile & Page (1128x191)</p>
+                    <div class="bg-navy-900 border border-gray-700 rounded-lg mb-4 h-48 overflow-hidden relative group">
+                        <img src="delray_services_linkedin_cover_miami_tech.png" class="w-full h-full object-cover"
+                            alt="Cover Preview">
+                    </div>
+                    <a href="delray_services_linkedin_cover_miami_tech.png" download
+                        class="block w-full py-3 bg-blue-600 text-white hover:bg-blue-500 rounded-lg font-bold transition">
+                        <i class="fas fa-download mr-2"></i> DOWNLOAD COVER
+                    </a>
+                </div>
+            </div>
+
+            <section class="glass rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4 text-white">✅ CLEAN UP CHECKLIST</h2>
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li class="flex items-center"><i class="far fa-square mr-3"></i> <strong>End Old Roles:</strong>
+                        Edit past jobs, uncheck "I currently work here", set end date to "Dec 2025".</li>
+                    <li class="flex items-center"><i class="far fa-square mr-3"></i> <strong>Set Featured:</strong> Add
+                        your new website (delray.services) to the "Featured" section.</li>
+                    <li class="flex items-center"><i class="far fa-square mr-3"></i> <strong>Service Page:</strong> Go
+                        to "Open to" > "Providing Services" > Add "Consulting", "AI Strategy".</li>
+                    <li class="flex items-center"><i class="far fa-square mr-3"></i> <strong>Custom URL:</strong> Ensure
+                        your public profile URL is clean (linkedin.com/in/delraywannemacher).</li>
+                </ul>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Reset contents
+            document.getElementById('content-personal').classList.add('hidden');
+            document.getElementById('content-company').classList.add('hidden');
+            document.getElementById('content-assets').classList.add('hidden');
+
+            // Reset buttons
+            document.getElementById('tab-personal').className = 'px-8 py-4 font-bold tab-inactive';
+            document.getElementById('tab-company').className = 'px-8 py-4 font-bold tab-inactive';
+            document.getElementById('tab-assets').className = 'px-8 py-4 font-bold tab-inactive';
+
+            // Activate target
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            document.getElementById('tab-' + tab).className = 'px-8 py-4 font-bold tab-active';
+        }
+
+        function copyToClipboard(elementId, btn) {
+            const text = document.getElementById(elementId).innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> COPIED!';
+                btn.classList.add('bg-green-600', 'text-white', 'border-transparent');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-600', 'text-white', 'border-transparent');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,292 @@
+{
+    "name": "Delray.Services - God Mode Enterprise v3 (MCP Integrate)",
+    "nodes": [
+        {
+            "parameters": {
+                "path": "delray-application",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "name": "Application Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.opencorporates.com/v0.4/companies/search?q={{ $json.body.businessName }}&jurisdiction_code={{ $json.body.state | lower }}",
+                "method": "GET"
+            },
+            "name": "Verify Business (OSINT)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"fields\": {\n    \"TITLE\": \"GOD MODE: {{ $json.body.businessName }}\",\n    \"NAME\": \"{{ $json.body.contactName }}\",\n    \"EMAIL\": [{ \"VALUE\": \"{{ $json.body.contactEmail }}\", \"VALUE_TYPE\": \"WORK\" }],\n    \"PHONE\": [{ \"VALUE\": \"{{ $json.body.contactPhone }}\", \"VALUE_TYPE\": \"WORK\" }],\n    \"COMPANY_TITLE\": \"{{ $json.body.businessName }}\",\n    \"STATUS_ID\": \"NEW\",\n    \"SOURCE_ID\": \"WEB\",\n    \"UF_CRM_EST_VALUE\": \"{{ $json.body.estimatedValue }}\",\n    \"COMMENTS\": \"Started God Mode Analysis...\"\n  }\n}"
+            },
+            "name": "Create Bitrix Lead",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                600,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://garmn.app.n8n.cloud/mcp-server/http",
+                "method": "POST",
+                "authentication": "headerAuth",
+                "headerAuth": {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZmViMGExOS1iODM1LTRkZmEtOGJlNi1lYmNjNTNlNzQ2MWMiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjNjYzU0ZDRiLTJmOTItNGQ3OC04OTNjLTNjZjA0Y2Q5NzE1YSIsImlhdCI6MTc2Njk3NjY5Mn0.9MF9xrU0t20MQPgZpebVq3QVO-Mv2bPy1JQPLhpNS0w"
+                },
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"task\": \"Analyze this business for Delray.Services context (Capital, AI, Marine). Return full assessment.\",\n  \"context\": {\n    \"business\": \"{{ $node['Application Webhook'].json.body.businessName }}\",\n    \"industry\": \"{{ $node['Application Webhook'].json.body.industry }}\",\n    \"revenue\": \"{{ $node['Application Webhook'].json.body.revenue }}\"\n  }\n}"
+            },
+            "name": "MCP God Mode Agent",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                800,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.update.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"id\": \"{{ $node['Create Bitrix Lead'].json.result }}\",\n  \"fields\": {\n    \"STATUS_ID\": \"PREPARATION\",\n    \"COMMENTS\": \"🤖 MCP AGENT ANALYSIS:\\n\\n{{ $json.result || $json.text || 'Analysis Complete' }}\"\n  }\n}"
+            },
+            "name": "Update Lead (Enrich)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                1000,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.activity.add.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"fields\": {\n    \"OWNER_TYPE_ID\": 1,\n    \"OWNER_ID\": \"{{ $node['Create Bitrix Lead'].json.result }}\",\n    \"TYPE_ID\": 2,\n    \"SUBJECT\": \"📞 Call: MCP Analysis Ready\",\n    \"START_TIME\": \"{{ $now.plus(1, 'hours').format('yyyy-MM-dd') }}T{{ $now.plus(1, 'hours').format('HH:mm:ss') }}\",\n    \"DESCRIPTION\": \"Review the God Mode analysis in comments and call client.\"\n  }\n}"
+            },
+            "name": "Create Bitrix Task",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                1200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/im.notify.personal.add.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"USER_ID\": 1,\n  \"MESSAGE\": \"🚀 GOD MODE: New Lead {{ $node['Application Webhook'].json.body.businessName }} enriched by MCP Agent. Task created.\"\n}"
+            },
+            "name": "Notify Delray (Bitrix)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                1400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "delray@delray.services",
+                "toEmail": "={{ $node['Application Webhook'].json.body.contactEmail }}",
+                "subject": "Your Enterprise Analysis is Ready",
+                "html": "<h1>Analysis Complete</h1><p>Our AI Agents have analyzed your business profile.</p><p>We have identified significant opportunities in Capital Strategy and Automations.</p><p>Delray will review the full report and call you shortly.</p>"
+            },
+            "name": "Send Client Email",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 1,
+            "position": [
+                1400,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "path": "delray-self-heal-check",
+                "responseMode": "lastNode"
+            },
+            "name": "Self-Heal Timer",
+            "type": "n8n-nodes-base.cron",
+            "typeVersion": 1,
+            "position": [
+                200,
+                700
+            ],
+            "cronExpression": "0 */1 * * *"
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.list.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"filter\": {\n    \"STATUS_ID\": \"NEW\",\n    \"<DATE_CREATE\": \"{{ $now.minus(4, 'hours').toISO() }}\"\n  }\n}"
+            },
+            "name": "Find Stalled Leads",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                400,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.update.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"id\": \"{{ $json.ID }}\",\n  \"fields\": {\n    \"COMMENTS\": \"⚠️ AUTO-HEAL: Lead was stalled for 4 hours. Escalated priority.\",\n    \"OPENED\": \"Y\"\n  }\n}"
+            },
+            "name": "Self-Heal: Escalate",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                600,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/im.notify.personal.add.json",
+                "method": "POST",
+                "jsonParameters": true,
+                "bodyParametersJson": "{\n  \"USER_ID\": 1,\n  \"MESSAGE\": \"⚠️ SELF-HEAL: Lead {{ $json.TITLE }} was stalled. I have escalated it for you.\"\n}"
+            },
+            "name": "Notify Delray (Heal)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 2,
+            "position": [
+                800,
+                700
+            ]
+        }
+    ],
+    "connections": {
+        "Application Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Verify Business (OSINT)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Verify Business (OSINT)": {
+            "main": [
+                [
+                    {
+                        "node": "Create Bitrix Lead",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Create Bitrix Lead": {
+            "main": [
+                [
+                    {
+                        "node": "MCP God Mode Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "MCP God Mode Agent": {
+            "main": [
+                [
+                    {
+                        "node": "Update Lead (Enrich)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update Lead (Enrich)": {
+            "main": [
+                [
+                    {
+                        "node": "Create Bitrix Task",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Create Bitrix Task": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Delray (Bitrix)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Send Client Email",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Self-Heal Timer": {
+            "main": [
+                [
+                    {
+                        "node": "Find Stalled Leads",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Find Stalled Leads": {
+            "main": [
+                [
+                    {
+                        "node": "Self-Heal: Escalate",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Self-Heal: Escalate": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Delray (Heal)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

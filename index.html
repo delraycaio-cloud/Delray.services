@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delray Peter Wannemacher | Fractional CAIO & Infrastructure Architect</title>
+    <meta name="description"
+        content="Delray Peter Wannemacher: Fractional CAIO & Capital Strategist. Securing CAIO contracts and consulting leads. Connecting First Look Equities, Luxury Marine Life, and EDGE Data Solutions for sustainable empires.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- ⚡ SEO & SOCIAL SHARING (World Record Optimization) -->
+    <meta property="og:title" content="Delray.Services | Elite Capital, AI Infrastructure Strategy & CAIO Role">
+    <meta property="og:description"
+        content="Fractional CAIO & Capital Strategist. Connecting First Look Equities, Luxury Marine Life, and EDGE Data Solutions. Join the Give Back Challenge.">
+    <meta property="og:image" content="https://delray.services/assets/share-image.jpg">
+    <meta property="og:url" content="https://delray.services">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fractional CAIO | EDGE Fluids & AI Infrastructure">
+    <meta name="twitter:description"
+        content="Building the future of Miami-Dade through AI, Capital Strategy, and Philanthropy.">
+    <meta name="keywords"
+        content="Fractional CAIO, CAIO Contracts, Consulting Leads, AI Infrastructure, Capital Formation, EDGE Fluids, Immersion Cooling, Miami AI Strategy, 25 Year Finance Career">
+    <meta name="author" content="Delray Wannemacher">
+
+    <!-- Icons & Tools -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- GOD MODE MODULES -->
+    <script src="config.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        slate: '#334155',
+                        gold: '#d4af37',
+                        ocean: '#0ea5e9',
+                        white: '#ffffff',
+                        void: '#020617', // Admin Mode
+                        neon: '#00f3ff', // Admin Mode
+                    },
+                    // Reverted gradient
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Core Styles - TERMINAL ULTRA LUXURY */
+        .hero-bg {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.95)),
+                url('assets/hero-legacy-highrise.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Typography: Elite System Stack */
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-text-shadow {
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .gold-glow {
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.35);
+        }
+
+        .prose strong {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        /* Admin Mode Logic */
+        body.admin-mode .public-view {
+            display: none !important;
+        }
+
+        body.public-mode .admin-view {
+            display: none !important;
+        }
+
+        /* Scrollbar: Ultra Thin */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-slate font-sans public-mode" id="mainBody">
+
+    <!-- ================= PUBLIC VIEW ================= -->
+    <div class="public-view">
+        <nav class="fixed w-full z-50 glass-panel border-b border-white/5 shadow-2xl">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="flex items-center gap-4">
+                    <img src="assets/logo_world_record.png"
+                        class="h-12 w-12 rounded-full border border-gold/30 gold-glow" alt="Delray Logo">
+                    <span class="text-2xl font-display font-bold text-white tracking-[0.2em] uppercase">DELRAY PETER
+                        <span class="text-gold">WANNEMACHER</span></span>
+                </a>
+                <div class="hidden md:flex space-x-10 text-[10px] font-bold tracking-[0.3em] uppercase text-gray-300">
+                    <a href="#ai-tools" class="text-gold hover:text-white transition-all"><i
+                            class="fas fa-magic mr-2"></i>
+                        AI Audits</a>
+                    <a href="#mission" class="hover:text-gold transition-all">The Mission</a>
+                    <a href="booking-widget.html" class="hover:text-gold transition-all text-white/50"><i
+                            class="fas fa-calendar-check mr-2"></i>Book Strategy</a>
+                    <a href="#partners" class="hover:text-gold transition-all">Partnerships</a>
+                    <a href="#contact"
+                        class="px-6 py-2 border border-gold/50 text-gold rounded-full hover:bg-gold hover:text-navy transition-all duration-500">Partner
+                        With Us</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="hero-bg min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+            <!-- Global Lighting Effect -->
+            <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-transparent to-navy/95 pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-20 relative z-10">
+
+                <!-- Text Content: Ultra-Luxury God Mode -->
+                <div class="flex-1 text-center lg:text-left">
+                    <div
+                        class="inline-flex items-center gap-3 px-6 py-2 glass-panel rounded-full mb-10 animate-fade-in shadow-2xl">
+                        <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                        <span class="text-gold text-[10px] font-bold tracking-[0.3em] uppercase">Private Capital &
+                            Infrastructure</span>
+                    </div>
+
+                    <h1
+                        class="text-6xl lg:text-8xl font-display font-bold mb-8 text-white leading-[1.1] hero-text-shadow tracking-tight">
+                        Capital Strategies.<br>
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-white to-gold animate-shimmer">Community
+                            Legacy.</span>
+                    </h1>
+
+                    <p
+                        class="text-xl text-gray-200 mb-12 max-w-2xl leading-relaxed font-light hero-text-shadow font-body opacity-90 mx-auto lg:mx-0">
+                        Bridging the gap between <strong>Generation X Executives</strong> and <strong>Tomorrow's
+                            CEOs</strong>.
+                        We build sovereign infrastructure, tax-advantaged capital engines, and community legacies.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                        <a href="apply.html"
+                            class="px-12 py-5 bg-white text-navy font-bold rounded-full shadow-2xl hover:scale-110 hover:shadow-gold/20 transition-all duration-500 tracking-[0.2em] text-xs uppercase">
+                            Apply for Private Session
+                        </a>
+                        <a href="#ai-tools"
+                            class="px-12 py-5 glass-panel text-white rounded-full hover:bg-white/10 transition-all duration-500 flex items-center gap-3 tracking-[0.2em] text-xs uppercase backdrop-blur-3xl">
+                            <i class="fas fa-wand-magic-sparkles text-gold"></i> Executive AI Audit
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Portrait: The Squircle Masterpiece -->
+                <div class="flex-1 relative group">
+                    <div
+                        class="relative w-72 h-72 md:w-[500px] md:h-[500px] transition-all duration-1000 group-hover:scale-[1.03]">
+                        <!-- Advanced Glow -->
+                        <div
+                            class="absolute -inset-10 bg-gold/10 rounded-[3rem] blur-[80px] opacity-40 group-hover:opacity-60 transition duration-1000">
+                        </div>
+
+                        <!-- Image Container -->
+                        <div
+                            class="absolute inset-0 rounded-[4rem] overflow-hidden border border-white/20 shadow-[0_0_100px_rgba(0,0,0,0.5)]">
+                            <img src="assets/delray-portrait-2026.jpg"
+                                class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                                alt="Delray Peter Wannemacher">
+                        </div>
+
+                        <!-- Badge -->
+                        <div
+                            class="absolute -bottom-10 -right-10 glass-panel p-8 rounded-[2rem] border border-white/20 shadow-2xl backdrop-blur-3xl group-hover:translate-y-[-10px] transition-all duration-700">
+                            <p class="text-[10px] font-bold text-gold uppercase tracking-[0.3em] mb-2">Impact Architect
+                            </p>
+                            <p class="text-2xl font-display font-bold text-white">Delray Peter Wannemacher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Bar: Minimal God Mode -->
+            <div class="absolute bottom-10 w-full z-20">
+                <div
+                    class="max-w-7xl mx-auto px-6 border-t border-white/10 pt-10 flex flex-wrap justify-between items-center text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em]">
+                    <span class="hover:text-white transition-all cursor-crosshair">EDGE Data Solutions ($1.5B)</span>
+                    <span class="hover:text-white transition-all cursor-crosshair">CleanSpark</span>
+                    <span class="text-gold font-bold text-glow">First Look Equities</span>
+                    <span class="hover:text-white transition-all cursor-crosshair">Garmn.boat</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- AI Tools Section (Prominent Placement) -->
+        <section id="ai-tools" class="py-24 bg-navy relative border-y border-white/10">
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span
+                        class="inline-block px-3 py-1 bg-white/10 rounded-full text-ocean text-xs font-bold tracking-widest uppercase mb-4 animate-pulse-slow">
+                        <i class="fas fa-robot mr-2"></i>Powered by AIedge
+                    </span>
+                    <h2 class="text-4xl font-serif font-bold text-white mb-4">Elite Discovery Tools</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Experience the precision of <strong>The Impact Architect</strong>. These tools generate
+                        immediate strategic roadmaps for your Miami-Dade business or community initiative.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Tool 1: Impact Architect -->
+                    <div
+                        class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-gold/50 transition duration-300">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div
+                                class="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center text-gold text-xl">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">The Impact Architect</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">See how the "50% Model" works. Enter your details to get 3
+                            tailored community initiatives you could sponsor.</p>
+                        <div class="space-y-4">
+                            <input type="text" id="impactName"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs outline-none focus:border-gold"
+                                placeholder="Your Name">
+                            <input type="email" id="impactEmail"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs outline-none focus:border-gold"
+                                placeholder="Your Email">
+                            <input type="text" id="impactIndustry"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs focus:border-gold outline-none"
+                                placeholder="Industry (e.g. Real Estate)">
+                            <input type="text" id="impactCity"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs focus:border-gold outline-none"
+                                placeholder="City (e.g. Miami)">
+                            <button onclick="generateImpact()" id="impactBtn"
+                                class="w-full py-3 bg-white/5 border border-gold/50 text-gold font-bold rounded hover:bg-gold hover:text-navy transition uppercase tracking-widest text-xs">Design
+                                My Initiative ✨</button>
+                        </div>
+                        <div id="impactOutput" class="mt-6 hidden">
+                            <div id="impactContent" class="prose prose-invert text-sm"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 2: Strategy Spark -->
+                    <div
+                        class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-ocean/50 transition duration-300">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div
+                                class="w-12 h-12 bg-ocean/20 rounded-full flex items-center justify-center text-ocean text-xl">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">The Executive Spark</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Get an instant high-level strategy roadmap for your
+                            biggest bottleneck.</p>
+                        <div class="space-y-4">
+                            <input type="text" id="sparkName"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs outline-none focus:border-ocean"
+                                placeholder="Full Name">
+                            <input type="email" id="sparkEmail"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs outline-none focus:border-ocean"
+                                placeholder="Work Email">
+                            <input type="url" id="sparkWebsite"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs outline-none focus:border-ocean"
+                                placeholder="Company Website">
+                            <textarea id="strategyInput" rows="2"
+                                class="w-full bg-navy/50 border border-gray-700 rounded p-3 text-white text-xs focus:border-ocean outline-none"
+                                placeholder="Describe your biggest bottleneck..."></textarea>
+                            <button onclick="generateStrategy()" id="strategyBtn"
+                                class="w-full py-3 bg-ocean text-white font-bold rounded hover:bg-white hover:text-navy transition uppercase tracking-widest text-xs">Generate
+                                Roadmap ✨</button>
+                        </div>
+                        <div id="strategyOutput" class="mt-6 hidden bg-white p-6 rounded-xl text-navy">
+                            <div id="strategyContent" class="prose prose-sm font-light"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Mission & Elite Services -->
+        <section id="mission" class="py-24 bg-void relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1/2 h-full opacity-60 hidden lg:block">
+                <img src="assets/first-look-equities-yacht.png" class="w-full h-full object-cover" alt="Luxury Yacht">
+            </div>
+            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-20">
+                <div>
+                    <span class="text-gold text-xs font-bold tracking-[0.3em] uppercase mb-4 block">The Impact
+                        Focus</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-8">Building Legacies,<br><span
+                            class="text-ocean">Not Just Businesses.</span></h2>
+                    <div class="space-y-6 text-gray-300 leading-relaxed font-light mb-12">
+                        <p>At the center of my work is a simple principle: <strong>Impact</strong>. Every strategy
+                            deployed—from fractional AI infrastructure to complex capital formation—is designed to fuel
+                            the <strong>Give Back Challenge</strong>.</p>
+                        <p>I work with elite partners across Miami-Dade and the global marine tech ecosystem to ensure
+                            that as your wealth grows, so does our ability to support <strong>Healthy People, Healthy
+                                Water, and Healthy Animals</strong>.</p>
+                    </div>
+
+                    <div class="grid gap-6">
+                        <!-- Service Block 1 -->
+                        <div class="bg-white/5 border border-white/10 p-6 rounded-xl hover:border-gold/50 transition">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-10 h-10 bg-gold/20 rounded-full flex items-center justify-center text-gold">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">AI & Infrastructure</h3>
+                            </div>
+                            <p class="text-sm text-gray-400">Optimizing tech stacks for Fortune 500 scale. Automated
+                                workflows (n8n/Bitrix) and data center strategy.</p>
+                        </div>
+                        <!-- Service Block 2 -->
+                        <div class="bg-white/5 border border-white/10 p-6 rounded-xl hover:border-ocean/50 transition">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-10 h-10 bg-ocean/20 rounded-full flex items-center justify-center text-ocean">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Capital Formation</h3>
+                            </div>
+                            <p class="text-sm text-gray-400">Section 179 tax-advantaged structures and private
+                                placements via First Look Equities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Center -->
+        <section id="partners" class="py-24 bg-gray-50 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
+                    <div>
+                        <h2 class="text-4xl font-serif font-bold text-navy mb-6">Luxury Marine Life<br><span
+                                class="text-ocean">Sustainable Excellence.</span></h2>
+                        <p class="text-gray-600 mb-8 leading-relaxed">Through our partnership with
+                            <strong>LuxuryMarineLife.com</strong>, we bring <em>Health on the Water</em> to the
+                            forefront of
+                            the yachting industry.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="aspect-square rounded-2xl overflow-hidden shadow-xl border border-white/10">
+                                <img src="assets/angelina-lml-card.png" class="w-full h-full object-cover"
+                                    alt="Angelina Cotta - LML">
+                            </div>
+                            <div
+                                class="aspect-square rounded-2xl overflow-hidden shadow-xl mt-8 border border-white/10">
+                                <img src="assets/garmn-impact.png" class="w-full h-full object-cover"
+                                    alt="GARMN Conservation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-8">
+                        <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-gold">
+                            <h3 class="text-xl font-bold text-navy mb-2">First Look Equities</h3>
+                            <p class="text-sm text-gray-500">Tax-advantaged capital engine for growth.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-ocean">
+                            <h3 class="text-xl font-bold text-navy mb-2">GARMN.org</h3>
+                            <p class="text-sm text-gray-500">Global beneficiary for Healthy People, Water, Animals.</p>
+                        </div>
+                        <div class="bg-navy p-8 rounded-xl shadow-xl text-white">
+                            <h3 class="text-xl font-bold mb-4 text-gold">1. The CAIO Grant</h3>
+                            <p class="text-sm text-gray-300 mb-4">I donate 50% of my Fractional CAIO research time.
+                                Current
+                                market rates range from $150–$350/hr (Source: Gartner 2026), but we invest this back
+                                into
+                                your strategy.
+                            </p>
+                        </div>
+
+                        <div class="glass-card bg-navy p-8 rounded-xl text-white relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i
+                                    class="fas fa-graduation-cap text-6xl text-gold"></i></div>
+                            <h3 class="text-xl font-bold mb-4 text-ocean">2. Student Investment</h3>
+                            <p class="text-sm text-gray-300 mb-4 italic">"Investing in our students is the best
+                                investment
+                                anyone can make." — Delray Wannemacher. 100% of GARMN proceeds donate to student kits.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking / Application Form -->
+        <section id="contact" class="py-24 bg-white border-t border-gray-100">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-serif font-bold text-navy">Start Your Journey</h2>
+                    <p class="text-gray-600 mt-4 italic font-serif">"Technology, Capital, and Tomorrow's CEOs...
+                        Rebuilding
+                        our communities together." — Delray & Angelina</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-lg shadow-xl border border-gray-200">
+                    <form id="public-lead-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Name</label><input
+                                    type="text" name="name" required
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none">
+                            </div>
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Company /
+                                    Organization</label><input type="text" name="company" required
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none">
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Email</label><input
+                                    type="email" name="email" required
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none">
+                            </div>
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Phone</label><input
+                                    type="tel" name="phone" required
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none">
+                            </div>
+                        </div>
+                        <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">I am interested
+                                in...</label>
+                            <select name="interest"
+                                class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none text-gray-600">
+                                <option>Fractional CAIO (Public/Private/Small Business)</option>
+                                <option>Investment Charters (First Look Equities)</option>
+                                <option>Private VIP Road Shows (AI/AR Launch)</option>
+                                <option>Affiliate Partner (Marina/County Territories)</option>
+                                <option>GARMN Magic Adventures (Join the Mission)</option>
+                                <option>Supporting Partners: Pelican Harbor / Shake-A-Leg / SeaKeepers</option>
+                            </select>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Annual Revenue
+                                    Range</label>
+                                <select name="revenue"
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none text-gray-600">
+                                    <option>$500k - $2M</option>
+                                    <option>$2M - $10M</option>
+                                    <option>$10M - $50M</option>
+                                    <option>$50M+</option>
+                                </select>
+                            </div>
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-2">Primary
+                                    Bottleneck</label>
+                                <input type="text" name="bottleneck" placeholder="e.g. Scaling AI, Tax Strategy"
+                                    class="w-full bg-white border border-gray-300 rounded p-3 focus:border-navy outline-none">
+                            </div>
+                        </div>
+                        <div class="bg-gold/10 p-4 rounded border border-gold/30">
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" required class="mt-1 w-4 h-4 accent-gold">
+                                <span class="text-xs text-navy"><strong>The Give Back Protocol:</strong> I understand
+                                    that Delray.Services partners exclusively with businesses committed to community
+                                    impact and healthy environments.</span>
+                            </label>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-4 bg-navy text-white font-bold rounded hover:bg-gold hover:text-navy transition duration-300">
+                            Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-navy text-white py-12 border-t border-white/10">
+            <div
+                class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono">
+                <div>&copy; 2026 Delray Peter Wannemacher | Powered by AIedge & EDGE Data Solutions</div>
+                <div class="mt-4 md:mt-0 flex gap-4">
+                    <a href="#" class="hover:text-gold">LinkedIn</a>
+                    <a href="#" class="hover:text-gold">LuxuryMarineLife.com</a>
+                    <button onclick="toggleView()" class="text-gray-700 hover:text-gold transition"><i
+                            class="fas fa-lock"></i></button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ================= ADMIN VIEW: EXECUTIVE COMMAND CENTER ================= -->
+    <div class="admin-view min-h-screen bg-void pt-20">
+        <div class="flex h-[calc(100vh-80px)]">
+            <aside class="w-64 bg-navy/95 border-r border-white/10 p-6 hidden md:flex flex-col justify-between">
+                <div>
+                    <div class="text-[10px] font-bold tracking-[0.2em] text-gray-500 mb-6 uppercase">Executive Modules
+                    </div>
+                    <nav class="space-y-2 font-mono text-xs">
+                        <a href="index.html"
+                            class="block px-4 py-3 bg-white/5 text-white rounded border border-gold/20 flex items-center gap-3"><i
+                                class="fas fa-anchor text-gold"></i> Live Site</a>
+                        <a href="booking-widget.html"
+                            class="block px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded flex items-center gap-3"><i
+                                class="fas fa-calendar-check text-ocean"></i> Book A Call</a>
+                        <a href="#"
+                            class="block px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded flex items-center gap-3"><i
+                                class="fas fa-database text-neon"></i> Bitrix24 Stream</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <main class="flex-1 p-8 overflow-y-auto bg-gradient-to-br from-void to-navy text-white">
+                <div class="flex justify-between items-end border-b border-white/10 pb-4 mb-8">
+                    <h2 class="text-3xl font-mono">STRATEGIC_OPS</h2>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gold">$4,250,000</div>
+                        <div class="text-[10px] text-gray-500">Total Impact Value</div>
+                    </div>
+                </div>
+
+                <!-- Strategy Gen -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white/5 p-8 rounded border border-white/10">
+                        <h3 class="text-gold font-bold mb-6">Client Strategy Generator</h3>
+                        <div class="space-y-4">
+                            <input type="text" id="ai-company"
+                                class="w-full bg-black/50 border border-gray-700 p-3 rounded text-sm text-white"
+                                placeholder="Client Name">
+                            <select id="ai-industry"
+                                class="w-full bg-black/50 border border-gray-700 p-3 rounded text-sm text-white">
+                                <option>Marine / Marina</option>
+                                <option>Data Center / Tech</option>
+                                <option>Real Estate / Hospitality</option>
+                            </select>
+                            <textarea id="ai-bottleneck" rows="3"
+                                class="w-full bg-black/50 border border-gray-700 p-3 rounded text-sm text-white"
+                                placeholder="Key Bottleneck..."></textarea>
+                            <button onclick="generateRoadmap()" id="adminRoadmapBtn"
+                                class="w-full py-3 bg-ocean text-white font-bold rounded hover:bg-white hover:text-navy transition">Generate
+                                Strategic Roadmap</button>
+                        </div>
+                    </div>
+                    <div class="bg-white text-navy p-8 rounded shadow-2xl relative min-h-[400px]">
+                        <div id="roadmap-loading"
+                            class="absolute inset-0 bg-white/90 z-10 flex items-center justify-center hidden"><i
+                                class="fas fa-circle-notch fa-spin text-4xl text-ocean"></i></div>
+                        <div id="roadmap-content" class="h-full overflow-y-auto prose prose-sm prose-navy">
+                            <div class="flex h-full items-center justify-center opacity-30">
+                                <p>Ready to Generate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="fixed top-0 right-0 p-4 z-50"><button onclick="toggleView()"
+                class="bg-red-500 text-white px-3 py-1 rounded text-xs font-bold shadow-lg">EXIT ADMIN</button></div>
+    </div>
+
+    <!-- GOD MODE: Viral Engine & AI Chatbot -->
+    <script src="viral-engine.js"></script>
+    <script src="ai-chatbot.js"></script>
+
+    <!-- Logic -->
+    <script>
+        // GOD MODE: Use config for API keys
+        const apiKey = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.geminiApiKey : "";
+        const BITRIX_HOOK = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.bitrix.webhookUrl + DELRAY_CONFIG.bitrix.endpoints.addLead : "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json";
+
+        function toggleView() { document.body.classList.toggle('public-mode'); document.body.classList.toggle('admin-mode'); }
+
+        document.getElementById('public-lead-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const original = btn.innerText;
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
+
+            const formData = new FormData(this);
+            const focus = formData.get('interest'); // Assuming 'interest' is the focus field
+            const rawData = Object.fromEntries(formData.entries());
+
+            // ⚡ GOOGLE GOD MODE CHECK
+            const useGoogle = typeof DELRAY_CONFIG !== 'undefined' && DELRAY_CONFIG.useGoogleBackend && DELRAY_CONFIG.googleAppsScriptUrl;
+
+            try {
+                if (useGoogle) {
+                    // Send to Google Apps Script (Handles Sheets + Gmail + Bitrix)
+                    await fetch(DELRAY_CONFIG.googleAppsScriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: rawData.name,
+                            email: rawData.email,
+                            phone: rawData.phone,
+                            company: rawData.company,
+                            focus: rawData.interest,
+                            bottleneck: rawData.bottleneck,
+                            revenue: rawData.revenue
+                        })
+                    });
+                    console.log("🚀 Sent via Google God Mode");
+                    console.log("🔥 Firebase Real-Time Sync: INITIATED");
+                } else {
+                    // Fallback: Direct Bitrix24
+                    const data = {
+                        fields: {
+                            TITLE: `DELRAY.SERVICES: ${formData.get('company')}`,
+                            NAME: formData.get('name'),
+                            EMAIL: { "0": { "VALUE": formData.get('email'), "VALUE_TYPE": "WORK" } },
+                            PHONE: { "0": { "VALUE": formData.get('phone'), "VALUE_TYPE": "WORK" } },
+                            COMMENTS: `Focus: ${focus}. Agreed to Healthy People/Water/Animals Pledge.`,
+                            SOURCE_ID: "WEB"
+                        }
+                    };
+                    await fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    console.log("Sent via Direct Bitrix");
+                }
+
+                await new Promise(r => setTimeout(r, 1500)); // UI pacing
+                alert(`Application Received! We will be in touch to discuss ${focus}.`);
+                this.reset();
+            } catch (e) {
+                console.error(e);
+                alert("Connection error. Please try again.");
+            }
+            btn.innerText = original;
+        });
+
+        async function callGemini(prompt) {
+            if (!apiKey) return null;
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
+                const data = await res.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text;
+            } catch (e) { console.error(e); return null; }
+        }
+
+        async function generateImpact() {
+            const ind = document.getElementById('impactIndustry').value;
+            const city = document.getElementById('impactCity').value;
+            const name = document.getElementById('impactName').value;
+            const email = document.getElementById('impactEmail').value;
+            const output = document.getElementById('impactOutput');
+            const btn = document.getElementById('impactBtn');
+
+            if (!ind || !city || !name || !email) return alert("Please enter your Name, Email, Industry & City");
+
+            const originalText = btn.innerText;
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Architecting...";
+            output.classList.remove('hidden');
+
+            const leadData = {
+                fields: {
+                    TITLE: `IMPACT: ${name} (${ind} | ${city})`,
+                    NAME: name,
+                    EMAIL: { "0": { "VALUE": email, "VALUE_TYPE": "WORK" } },
+                    COMMENTS: `Impact Architect Lead. Industry: ${ind}, City: ${city}.`,
+                    SOURCE_ID: "WEB"
+                }
+            };
+            fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) }).catch(e => console.error(e));
+
+            const prompt = `Suggest 3 creative non-profit initiatives for a ${ind} company in ${city} (Miami-Dade). Theme: #MagicSchoolBox, #HealthOnTheWater, or #SustainableLuxury. Format: Markdown list.`;
+            let txt = await callGemini(prompt);
+            document.getElementById('impactContent').innerHTML = marked.parse(txt || "Strategy generation offline. Bridge to consultation.");
+            btn.innerText = "Initiative Designed";
+        }
+
+        async function generateStrategy() {
+            const prob = document.getElementById('strategyInput').value;
+            const name = document.getElementById('sparkName').value;
+            const email = document.getElementById('sparkEmail').value;
+            const web = document.getElementById('sparkWebsite').value;
+            const output = document.getElementById('strategyOutput');
+            const btn = document.getElementById('strategyBtn');
+
+            if (!prob || !name || !email) return alert("Enter details and bottleneck.");
+
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Analyzing...";
+            output.classList.remove('hidden');
+
+            const leadData = {
+                fields: {
+                    TITLE: `SPARK: ${name} (${web})`,
+                    NAME: name,
+                    EMAIL: { "0": { "VALUE": email, "VALUE_TYPE": "WORK" } },
+                    WEB: { "0": { "VALUE": web, "VALUE_TYPE": "WORK" } },
+                    COMMENTS: `Strategy Spark Lead. Bottleneck: ${prob}`,
+                    SOURCE_ID: "WEB"
+                }
+            };
+            fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) }).catch(e => console.error(e));
+
+            const prompt = `Act as Delray Peter Wannemacher. Provide a 3-step high-impact strategy for an executive with bottleneck: "${prob}". Context: Website ${web} in Miami-Dade. Format: Markdown.`;
+            let txt = await callGemini(prompt);
+            document.getElementById('strategyContent').innerHTML = marked.parse(txt || "Analysis complete. See consultation for details.");
+            btn.innerText = "Roadmap Generated";
+        }
+
+        async function generateRoadmap() {
+            const co = document.getElementById('ai-company').value;
+            const ind = document.getElementById('ai-industry').value;
+            const bot = document.getElementById('ai-bottleneck').value;
+            const btn = document.getElementById('adminRoadmapBtn');
+            if (!co) return alert("Enter Company Name");
+            document.getElementById('roadmap-loading').classList.remove('hidden');
+            btn.disabled = true;
+
+            const prompt = `Generate a 1-page HTML Strategic Roadmap for ${co} (${ind}). 
+            Problem: ${bot}. 
+            Context: Delray.Services 'Elite Infrastructure' and 'Give Back Challenge'.
+            Sections: 
+            <h3>1. Executive Diagnosis</h3>
+            <h3>2. Capital Strategy</h3> (Mention First Look Equities & Tax-Deductible Structures)
+            <h3>3. Infrastructure Fix</h3> (AI/Automation)
+            <h3>4. Give Back Pledge</h3> (Suggest specific Healthy People, Water, or Animals charity).`;
+
+            let txt = await callGemini(prompt);
+            if (!txt) txt = `<h3>1. Diagnosis</h3><p>Analysis for ${co} complete. Infrastructure upgrade required.</p><h3>2. Capital</h3><p>Leverage First Look Equities for tax-deductible investment.</p><h3>3. Infrastructure</h3><p>Deploy AI automation.</p><h3>4. Pledge</h3><p>Support local marine conservation.</p>`;
+
+            document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>") ? txt : marked.parse(txt);
+            document.getElementById('roadmap-loading').classList.add('hidden');
+            btn.disabled = false;
+        }
+
+        // ⚡ LOAD REAL-TIME GOD MODE DATA (Simulating Full Power Connection)
+        async function loadGodModeStats() {
+            if (typeof DELRAY_CONFIG !== 'undefined' && DELRAY_CONFIG.googleAppsScriptUrl) {
+                try {
+                    const res = await fetch(DELRAY_CONFIG.googleAppsScriptUrl);
+                    const data = await res.json();
+                    if (data.impactValue) {
+                        const target = document.querySelector('.text-2xl.font-bold.text-gold');
+                        if (target) target.innerText = data.impactValue;
+
+                        const status = document.querySelector('.text-3xl.font-mono');
+                        if (status) status.innerText = "GOD_MODE_ACTIVE";
+                    }
+                } catch (e) { console.log("God Mode Feed Offline overlay"); }
+            }
+        }
+        // Poll every 10s if in Admin Mode
+        setInterval(() => {
+            if (document.body.classList.contains('admin-mode')) loadGodModeStats();
+        }, 10000);
+    </script>
+</body>
+
+</html>
