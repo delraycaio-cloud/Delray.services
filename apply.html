@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for Strategy Session | Delray.Services</title>
+    <title>Apply for Discovery Call | TimeBroker.AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
@@ -397,7 +397,7 @@
                     <input type="checkbox" id="partner-referral" class="mt-1 w-5 h-5 accent-[#d4af37]"
                         onchange="togglePartnerOption()">
                     <div>
-                        <p class="font-bold text-orange-300">Delray's calendar is full? Connect me with a qualified
+                        <p class="font-bold text-orange-300">TimeBroker's calendar is full? Connect me with a qualified
                             partner</p>
                         <p class="text-xs text-gray-400 mt-1">By checking this, you agree to sign an NDA and we may
                             forward your info to a vetted partner consultant.</p>
@@ -412,7 +412,7 @@
                 <div class="bg-black/30 p-4 rounded-lg max-h-40 overflow-y-auto text-xs text-gray-400 mb-4">
                     <p><strong>MUTUAL NON-DISCLOSURE AGREEMENT</strong></p>
                     <p class="mt-2">This Agreement is entered into as of the date of electronic signature between the
-                        undersigned party ("Disclosing Party") and Delray Wannemacher / Delray.Services ("Receiving
+                        undersigned party ("Disclosing Party") and Delray Wannemacher / TimeBroker.AI ("Receiving
                         Party").</p>
                     <p class="mt-2">1. CONFIDENTIAL INFORMATION: All business information, strategies, financial data,
                         and proprietary methods shared during the consultation process.</p>
@@ -534,7 +534,7 @@
     <!-- Trust Footer -->
     <div class="max-w-4xl mx-auto mt-8 text-center text-xs text-gray-500">
         <p><i class="fas fa-lock mr-1"></i> 256-bit SSL Encrypted | Your data is secure</p>
-        <p class="mt-2">Delray.Services | Give Back Challenge | © 2026</p>
+        <p class="mt-2">TimeBroker.AI | Give Back Challenge | © 2026</p>
     </div>
 
     <script>
@@ -692,8 +692,8 @@
                     preferredTime: applicationData.preferredTime,
                     partnerReferral: applicationData.partnerReferral,
                     giveBackPledge: true,
-                    source: 'delray-services-application',
-                    property: 'delray.services',
+                    source: 'timebroker-ai-application',
+                    property: 'timebroker.ai',
                     status: 'new',
                     crmStatus: 'new',
                     priority: 'high',
@@ -707,9 +707,9 @@
                 console.warn('Firestore save error, logging locally:', err.message);
                 // LocalStorage fallback
                 try {
-                    const leads = JSON.parse(localStorage.getItem('DELRAY_LEADS') || '[]');
+                    const leads = JSON.parse(localStorage.getItem('TB_LEADS') || '[]');
                     leads.unshift({ ...applicationData, status: 'NEW', source: 'Verified Application' });
-                    localStorage.setItem('DELRAY_LEADS', JSON.stringify(leads));
+                    localStorage.setItem('TB_LEADS', JSON.stringify(leads));
                 } catch (e) { /* silent */ }
             }
 

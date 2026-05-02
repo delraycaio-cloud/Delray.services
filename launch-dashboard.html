@@ -61,7 +61,7 @@
                 <h1 class="text-2xl font-display font-bold">TOMORROW'S <span class="text-[#d4af37]">CEOs</span> TODAY
                 </h1>
                 <p class="text-[10px] text-gray-500 uppercase tracking-[0.3em]">World Record Launch Attempt | Project
-                    Delray.Services</p>
+                    TimeBroker.AI</p>
             </div>
             <div class="flex items-center gap-4">
                 <span class="text-xs text-gray-400">Miami-Dade Beta</span>
@@ -166,11 +166,11 @@
 
         <!-- Quick Actions -->
         <div class="grid grid-cols-4 gap-6 mb-8">
-            <a href="https://delray.services" target="_blank"
+            <a href="https://timebroker.ai" target="_blank"
                 class="glass rounded-xl p-6 hover:border-[#d4af37] transition text-center pulse-ring">
                 <div class="text-4xl mb-3">🚀</div>
                 <h4 class="font-bold">VIEW LIVE SITE</h4>
-                <p class="text-xs text-gray-400 mt-2">delray.services</p>
+                <p class="text-xs text-gray-400 mt-2">timebroker.ai</p>
             </a>
             <a href="https://b24-9o23fs.bitrix24.com/crm/lead/" target="_blank"
                 class="glass rounded-xl p-6 hover:border-[#d4af37] transition text-center">
@@ -264,7 +264,7 @@
     <!-- Footer -->
     <footer class="p-6 border-t border-white/10 mt-8">
         <div class="max-w-7xl mx-auto flex justify-between items-center text-xs text-gray-500">
-            <span>Project: Delray.Services | Tomorrow's CEOs Today</span>
+            <span>Project: TimeBroker.AI | Tomorrow's CEOs Today</span>
             <span>World Record Attempt: AI-Assisted Enterprise Launch</span>
             <span id="current-time"></span>
         </div>
@@ -297,7 +297,7 @@
             const seconds = elapsedSeconds % 60;
 
             const record = {
-                project: 'Delray.Services - Tomorrow\'s CEOs Today',
+                project: 'TimeBroker.AI - Tomorrow\'s CEOs Today',
                 type: 'AI-Assisted Enterprise System Launch',
                 totalTime: `${hours}h ${minutes}m ${seconds}s`,
                 humanTime: '~15 minutes',
@@ -339,7 +339,7 @@
         async function checkStatus() {
             // Check Website
             try {
-                const site = await fetch('https://delray.services', { mode: 'no-cors' });
+                const site = await fetch('https://timebroker.ai', { mode: 'no-cors' });
                 document.getElementById('status-website').innerHTML = '● Online';
                 document.getElementById('status-website').className = 'text-xs text-green-400';
             } catch (e) {
