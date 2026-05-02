@@ -1,5 +1,5 @@
 /**
- * DELRAY.SERVICES - LINKEDIN OPTIMIZATION TOOLKIT
+ * TIMEBROKER.AI - LINKEDIN OPTIMIZATION TOOLKIT
  * ═══════════════════════════════════════════════════════════════
  * Prompts, Templates & Automation for LinkedIn Growth
  * Optimized for: Sustainable Luxury, CAIO, Capital Strategy,
@@ -40,7 +40,7 @@ WHAT I DEPLOY:
 I believe that giving back is the only way to build a real empire. Let's help others win.
 
 🚀 Now accepting Corporate Consulting & Board Advisory Roles.
-👉 Mission Control: delray.services
+👉 Mission Control: timebroker.ai
 
 #FractionalCAIO #ChiefAIOfficer #FinanceExpert #MiamiTech #InfrastructureStrategy #GiveBackChallenge`,
 
@@ -74,7 +74,7 @@ But the mission doesn't stop at corporate. I am here to help others win. I am do
 
 If you are ready for a world-record launch, let's connect.
 
-🔗 Mission Control: delray.services
+🔗 Mission Control: timebroker.ai
 
 #FractionalCAIO #ChiefAIOfficer #EDGEFluids #ImmersionAI #MiamiInfrastructure`
         },
@@ -183,7 +183,7 @@ No pitch, no pressure. Just 30 minutes of pure strategy.
 
 Comment "STRATEGY" and I'll send you the booking link.
 
-(Or go directly: delray.services)
+(Or go directly: timebroker.ai)
 
 #FreeConsultation #BusinessStrategy`
         },

@@ -9,6 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="config.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        const app = initializeApp({
+            apiKey: "AIzaSyBgCn1OPJqbQM3K3nR0VzX8kL_QuA2GBCQ",
+            authDomain: "ac-godmode-titan.firebaseapp.com",
+            projectId: "ac-godmode-titan",
+            storageBucket: "ac-godmode-titan.firebasestorage.app",
+            messagingSenderId: "844071898498",
+            appId: "1:844071898498:web:delray-services"
+        });
+        const db = getFirestore(app);
+        window._firebase = { db, collection, addDoc, serverTimestamp };
+        window.dispatchEvent(new Event('firebase-ready'));
+    </script>
     <style>
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -651,59 +668,50 @@
             const appId = 'DW-' + Date.now().toString(36).toUpperCase();
             applicationData.applicationId = appId;
 
-            // Submit to Bitrix24
-            const bitrixUrl = typeof DELRAY_CONFIG !== 'undefined'
-                ? DELRAY_CONFIG.bitrix.webhookUrl + DELRAY_CONFIG.bitrix.endpoints.addLead
-                : 'https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json';
-
-            // Save to LocalStorage for God Mode Live Demo
             try {
-                const existingLeads = JSON.parse(localStorage.getItem('DELRAY_LEADS') || '[]');
-                existingLeads.unshift({
-                    ...applicationData,
-                    status: 'NEW',
-                    source: 'Verified Application'
-                });
-                localStorage.setItem('DELRAY_LEADS', JSON.stringify(existingLeads));
+                // Wait for Firebase
+                if (!window._firebase) {
+                    await new Promise(resolve => window.addEventListener('firebase-ready', resolve, { once: true }));
+                }
+                const { db, collection, addDoc, serverTimestamp } = window._firebase;
 
-                // Update specific stats
-                const stats = JSON.parse(localStorage.getItem('DELRAY_STATS') || '{"leads": 12, "value": 230000}');
-                stats.leads++;
-                stats.value += (applicationData.estimatedValue || 0);
-                localStorage.setItem('DELRAY_STATS', JSON.stringify(stats));
-            } catch (e) { console.log('God Mode Sync Error:', e); }
-
-            try {
-                await fetch(bitrixUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        fields: {
-                            TITLE: `VERIFIED APP: ${applicationData.businessName}`,
-                            NAME: applicationData.contactName,
-                            EMAIL: [{ VALUE: applicationData.contactEmail, VALUE_TYPE: 'WORK' }],
-                            PHONE: [{ VALUE: applicationData.contactPhone, VALUE_TYPE: 'WORK' }],
-                            COMPANY_TITLE: applicationData.businessName,
-                            COMMENTS: `
-APPLICATION ID: ${appId}
-INDUSTRY: ${applicationData.industry}
-REVENUE: ${applicationData.revenue}
-STATE: ${applicationData.state}
-ROLE: ${applicationData.role}
-WEBSITE: ${applicationData.website}
-SOS #: ${applicationData.sosNumber || 'Not provided'}
-EIN: ${applicationData.einNumber || 'Not provided'}
-BOTTLENECK: ${applicationData.bottleneck}
-EST. VALUE: $${applicationData.estimatedValue?.toLocaleString() || 'TBD'}
-PARTNER REFERRAL: ${applicationData.partnerReferral ? 'YES (NDA Signed)' : 'NO'}
-GIVE BACK PLEDGE: ACCEPTED
-                            `.trim(),
-                            SOURCE_ID: 'WEB',
-                            STATUS_ID: 'NEW'
-                        }
-                    })
+                // Save to Firestore leads_v2
+                await addDoc(collection(db, 'leads_v2'), {
+                    applicationId: appId,
+                    name: applicationData.contactName,
+                    email: applicationData.contactEmail,
+                    phone: applicationData.contactPhone,
+                    company: applicationData.businessName,
+                    website: applicationData.website,
+                    industry: applicationData.industry,
+                    revenue: applicationData.revenue,
+                    state: applicationData.state,
+                    role: applicationData.role,
+                    bottleneck: applicationData.bottleneck,
+                    estimatedValue: applicationData.estimatedValue || 0,
+                    preferredTime: applicationData.preferredTime,
+                    partnerReferral: applicationData.partnerReferral,
+                    giveBackPledge: true,
+                    source: 'delray-services-application',
+                    property: 'delray.services',
+                    status: 'new',
+                    crmStatus: 'new',
+                    priority: 'high',
+                    notes: `Verified Application | SOS: ${applicationData.sosNumber || 'N/A'} | EIN: ${applicationData.einNumber || 'N/A'} | Est. Value: $${applicationData.estimatedValue?.toLocaleString() || 'TBD'}`,
+                    createdAt: serverTimestamp(),
+                    assignedTo: 'delray'
                 });
-            } catch (err) { console.log('Submit error:', err); }
+
+                console.log('🔥 Application saved to Firestore leads_v2');
+            } catch (err) {
+                console.warn('Firestore save error, logging locally:', err.message);
+                // LocalStorage fallback
+                try {
+                    const leads = JSON.parse(localStorage.getItem('DELRAY_LEADS') || '[]');
+                    leads.unshift({ ...applicationData, status: 'NEW', source: 'Verified Application' });
+                    localStorage.setItem('DELRAY_LEADS', JSON.stringify(leads));
+                } catch (e) { /* silent */ }
+            }
 
             // Show success
             document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));

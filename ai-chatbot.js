@@ -1,39 +1,54 @@
 /**
- * DELRAY.SERVICES - AI CHATBOT MODULE
+ * TIMEBROKER.AI - AI CONCIERGE MODULE (SOVEREIGN)
  * ═══════════════════════════════════════════════════════════════
- * Gemini-Powered Lead Qualification & Booking Assistant
+ * Firebase Cloud Function Powered | Zero Client-Side API Keys
+ * Routes through omniConciergeV1 for RAG-backed responses
+ * Routes leads through submitLeadV2 for Firestore CRM
  * ═══════════════════════════════════════════════════════════════
  */
 
-class DelrayChatbot {
+class TimeBrokerConcierge {
     constructor() {
         this.isOpen = false;
         this.messages = [];
-        this.config = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.chatbot : this.getDefaultConfig();
+        this.config = typeof TIMEBROKER_CONFIG !== 'undefined' ? TIMEBROKER_CONFIG.chatbot :
+                      typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.chatbot : this.getDefaultConfig();
         this.conversationState = 'greeting';
         this.leadData = {};
+        this.firebaseReady = false;
         this.init();
     }
 
     getDefaultConfig() {
         return {
-            name: "Concierge",
-            avatar: "🥂",
-            greeting: "Good evening. I am Delray's private concierge. How may I assist your inquiry into our exclusive capital or infrastructure services?",
-            personality: "Sophisticated luxury concierge and strategic guide. Professional, subtle, and highly intelligent. Focus on providing value and gentle guidance rather than sales qualification."
+            name: "TimeBroker Concierge",
+            avatar: "⚡",
+            greeting: "Welcome to TimeBroker AI. I'm your strategic concierge. How may I assist with capital formation, AI infrastructure, or executive advisory?",
+            personality: "Sophisticated luxury concierge and strategic guide. Professional, subtle, and highly intelligent."
         };
     }
 
     init() {
         this.injectStyles();
         this.createChatWidget();
-        console.log('🥂 Luxury Concierge: ONLINE');
+
+        // Wait for Firebase to be ready
+        if (window._firebase) {
+            this.firebaseReady = true;
+        } else {
+            window.addEventListener('firebase-ready', () => {
+                this.firebaseReady = true;
+                console.log('⚡ Concierge: Firebase CRM connected');
+            });
+        }
+
+        console.log('⚡ TimeBroker Concierge: ONLINE (Sovereign Mode)');
     }
 
     injectStyles() {
         const style = document.createElement('style');
         style.textContent = `
-            #delray-chatbot {
+            #timebroker-chatbot {
                 position: fixed; bottom: 100px; right: 20px; z-index: 99998;
                 font-family: 'Montserrat', sans-serif;
             }
@@ -161,9 +176,9 @@ class DelrayChatbot {
 
     createChatWidget() {
         const widget = document.createElement('div');
-        widget.id = 'delray-chatbot';
+        widget.id = 'timebroker-chatbot';
         widget.innerHTML = `
-            <div class="chat-bubble" onclick="delrayChatbot.toggleChat()">
+            <div class="chat-bubble" onclick="tbConcierge.toggleChat()">
                 ${this.config.avatar}
             </div>
             <div class="chat-window" id="chat-window">
@@ -173,34 +188,32 @@ class DelrayChatbot {
                         <h4>${this.config.name}</h4>
                         <span>● Online now</span>
                     </div>
-                    <button class="chat-close" onclick="delrayChatbot.toggleChat()">&times;</button>
+                    <button class="chat-close" onclick="tbConcierge.toggleChat()">&times;</button>
                 </div>
                 <div class="chat-messages" id="chat-messages"></div>
                 <div class="chat-input-area">
-                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." onkeypress="if(event.key==='Enter')delrayChatbot.sendMessage()">
-                    <button class="chat-send" onclick="delrayChatbot.sendMessage()">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." onkeypress="if(event.key==='Enter')tbConcierge.sendMessage()">
+                    <button class="chat-send" onclick="tbConcierge.sendMessage()">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
         `;
         document.body.appendChild(widget);
-
-        // Subtly notify user via console that concierge is ready
-        console.log('🥂 Private Concierge: Awaiting your inquiry.');
+        console.log('⚡ TimeBroker Concierge: Awaiting your inquiry.');
     }
 
     toggleChat() {
         this.isOpen = !this.isOpen;
-        const window = document.getElementById('chat-window');
-        window.classList.toggle('open', this.isOpen);
+        const chatWindow = document.getElementById('chat-window');
+        chatWindow.classList.toggle('open', this.isOpen);
 
         if (this.isOpen && this.messages.length === 0) {
             this.sendBotMessage(this.config.greeting, [
-                "I need capital strategy help",
-                "Tell me about AI services",
-                "What's the Give Back Challenge?",
-                "Book a strategy session"
+                "Capital strategy",
+                "AI infrastructure",
+                "Give Back Challenge",
+                "Book a discovery call"
             ]);
         }
     }
@@ -226,7 +239,7 @@ class DelrayChatbot {
 
         if (quickReplies.length > 0) {
             html += `<div class="quick-replies">${quickReplies.map(r =>
-                `<button class="quick-reply" onclick="delrayChatbot.handleQuickReply('${r}')">${r}</button>`
+                `<button class="quick-reply" onclick="tbConcierge.handleQuickReply('${r.replace(/'/g, "\\'")}')">${r}</button>`
             ).join('')}</div>`;
         }
 
@@ -267,7 +280,6 @@ class DelrayChatbot {
     async processMessage(text) {
         const lowerText = text.toLowerCase();
 
-        // Lead qualification flow
         if (this.conversationState === 'greeting') {
             if (lowerText.includes('capital') || lowerText.includes('investment') || lowerText.includes('tax')) {
                 this.conversationState = 'qualifying_capital';
@@ -293,11 +305,10 @@ class DelrayChatbot {
                     []
                 );
             } else {
-                // Use AI for general questions
+                // Use Omni-Concierge for general questions
                 await this.getAIResponse(text);
             }
         } else if (this.conversationState === 'booking') {
-            // Collect booking info
             if (!this.leadData.name) {
                 this.leadData.name = text;
                 this.sendBotMessage("Nice to meet you, " + text + "! What's your email address?");
@@ -320,79 +331,40 @@ class DelrayChatbot {
     }
 
     async getAIResponse(text) {
-        const config = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG : {};
-        const preferred = config.preferredAI || 'auto';
-
-        // Try providers in priority sequence
-        const providerOrder = preferred === 'auto'
-            ? ['gemini', 'claude', 'perplexity']
-            : [preferred, 'gemini', 'claude']; // Fallback even if preferred specified
-
-        for (const provider of providerOrder) {
-            try {
-                const response = await this.tryProvider(provider, text, config);
-                if (response) {
-                    this.sendBotMessage(response, ["Book a session", "Tell me more"]);
-                    return;
-                }
-            } catch (e) {
-                console.warn(`Provider ${provider} failed, trying next...`);
-            }
-        }
-
-        // Ultimate Concierge Fallback
-        const fallback = "I'm currently processing your high-level request. To ensure the most accurate strategy, would you like to schedule a brief 15-minute briefing with Delray directly?";
-        this.sendBotMessage(fallback, ["Yes, schedule call", "Continue searching"]);
-    }
-
-    async tryProvider(provider, text, config) {
-        const prompt = `${this.config.personality}\n\nUser message: "${text}"\n\nRespond helpfully in 2-3 sentences. Focus on Miami-Dade area businesses, marinas, and yachting. Always try to guide toward booking a strategy session or joining the Give Back Challenge.`;
-
         try {
-            if (provider === 'gemini' && config.geminiApiKey) {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${config.geminiApiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { temperature: 0.7, maxOutputTokens: 300 }
-                    })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
-                }
+            if (!this.firebaseReady || !window._firebase) {
+                throw new Error('Firebase not ready');
             }
 
-            if (provider === 'claude' && config.claudeApiKey) {
-                // IMPORTANT: Since we are in a browser, direct Claude API calls might hit CORS issues
-                // unless the user has a proxy. We will try, but also provide a 'Simulated Intelligence' fallback
-                // if the key is present but the request fails.
-                const res = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': config.claudeApiKey,
-                        'anthropic-version': '2023-06-01',
-                        'dangerouslyAllowBrowser': 'true' // Some libraries use this
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-3-haiku-20240307',
-                        max_tokens: 300,
-                        messages: [{ role: 'user', content: prompt }]
-                    })
-                });
+            const { functions, httpsCallable } = window._firebase;
+            const omniConcierge = httpsCallable(functions, 'omniConciergeV1');
 
-                if (res.ok) {
-                    const data = await res.json();
-                    return data.content?.[0]?.text;
-                }
-            }
+            const result = await omniConcierge({
+                message: text,
+                persona: 'ORACLE',
+                context: 'timebroker-consulting',
+                conversationHistory: this.messages.slice(-6).map(m => ({
+                    role: m.type === 'user' ? 'user' : 'model',
+                    content: m.content
+                }))
+            });
+
+            const response = result.data?.response || result.data?.message || 
+                "I'd be happy to help with that. Would you like to schedule a discovery call to discuss in detail?";
+            
+            this.sendBotMessage(response, ["Book a session", "Tell me more", "Chat on WhatsApp"]);
+
         } catch (err) {
-            console.warn(`${provider} API error:`, err.message);
+            console.warn('Omni-Concierge call failed:', err.message);
+            // Intelligent fallback
+            const fallbackResponses = [
+                "That's a great question. Want me to set up a complimentary discovery call so we can give you a personalized answer?",
+                "I can connect you directly to discuss this in depth. Would you prefer a <a href='https://wa.me/13366521387' target='_blank' style='color:#d4af37'>WhatsApp chat</a> or a scheduled call?",
+                "Let me arrange a deeper dive into that topic. Shall I book a complimentary discovery call?"
+            ];
+            const fallback = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+            this.sendBotMessage(fallback, ["Yes, schedule call", "WhatsApp instead"]);
         }
-        return null;
     }
 
     sendBotMessage(content, quickReplies = []) {
@@ -403,30 +375,53 @@ class DelrayChatbot {
     }
 
     async submitLead() {
-        const bitrixUrl = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.bitrix.webhookUrl + DELRAY_CONFIG.bitrix.endpoints.addLead : '';
+        try {
+            if (!this.firebaseReady || !window._firebase) {
+                throw new Error('Firebase not ready');
+            }
 
-        if (bitrixUrl) {
-            try {
-                await fetch(bitrixUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        fields: {
-                            TITLE: `CHATBOT: ${this.leadData.name} - ${this.leadData.interest}`,
-                            NAME: this.leadData.name,
-                            EMAIL: [{ VALUE: this.leadData.email, VALUE_TYPE: 'WORK' }],
-                            PHONE: [{ VALUE: this.leadData.phone, VALUE_TYPE: 'WORK' }],
-                            COMMENTS: `Interest: ${this.leadData.interest}\nSource: AI Chatbot`,
-                            SOURCE_ID: 'WEB'
-                        }
-                    })
+            const { db, collection, addDoc, serverTimestamp } = window._firebase;
+
+            // Write directly to Firestore leads_v2 collection
+            await addDoc(collection(db, 'leads_v2'), {
+                name: this.leadData.name,
+                email: this.leadData.email,
+                phone: this.leadData.phone,
+                interest: this.leadData.interest,
+                source: 'timebroker-ai-concierge',
+                property: 'timebroker.ai',
+                status: 'new',
+                crmStatus: 'new',
+                priority: 'high',
+                notes: `Concierge lead from TimeBroker.AI. Interest: ${this.leadData.interest}`,
+                createdAt: serverTimestamp(),
+                assignedTo: 'delray'
+            });
+
+            console.log('🔥 Lead saved to Firestore leads_v2');
+
+            // Track in GA4
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'lead_captured', {
+                    source: 'chatbot',
+                    interest: this.leadData.interest,
+                    property: 'timebroker.ai'
                 });
-            } catch (err) { console.log('Lead submit error:', err); }
+            }
+
+        } catch (err) {
+            console.warn('Firestore lead save failed, logging locally:', err.message);
+            // LocalStorage fallback
+            try {
+                const leads = JSON.parse(localStorage.getItem('TB_LEADS') || '[]');
+                leads.unshift({ ...this.leadData, source: 'timebroker-concierge', status: 'pending_sync', timestamp: new Date().toISOString() });
+                localStorage.setItem('TB_LEADS', JSON.stringify(leads));
+            } catch (e) { /* silent */ }
         }
 
         this.sendBotMessage(
-            `🎉 <b>You're all set, ${this.leadData.name}!</b><br><br>I've scheduled your strategy session request. Delray will reach out within 24 hours to confirm a time.<br><br>In the meantime, feel free to explore our AI tools on this page!`,
-            ["Show me AI tools", "Thanks!"]
+            `🎉 <b>You're all set, ${this.leadData.name}!</b><br><br>Your inquiry has been logged and our team will reach out within 24 hours to confirm a time.<br><br>Need immediate help? <a href="https://wa.me/13366521387" target="_blank" style="color:#d4af37">Chat on WhatsApp →</a>`,
+            ["Explore AI services", "Thanks!"]
         );
 
         this.conversationState = 'complete';
@@ -434,7 +429,9 @@ class DelrayChatbot {
 }
 
 // Auto-initialize
-let delrayChatbot;
+let tbConcierge;
+let delrayChatbot; // Backwards compatibility alias
 document.addEventListener('DOMContentLoaded', () => {
-    delrayChatbot = new DelrayChatbot();
+    tbConcierge = new TimeBrokerConcierge();
+    delrayChatbot = tbConcierge; // Legacy alias
 });

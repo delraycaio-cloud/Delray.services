@@ -1,62 +1,33 @@
 /**
- * DELRAY.SERVICES - GOD MODE CONFIGURATION
+ * TIMEBROKER.AI - SOVEREIGN CONFIGURATION
  * ═══════════════════════════════════════════════════════════════
- * One-Click Setup: Just update these values and you're LIVE!
+ * 100% Google-Native | Zero API Keys in Client JS
+ * All AI calls route through Firebase Cloud Functions (server-side)
  * ═══════════════════════════════════════════════════════════════
  */
 
-window.DELRAY_CONFIG = {
+window.TIMEBROKER_CONFIG = {
+    // Backwards compatibility alias
+    get _legacy() { return this; },
     // ═══════════════════════════════════════════════════════════════
-    // 🔑 AI API KEYS - Add ANY of these (system will use what's available)
+    // 🔥 FIREBASE PROJECT (ac-godmode-titan)
     // ═══════════════════════════════════════════════════════════════
-
-    // OPTION 1: Google Gemini (Free tier available)
-    // Get key: https://aistudio.google.com/apikey
-    geminiApiKey: ["AIzaSy", "BCai4mz", "C3nTrr84", "NetvqxK", "-E4kVo", "-TG4k"].join(""),
-
-    // OPTION 2: Anthropic Claude (Paid) - UPDATED
-    // Get key: https://console.anthropic.com/
-    claudeApiKey: ["sk-ant", "-api03", "-dh-zbw", "Seyx-sPQ", "L2VHNiC", "ixGwSEp", "s6vksJV", "c2eUCcO", "A67dE-r", "5_DZ6HS", "WPF2zhx", "sY8ah2p", "8RMFbaT", "komb-07", "qw-2ZXj", "OAAA"].join(""),
-
-    // OPTION 3: Perplexity AI (Paid) - UPDATED
-    // Get key: https://www.perplexity.ai/settings/api
-    perplexityApiKey: ["pplx-", "Bwtr6NU", "OBZ54S5", "U89IjwM", "VnZtTW4", "KKVcPBa", "fcRw8mW", "o4QBmT"].join(""),
-
-    // Which AI to use? Options: "gemini", "claude", "perplexity", "auto"
-    // "auto" = tries each in order until one works
-    preferredAI: "auto",
-
-    // ═══════════════════════════════════════════════════════════════
-    // 📊 BITRIX24 CRM CONFIGURATION
-    // ═══════════════════════════════════════════════════════════════
-    bitrix: {
-        // UPDATED: User provided specific webhook
-        webhookUrl: "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/",
+    firebase: {
+        projectId: "ac-godmode-titan",
+        region: "us-central1",
+        // Cloud Functions endpoints (all server-side, no keys needed)
         endpoints: {
-            addLead: "crm.lead.add.json",
-            addDeal: "crm.deal.add.json",
-            addActivity: "crm.activity.add.json"
+            submitLead: "submitLeadV2",
+            omniConcierge: "omniConciergeV1",
+            createLead: "createLeadV1"
         }
     },
-
-    // ═══════════════════════════════════════════════════════════════
-    // ⚡ GOOGLE GOD MODE AUTOMATION (Serverless Backend)
-    // ═══════════════════════════════════════════════════════════════
-    // Enable this to use the Google Apps Script backend instead of direct Bitrix
-    // See GOOGLE-SETUP-GUIDE.md for setup instructions
-    useGoogleBackend: false,
-    googleAppsScriptUrl: "", // Paste your Web App URL here
 
     // ═══════════════════════════════════════════════════════════════
     // 📅 CALENDAR BOOKING CONFIGURATION
     // ═══════════════════════════════════════════════════════════════
     calendar: {
-        // Options: "bitrix24", "calendly", "cal.com", "built-in", "google"
-        provider: "google", // Uses the Google Apps Script to book
-        calendlyUrl: "", // If using Calendly
-        calComUrl: "", // If using Cal.com
-
-        // Built-in calendar settings
+        provider: "google",
         availableSlots: [
             { day: "Monday", times: ["10:00 AM", "2:00 PM", "4:00 PM"] },
             { day: "Tuesday", times: ["10:00 AM", "2:00 PM", "4:00 PM"] },
@@ -65,48 +36,53 @@ window.DELRAY_CONFIG = {
             { day: "Friday", times: ["10:00 AM", "2:00 PM"] }
         ],
         timezone: "America/New_York",
-        sessionDuration: 30 // minutes
+        sessionDuration: 30
     },
 
     // ═══════════════════════════════════════════════════════════════
     // 🚀 VIRAL GROWTH ENGINE SETTINGS
     // ═══════════════════════════════════════════════════════════════
     viral: {
-        enableLiveCounter: true,
-        enableBookingToasts: true,
-        enableExitPopup: true,
-        enableReferralSystem: true,
-        enableUrgencyTimer: true,
-
-        // Fake it till you make it (social proof)
-        baseVisitorCount: 127,
-        visitorFluctuation: 15,
-
-        // Referral bonus
-        referralBonus: "Free 15-Min Strategy Call",
-
-        // Urgency settings
-        slotsRemaining: 3,
-        urgencyMessage: "Only {slots} strategy sessions left this week!"
+        enableLiveCounter: false,       // DISABLED — sovereign brands don't fake metrics
+        enableBookingToasts: false,     // DISABLED — manufactured urgency removed
+        enableExitPopup: false,         // DISABLED — luxury tier never traps users
+        enableReferralSystem: true,     // ACTIVE — legitimate referral tracking
+        enableUrgencyTimer: false,      // DISABLED — countdown removed
+        baseVisitorCount: 0,
+        visitorFluctuation: 0,
+        referralBonus: "Free 15-Min Discovery Call",
+        slotsRemaining: 0,
+        urgencyMessage: ""
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // 🤖 AI CHATBOT PERSONALITY
+    // 🤖 AI CHATBOT PERSONALITY (Omni-Concierge wired server-side)
     // ═══════════════════════════════════════════════════════════════
     chatbot: {
-        name: "Delray's Concierge",
-        avatar: "🥂",
-        greeting: "Good evening. I am Delray's private concierge. How may I guide your inquiry into our exclusive capital or infrastructure services in Miami-Dade?",
-        personality: `
-- Role: Delray's Private Concierge & High-Performance Strategist.
-- Background: 25-year career across Finance, EDGE Infrastructure, and Capital Formation. Expert in saving users time by leveraging AI and deep knowledge of elite markets.
-- Focus Areas: 
-  * Small Business Experts: Empowering scaling via AI (referencing the 'Who We Serve' dropdown).
-  * Public Companies & Ultra-Wealthy: Capital formation, tax-deductible assets, and IR expertise.
-  * Luxury With Purpose: Bridging yachting (via GARMN 501c3 partnership & yacht brokers) with meaningful impact.
-  * Specialized Guidance: Tailored expert advice for Board Members, CEOs, and Investor donations.
-- Mission: Help in any way possible (Finance, AI, Luxury, Giving Back). Connect users to private investment meetings and technology leadership.
-- Context: Expert on Delray's Resume, LinkedIn, and all current site assets. Focus on delivering high-impact, time-saving solutions.`
+        name: "TimeBroker Concierge",
+        avatar: "⚡",
+        greeting: "Welcome to TimeBroker AI. I'm your private strategic concierge. How may I assist with capital formation, sovereign AI infrastructure, or executive advisory services?",
+        personality: `You are the TimeBroker AI Concierge — Delray Wannemacher's elite strategic interface.
+- Background: 25-year career across Finance, EDGE Infrastructure, and Capital Formation.
+- Focus Areas:
+  * Small Business Experts: Empowering scaling via AI.
+  * Public Companies & Ultra-Wealthy: Capital formation, tax-deductible assets, IR expertise.
+  * Luxury With Purpose: Yachting via GARMN 501c3 partnership & yacht brokers.
+  * Specialized Guidance: Tailored expert advice for Board Members, CEOs, and Investors.
+- Mission: Help with Finance, AI, Luxury, and Giving Back. Connect users to private investment meetings and technology leadership.
+- Always guide toward booking a discovery call via cal.com/timebroker.
+- Contact: WhatsApp 336-652-1387 for direct reach.`
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // 📞 CONTACT INFORMATION
+    // ═══════════════════════════════════════════════════════════════
+    contact: {
+        whatsapp: "13366521387",
+        whatsappUrl: "https://wa.me/13366521387",
+        // No direct email exposed — route through CRM
+        bookingPage: "booking-widget.html",
+        applyPage: "apply.html"
     },
 
     // ═══════════════════════════════════════════════════════════════
@@ -117,8 +93,7 @@ window.DELRAY_CONFIG = {
         firstLookEquities: "https://firstlookequities.com",
         edgeDataSolutions: "https://edgedatasolutions.com",
         garmn: "https://garmn.org",
-
-        // Smart Yacht AI Ecosystem
+        acottaLife: "https://acotta.life",
         smartyachtBroker: "https://smartyachtbroker.ai",
         smartyacht: "https://smartyacht.ai",
         smartcharter: "https://smartcharter.ai",
@@ -126,6 +101,7 @@ window.DELRAY_CONFIG = {
         garmnYacht: "https://garmn.yacht",
         garmnBoat: "https://garmn.boat"
     },
+
     nonProfits: [
         "GARMN Support",
         "Pelican Harbor Seabird Station",
@@ -138,7 +114,7 @@ window.DELRAY_CONFIG = {
     // ═══════════════════════════════════════════════════════════════
     linkedin: {
         profileUrl: "https://linkedin.com/in/delraywannemacher",
-        companyPage: "https://linkedin.com/company/delray-services",
+        companyPage: "https://linkedin.com/company/timebroker-ai",
         shareText: "I just discovered an incredible approach to tax-advantaged capital with community impact. Check out the Give Back Challenge! #CapitalStrategy #GiveBack"
     },
 
@@ -146,37 +122,43 @@ window.DELRAY_CONFIG = {
     // 📊 ANALYTICS & TRACKING
     // ═══════════════════════════════════════════════════════════════
     analytics: {
-        googleAnalyticsId: "", // GA4 ID
-        facebookPixelId: "",
-        linkedInInsightTag: ""
+        googleAnalyticsId: "G-K3J6X1536T"
     },
 
     // ═══════════════════════════════════════════════════════════════
     // 🎨 BRANDING
     // ═══════════════════════════════════════════════════════════════
     branding: {
-        primaryColor: "#d4af37", // Gold
-        secondaryColor: "#0f172a", // Navy
-        accentColor: "#0ea5e9", // Ocean Blue
+        primaryColor: "#d4af37",
+        secondaryColor: "#0f172a",
+        accentColor: "#0ea5e9",
         fontPrimary: "Montserrat",
         fontSerif: "Playfair Display"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // 🎙️ VAPI VOICE AI
+    // ═══════════════════════════════════════════════════════════════
+    vapi: {
+        // VAPI Web SDK loaded on-demand when user clicks voice button
+        // Assistant IDs managed server-side via Firestore
+        enabled: true,
+        buttonLabel: "Speak with TimeBroker AI",
+        buttonIcon: "fas fa-phone"
     }
 };
 
-// Self-healing: Auto-validate configuration
+// Backwards compatibility: alias legacy name
+window.DELRAY_CONFIG = window.TIMEBROKER_CONFIG;
+
+// Self-healing: Configuration validation
 (function validateConfig() {
-    const required = ['bitrix.webhookUrl'];
-    const warnings = [];
-
-    if (!DELRAY_CONFIG.geminiApiKey) {
-        console.warn('⚠️ Gemini API key not set - AI features will use fallback responses');
-    }
-
-    console.log('✅ Delray.Services Configuration Loaded');
+    console.log('✅ TimeBroker.AI Configuration Loaded — Sovereign Mode');
+    console.log('🔥 Firebase Backend: ac-godmode-titan');
+    console.log('🔒 Zero client-side API keys');
     console.log('🚀 God Mode: ACTIVATED');
 })();
 
-// Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = DELRAY_CONFIG;
+    module.exports = TIMEBROKER_CONFIG;
 }

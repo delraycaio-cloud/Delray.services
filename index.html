@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delray Peter Wannemacher | Fractional CAIO & Infrastructure Architect</title>
+    <title>TimeBroker.AI | Fractional CAIO & Infrastructure Architect — Delray Wannemacher</title>
     <meta name="description"
-        content="Delray Peter Wannemacher: Fractional CAIO & Capital Strategist. Securing CAIO contracts and consulting leads. Connecting First Look Equities, Luxury Marine Life, and EDGE Data Solutions for sustainable empires.">
+        content="TimeBroker.AI — Fractional CAIO & Capital Strategist. Sovereign AI infrastructure, capital formation, and algorithmic wealth generation through Luxury Marine Life, First Look Equities, and SmartYacht AI.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,11 +19,12 @@
         rel="stylesheet">
 
     <!-- ⚡ SEO & SOCIAL SHARING (World Record Optimization) -->
-    <meta property="og:title" content="Delray.Services | Elite Capital, AI Infrastructure Strategy & CAIO Role">
+    <meta property="og:title" content="TimeBroker.AI | Sovereign AI Infrastructure & Capital Strategy">
     <meta property="og:description"
-        content="Fractional CAIO & Capital Strategist. Connecting First Look Equities, Luxury Marine Life, and EDGE Data Solutions. Join the Give Back Challenge.">
-    <meta property="og:image" content="https://delray.services/assets/share-image.jpg">
-    <meta property="og:url" content="https://delray.services">
+        content="Fractional CAIO & Capital Strategist. Sovereign AI infrastructure through Luxury Marine Life, First Look Equities, and SmartYacht AI. Book a consultation.">
+    <meta property="og:image" content="https://timebroker.ai/share-image.jpg">
+    <meta property="og:url" content="https://timebroker.ai">
+    <link rel="canonical" href="https://timebroker.ai">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Fractional CAIO | EDGE Fluids & AI Infrastructure">
@@ -37,6 +38,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgCn1OPJqbQM3K3nR0VzX8kL_QuA2GBCQ",
+            authDomain: "ac-godmode-titan.firebaseapp.com",
+            projectId: "ac-godmode-titan",
+            storageBucket: "ac-godmode-titan.firebasestorage.app",
+            messagingSenderId: "844071898498",
+            appId: "1:844071898498:web:delray-services"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const functions = getFunctions(app, 'us-central1');
+
+        // Expose globally for inline scripts
+        window._firebase = { db, functions, collection, addDoc, serverTimestamp, httpsCallable };
+        window.dispatchEvent(new Event('firebase-ready'));
+    </script>
+
+    <!-- GA4 Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3J6X1536T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K3J6X1536T');
+    </script>
 
     <!-- GOD MODE MODULES -->
     <script src="config.js"></script>
@@ -63,7 +97,7 @@
         /* Core Styles - TERMINAL ULTRA LUXURY */
         .hero-bg {
             background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.95)),
-                url('assets/hero-legacy-highrise.jpg');
+                url('hero-legacy-highrise.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -135,7 +169,7 @@
         <nav class="fixed w-full z-50 glass-panel border-b border-white/5 shadow-2xl">
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" class="flex items-center gap-4">
-                    <img src="assets/logo_world_record.png"
+                    <img src="logo_world_record.png"
                         class="h-12 w-12 rounded-full border border-gold/30 gold-glow" alt="Delray Logo">
                     <span class="text-2xl font-display font-bold text-white tracking-[0.2em] uppercase">DELRAY PETER
                         <span class="text-gold">WANNEMACHER</span></span>
@@ -145,7 +179,7 @@
                             class="fas fa-magic mr-2"></i>
                         AI Audits</a>
                     <a href="#mission" class="hover:text-gold transition-all">The Mission</a>
-                    <a href="booking-widget.html" class="hover:text-gold transition-all text-white/50"><i
+                    <a href="https://luxurymarinelife.com/book" target="_blank" class="hover:text-gold transition-all text-white/50"><i
                             class="fas fa-calendar-check mr-2"></i>Book Strategy</a>
                     <a href="#partners" class="hover:text-gold transition-all">Partnerships</a>
                     <a href="#contact"
@@ -212,7 +246,7 @@
                         <!-- Image Container -->
                         <div
                             class="absolute inset-0 rounded-[4rem] overflow-hidden border border-white/20 shadow-[0_0_100px_rgba(0,0,0,0.5)]">
-                            <img src="assets/delray-portrait-2026.jpg"
+                            <img src="delray-portrait-2026.jpg"
                                 class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
                                 alt="Delray Peter Wannemacher">
                         </div>
@@ -330,7 +364,7 @@
         <!-- The Mission & Elite Services -->
         <section id="mission" class="py-24 bg-void relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1/2 h-full opacity-60 hidden lg:block">
-                <img src="assets/first-look-equities-yacht.png" class="w-full h-full object-cover" alt="Luxury Yacht">
+                <img src="first-look-equities-yacht.png" class="w-full h-full object-cover" alt="Luxury Yacht">
             </div>
             <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-20">
                 <div>
@@ -357,8 +391,8 @@
                                 </div>
                                 <h3 class="text-xl font-bold text-white">AI & Infrastructure</h3>
                             </div>
-                            <p class="text-sm text-gray-400">Optimizing tech stacks for Fortune 500 scale. Automated
-                                workflows (n8n/Bitrix) and data center strategy.</p>
+                            <p class="text-sm text-gray-400">Optimizing tech stacks for Fortune 500 scale. AI Automation,
+                                Cloud Infrastructure & sovereign data center strategy.</p>
                         </div>
                         <!-- Service Block 2 -->
                         <div class="bg-white/5 border border-white/10 p-6 rounded-xl hover:border-ocean/50 transition">
@@ -391,12 +425,12 @@
                         </p>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="aspect-square rounded-2xl overflow-hidden shadow-xl border border-white/10">
-                                <img src="assets/angelina-lml-card.png" class="w-full h-full object-cover"
+                                <img src="angelina-lml-card.png" class="w-full h-full object-cover"
                                     alt="Angelina Cotta - LML">
                             </div>
                             <div
                                 class="aspect-square rounded-2xl overflow-hidden shadow-xl mt-8 border border-white/10">
-                                <img src="assets/garmn-impact.png" class="w-full h-full object-cover"
+                                <img src="garmn-impact.png" class="w-full h-full object-cover"
                                     alt="GARMN Conservation">
                             </div>
                         </div>
@@ -498,7 +532,7 @@
                             <label class="flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" required class="mt-1 w-4 h-4 accent-gold">
                                 <span class="text-xs text-navy"><strong>The Give Back Protocol:</strong> I understand
-                                    that Delray.Services partners exclusively with businesses committed to community
+                                    that TimeBroker.AI partners exclusively with businesses committed to community
                                     impact and healthy environments.</span>
                             </label>
                         </div>
@@ -507,6 +541,14 @@
                             Submit Application
                         </button>
                     </form>
+                    <!-- WhatsApp CTA -->
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-500 mb-3">Or reach us directly:</p>
+                        <a href="https://wa.me/13366521387" target="_blank"
+                            class="inline-flex items-center gap-3 px-8 py-3 bg-green-500 text-white font-bold rounded-full hover:bg-green-600 transition-all duration-300 shadow-lg">
+                            <i class="fab fa-whatsapp text-xl"></i> Chat on WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -514,10 +556,10 @@
         <footer class="bg-navy text-white py-12 border-t border-white/10">
             <div
                 class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono">
-                <div>&copy; 2026 Delray Peter Wannemacher | Powered by AIedge & EDGE Data Solutions</div>
+                <div>&copy; 2026 TimeBroker.AI — Delray Wannemacher | Powered by Sovereign AI Infrastructure</div>
                 <div class="mt-4 md:mt-0 flex gap-4">
-                    <a href="#" class="hover:text-gold">LinkedIn</a>
-                    <a href="#" class="hover:text-gold">LuxuryMarineLife.com</a>
+                    <a href="https://linkedin.com/in/delraywannemacher" target="_blank" class="hover:text-gold">LinkedIn</a>
+                    <a href="https://luxurymarinelife.com" target="_blank" class="hover:text-gold">LuxuryMarineLife.com</a>
                     <button onclick="toggleView()" class="text-gray-700 hover:text-gold transition"><i
                             class="fas fa-lock"></i></button>
                 </div>
@@ -536,7 +578,7 @@
                         <a href="index.html"
                             class="block px-4 py-3 bg-white/5 text-white rounded border border-gold/20 flex items-center gap-3"><i
                                 class="fas fa-anchor text-gold"></i> Live Site</a>
-                        <a href="booking-widget.html"
+                        <a href="https://luxurymarinelife.com/book" target="_blank"
                             class="block px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded flex items-center gap-3"><i
                                 class="fas fa-calendar-check text-ocean"></i> Book A Call</a>
                         <a href="#"
@@ -598,14 +640,13 @@
     <script src="viral-engine.js"></script>
     <script src="ai-chatbot.js"></script>
 
-    <!-- Logic -->
+    <!-- Logic: Firebase Sovereign Backend -->
     <script>
-        // GOD MODE: Use config for API keys
-        const apiKey = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.geminiApiKey : "";
-        const BITRIX_HOOK = typeof DELRAY_CONFIG !== 'undefined' ? DELRAY_CONFIG.bitrix.webhookUrl + DELRAY_CONFIG.bitrix.endpoints.addLead : "https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/crm.lead.add.json";
-
         function toggleView() { document.body.classList.toggle('public-mode'); document.body.classList.toggle('admin-mode'); }
 
+        // ═══════════════════════════════════════════════════════════════
+        // FIREBASE CRM: Contact Form → Firestore leads_v2
+        // ═══════════════════════════════════════════════════════════════
         document.getElementById('public-lead-form').addEventListener('submit', async function (e) {
             e.preventDefault();
             const btn = this.querySelector('button');
@@ -613,64 +654,92 @@
             btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
 
             const formData = new FormData(this);
-            const focus = formData.get('interest'); // Assuming 'interest' is the focus field
             const rawData = Object.fromEntries(formData.entries());
 
-            // ⚡ GOOGLE GOD MODE CHECK
-            const useGoogle = typeof DELRAY_CONFIG !== 'undefined' && DELRAY_CONFIG.useGoogleBackend && DELRAY_CONFIG.googleAppsScriptUrl;
-
             try {
-                if (useGoogle) {
-                    // Send to Google Apps Script (Handles Sheets + Gmail + Bitrix)
-                    await fetch(DELRAY_CONFIG.googleAppsScriptUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            name: rawData.name,
-                            email: rawData.email,
-                            phone: rawData.phone,
-                            company: rawData.company,
-                            focus: rawData.interest,
-                            bottleneck: rawData.bottleneck,
-                            revenue: rawData.revenue
-                        })
-                    });
-                    console.log("🚀 Sent via Google God Mode");
-                    console.log("🔥 Firebase Real-Time Sync: INITIATED");
-                } else {
-                    // Fallback: Direct Bitrix24
-                    const data = {
-                        fields: {
-                            TITLE: `DELRAY.SERVICES: ${formData.get('company')}`,
-                            NAME: formData.get('name'),
-                            EMAIL: { "0": { "VALUE": formData.get('email'), "VALUE_TYPE": "WORK" } },
-                            PHONE: { "0": { "VALUE": formData.get('phone'), "VALUE_TYPE": "WORK" } },
-                            COMMENTS: `Focus: ${focus}. Agreed to Healthy People/Water/Animals Pledge.`,
-                            SOURCE_ID: "WEB"
-                        }
-                    };
-                    await fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                    console.log("Sent via Direct Bitrix");
+                // Wait for Firebase
+                if (!window._firebase) {
+                    await new Promise(resolve => window.addEventListener('firebase-ready', resolve, { once: true }));
                 }
 
-                await new Promise(r => setTimeout(r, 1500)); // UI pacing
-                alert(`Application Received! We will be in touch to discuss ${focus}.`);
+                const { db, collection, addDoc, serverTimestamp } = window._firebase;
+
+                await addDoc(collection(db, 'leads_v2'), {
+                    name: rawData.name,
+                    email: rawData.email,
+                    phone: rawData.phone,
+                    company: rawData.company,
+                    interest: rawData.interest,
+                    revenue: rawData.revenue,
+                    bottleneck: rawData.bottleneck,
+                    source: 'delray-services-contact-form',
+                    property: 'timebroker.ai',
+                    status: 'new',
+                    crmStatus: 'new',
+                    priority: 'high',
+                    giveBackPledge: true,
+                    createdAt: serverTimestamp(),
+                    assignedTo: 'delray'
+                });
+
+                console.log("🔥 Lead saved to Firestore leads_v2");
+                if (typeof gtag !== 'undefined') gtag('event', 'lead_captured', { source: 'contact_form', property: 'timebroker.ai' });
+
+                await new Promise(r => setTimeout(r, 1000));
+                alert(`Application Received! We will be in touch to discuss ${rawData.interest}.`);
                 this.reset();
-            } catch (e) {
-                console.error(e);
-                alert("Connection error. Please try again.");
+            } catch (err) {
+                console.error('Form submission error:', err);
+                alert("Connection error. Please try again or reach us via WhatsApp.");
             }
             btn.innerText = original;
         });
 
-        async function callGemini(prompt) {
-            if (!apiKey) return null;
+        // ═══════════════════════════════════════════════════════════════
+        // AI TOOLS: Omni-Concierge Cloud Functions (server-side AI)
+        // ═══════════════════════════════════════════════════════════════
+        async function callOmniConcierge(prompt, context) {
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
-                const data = await res.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text;
-            } catch (e) { console.error(e); return null; }
+                if (!window._firebase) {
+                    await new Promise(resolve => window.addEventListener('firebase-ready', resolve, { once: true }));
+                }
+                const { functions, httpsCallable } = window._firebase;
+                const omni = httpsCallable(functions, 'omniConciergeV1');
+                const result = await omni({ message: prompt, persona: 'ORACLE', context: context || 'delray-consulting' });
+                return result.data?.response || result.data?.message || null;
+            } catch (err) {
+                console.warn('Omni-Concierge error:', err.message);
+                return null;
+            }
+        }
+
+        async function saveToolLead(name, email, source, details) {
+            try {
+                if (!window._firebase) return;
+                const { db, collection, addDoc, serverTimestamp } = window._firebase;
+                // Map source → revenue stream for CRM routing
+                const streamMap = {
+                    'impact-architect': 'consulting',
+                    'executive-spark': 'consulting',
+                    'admin-roadmap': 'consulting',
+                    'ai-chatbot': 'consulting',
+                    'booking-widget': 'consulting',
+                    'contact-form': 'consulting',
+                    'application-form': 'consulting',
+                };
+                await addDoc(collection(db, 'leads_v2'), {
+                    name, email, source,
+                    property: 'timebroker.ai',
+                    revenueStream: streamMap[source] || 'consulting',
+                    pipelineStage: 'inbound',
+                    channel: 'web',
+                    priority: 'medium',
+                    estimatedValue: 0,
+                    notes: details,
+                    createdAt: serverTimestamp(),
+                });
+                console.log('🔥 Tool lead saved → CRM Router:', source);
+            } catch (e) { console.warn('Lead save error:', e.message); }
         }
 
         async function generateImpact() {
@@ -687,21 +756,13 @@
             btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Architecting...";
             output.classList.remove('hidden');
 
-            const leadData = {
-                fields: {
-                    TITLE: `IMPACT: ${name} (${ind} | ${city})`,
-                    NAME: name,
-                    EMAIL: { "0": { "VALUE": email, "VALUE_TYPE": "WORK" } },
-                    COMMENTS: `Impact Architect Lead. Industry: ${ind}, City: ${city}.`,
-                    SOURCE_ID: "WEB"
-                }
-            };
-            fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) }).catch(e => console.error(e));
+            // Save lead to Firestore
+            saveToolLead(name, email, 'impact-architect', `Industry: ${ind}, City: ${city}`);
 
             const prompt = `Suggest 3 creative non-profit initiatives for a ${ind} company in ${city} (Miami-Dade). Theme: #MagicSchoolBox, #HealthOnTheWater, or #SustainableLuxury. Format: Markdown list.`;
-            let txt = await callGemini(prompt);
-            document.getElementById('impactContent').innerHTML = marked.parse(txt || "Strategy generation offline. Bridge to consultation.");
-            btn.innerText = "Initiative Designed";
+            let txt = await callOmniConcierge(prompt, 'impact-architect');
+            document.getElementById('impactContent').innerHTML = marked.parse(txt || "Strategy generation in progress. [Book a call](https://luxurymarinelife.com/book) for a personalized plan.");
+            btn.innerText = "Initiative Designed ✨";
         }
 
         async function generateStrategy() {
@@ -717,22 +778,13 @@
             btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Analyzing...";
             output.classList.remove('hidden');
 
-            const leadData = {
-                fields: {
-                    TITLE: `SPARK: ${name} (${web})`,
-                    NAME: name,
-                    EMAIL: { "0": { "VALUE": email, "VALUE_TYPE": "WORK" } },
-                    WEB: { "0": { "VALUE": web, "VALUE_TYPE": "WORK" } },
-                    COMMENTS: `Strategy Spark Lead. Bottleneck: ${prob}`,
-                    SOURCE_ID: "WEB"
-                }
-            };
-            fetch(BITRIX_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) }).catch(e => console.error(e));
+            // Save lead to Firestore
+            saveToolLead(name, email, 'executive-spark', `Website: ${web}, Bottleneck: ${prob}`);
 
             const prompt = `Act as Delray Peter Wannemacher. Provide a 3-step high-impact strategy for an executive with bottleneck: "${prob}". Context: Website ${web} in Miami-Dade. Format: Markdown.`;
-            let txt = await callGemini(prompt);
-            document.getElementById('strategyContent').innerHTML = marked.parse(txt || "Analysis complete. See consultation for details.");
-            btn.innerText = "Roadmap Generated";
+            let txt = await callOmniConcierge(prompt, 'executive-spark');
+            document.getElementById('strategyContent').innerHTML = marked.parse(txt || "Analysis complete. [Schedule a session](https://luxurymarinelife.com/book) for detailed findings.");
+            btn.innerText = "Roadmap Generated ✨";
         }
 
         async function generateRoadmap() {
@@ -744,43 +796,14 @@
             document.getElementById('roadmap-loading').classList.remove('hidden');
             btn.disabled = true;
 
-            const prompt = `Generate a 1-page HTML Strategic Roadmap for ${co} (${ind}). 
-            Problem: ${bot}. 
-            Context: Delray.Services 'Elite Infrastructure' and 'Give Back Challenge'.
-            Sections: 
-            <h3>1. Executive Diagnosis</h3>
-            <h3>2. Capital Strategy</h3> (Mention First Look Equities & Tax-Deductible Structures)
-            <h3>3. Infrastructure Fix</h3> (AI/Automation)
-            <h3>4. Give Back Pledge</h3> (Suggest specific Healthy People, Water, or Animals charity).`;
-
-            let txt = await callGemini(prompt);
-            if (!txt) txt = `<h3>1. Diagnosis</h3><p>Analysis for ${co} complete. Infrastructure upgrade required.</p><h3>2. Capital</h3><p>Leverage First Look Equities for tax-deductible investment.</p><h3>3. Infrastructure</h3><p>Deploy AI automation.</p><h3>4. Pledge</h3><p>Support local marine conservation.</p>`;
+            const prompt = `Generate a 1-page HTML Strategic Roadmap for ${co} (${ind}). Problem: ${bot}. Context: TimeBroker.AI 'Sovereign AI Infrastructure' and 'Give Back Challenge'. Sections: 1. Executive Diagnosis, 2. Capital Strategy (First Look Equities & Tax-Deductible), 3. Infrastructure Fix (AI/Automation), 4. Give Back Pledge (specific charity recommendation).`;
+            let txt = await callOmniConcierge(prompt, 'admin-roadmap');
+            if (!txt) txt = `<h3>1. Diagnosis</h3><p>Analysis for ${co} complete.</p><h3>2. Capital</h3><p>Leverage First Look Equities for tax-deductible investment.</p><h3>3. Infrastructure</h3><p>Deploy AI automation.</p><h3>4. Pledge</h3><p>Support local marine conservation.</p>`;
 
             document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>") ? txt : marked.parse(txt);
             document.getElementById('roadmap-loading').classList.add('hidden');
             btn.disabled = false;
         }
-
-        // ⚡ LOAD REAL-TIME GOD MODE DATA (Simulating Full Power Connection)
-        async function loadGodModeStats() {
-            if (typeof DELRAY_CONFIG !== 'undefined' && DELRAY_CONFIG.googleAppsScriptUrl) {
-                try {
-                    const res = await fetch(DELRAY_CONFIG.googleAppsScriptUrl);
-                    const data = await res.json();
-                    if (data.impactValue) {
-                        const target = document.querySelector('.text-2xl.font-bold.text-gold');
-                        if (target) target.innerText = data.impactValue;
-
-                        const status = document.querySelector('.text-3xl.font-mono');
-                        if (status) status.innerText = "GOD_MODE_ACTIVE";
-                    }
-                } catch (e) { console.log("God Mode Feed Offline overlay"); }
-            }
-        }
-        // Poll every 10s if in Admin Mode
-        setInterval(() => {
-            if (document.body.classList.contains('admin-mode')) loadGodModeStats();
-        }, 10000);
     </script>
 </body>
 
