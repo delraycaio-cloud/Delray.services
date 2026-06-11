@@ -874,4 +874,11 @@
             let txt = await callOmniConcierge(prompt, 'admin-roadmap');
             if (!txt) txt = `<h3>1. Diagnosis</h3><p>Analysis for ${co} complete.</p><h3>2. Capital</h3><p>Leverage First Look Equities for tax-deductible investment.</p><h3>3. Infrastructure</h3><p>Deploy AI automation.</p><h3>4. Pledge</h3><p>Support local marine conservation.</p>`;
 
-            document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>"
+            document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>") ? txt : marked.parse(txt);
+            document.getElementById('roadmap-loading').classList.add('hidden');
+            btn.disabled = false;
+        }
+    </script>
+</body>
+
+</html>
