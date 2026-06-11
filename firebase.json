@@ -3,31 +3,19 @@
     {
       "site": "delray-services",
       "public": ".",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "*.md", "*.ps1", "*.gs"],
       "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
+        { "source": "/api/**", "function": "api" },
+        { "source": "**", "destination": "/index.html" }
       ]
     },
     {
       "site": "timebroker-ai",
       "public": ".",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "*.md", "*.ps1", "*.gs"],
       "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
+        { "source": "/api/**", "function": "api" },
+        { "source": "**", "destination": "/index.html" }
       ]
     }
   ]

@@ -246,6 +246,9 @@
                         <span class="text-gold">WANNEMACHER</span></span>
                 </a>
                 <div class="hidden md:flex space-x-10 text-[10px] font-bold tracking-[0.3em] uppercase text-gray-300">
+                    <a href="/app/" class="text-gold hover:text-white transition-all"><i
+                            class="fas fa-gem mr-2"></i>
+                        The Platform</a>
                     <a href="#ai-tools" class="text-gold hover:text-white transition-all"><i
                             class="fas fa-magic mr-2"></i>
                         AI Audits</a>
@@ -871,11 +874,4 @@
             let txt = await callOmniConcierge(prompt, 'admin-roadmap');
             if (!txt) txt = `<h3>1. Diagnosis</h3><p>Analysis for ${co} complete.</p><h3>2. Capital</h3><p>Leverage First Look Equities for tax-deductible investment.</p><h3>3. Infrastructure</h3><p>Deploy AI automation.</p><h3>4. Pledge</h3><p>Support local marine conservation.</p>`;
 
-            document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>") ? txt : marked.parse(txt);
-            document.getElementById('roadmap-loading').classList.add('hidden');
-            btn.disabled = false;
-        }
-    </script>
-</body>
-
-</html>
+            document.getElementById('roadmap-content').innerHTML = txt.includes("<h3>"
