@@ -255,6 +255,22 @@
       color: #64748b;
     }
 
+    /* Share / download / copy toolbar */
+    .share-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .share-bar .sb-label { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+    .sb-btn {
+      display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--ink); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); border-radius: 10px;
+      padding: 9px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .sb-btn:hover { border-color: var(--gold); background: var(--gold-soft); transform: translateY(-1px); }
+    .sb-btn.ok { border-color: var(--green); color: #bbf7d0; }
+    @media print {
+      body { background: #fff !important; }
+      .brand, .share-bar, #signPanel, .footer-note, .report-header { display: none !important; }
+      .report-frame-shell { border: none !important; box-shadow: none !important; }
+    }
+
     @media (max-width: 560px) {
       .field-row { grid-template-columns: 1fr; }
       .wrap { padding: 20px 14px 56px; }
@@ -291,6 +307,12 @@
 
     <!-- Proposal -->
     <section id="proposalView">
+      <div class="share-bar" id="shareBar">
+        <span class="sb-label">Your proposal</span>
+        <button type="button" class="sb-btn" id="sbCopy"><span aria-hidden="true">🔗</span> Copy link</button>
+        <button type="button" class="sb-btn" id="sbDownload"><span aria-hidden="true">⬇</span> Download PDF</button>
+        <button type="button" class="sb-btn" id="sbShare" hidden><span aria-hidden="true">↗</span> Share</button>
+      </div>
       <div class="report-header">
         <span class="dot" aria-hidden="true"></span>
         <span class="title"><span class="accent">TimeBroker.AI</span> — Proposal for <span id="clientNameHeader">your team</span></span>
@@ -436,6 +458,36 @@
       });
     }
 
+    // --- share toolbar: copy link / download (print) / native share ------
+    function wireShareBar() {
+      const copyBtn = document.getElementById('sbCopy');
+      const dlBtn = document.getElementById('sbDownload');
+      const shareBtn = document.getElementById('sbShare');
+      const url = window.location.href;
+      if (copyBtn) copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+        } catch (e) {
+          const t = document.createElement('textarea');
+          t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+          document.body.appendChild(t); t.select();
+          try { document.execCommand('copy'); } catch (e2) { /* ignore */ }
+          document.body.removeChild(t);
+        }
+        const prev = copyBtn.innerHTML;
+        copyBtn.classList.add('ok');
+        copyBtn.innerHTML = '<span aria-hidden="true">✓</span> Copied';
+        setTimeout(() => { copyBtn.classList.remove('ok'); copyBtn.innerHTML = prev; }, 1800);
+      });
+      if (dlBtn) dlBtn.addEventListener('click', () => window.print());
+      if (shareBtn && navigator.share) {
+        shareBtn.hidden = false;
+        shareBtn.addEventListener('click', () => {
+          navigator.share({ title: document.title, url }).catch(() => { /* user cancelled */ });
+        });
+      }
+    }
+
     // --- boot ------------------------------------------------------------
     async function boot() {
       const token = new URLSearchParams(window.location.search).get('t');
@@ -486,6 +538,7 @@
           renderForm(token);
         }
 
+        wireShareBar();
         showOnly('proposalView');
       } catch (err) {
         showOnly('errorState');
