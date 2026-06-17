@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Your Proposal — TimeBroker.AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-2: #1e293b;
+      --gold: #d4af37;
+      --gold-soft: rgba(212, 175, 55, 0.12);
+      --ink: #e2e8f0;
+      --muted: #94a3b8;
+      --line: rgba(255, 255, 255, 0.10);
+      --green: #16a34a;
+      --green-soft: rgba(22, 163, 74, 0.14);
+      --red: #ef4444;
+      --red-soft: rgba(239, 68, 68, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      background: radial-gradient(1200px 600px at 50% -10%, #16223b 0%, var(--navy) 55%) fixed, var(--navy);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 72px;
+    }
+
+    h1, h2, .display { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* Brand bar */
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .brand .mark {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+    .brand .mark .gold { color: var(--gold); }
+    .brand .tag {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* States: loading / error / missing */
+    .state {
+      display: none;
+      text-align: center;
+      padding: 64px 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+    .state.is-active { display: block; }
+    .state .icon { font-size: 34px; margin-bottom: 14px; }
+    .state h2 { margin: 0 0 8px; font-size: 24px; color: #fff; }
+    .state p { margin: 0; color: var(--muted); max-width: 460px; margin-inline: auto; }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 3px solid rgba(212, 175, 55, 0.25);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Proposal view */
+    #proposalView { display: none; }
+    #proposalView.is-active { display: block; }
+
+    .report-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      border: 1px solid var(--line);
+      border-bottom: none;
+      border-radius: 16px 16px 0 0;
+      padding: 16px 20px;
+    }
+    .report-header .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px var(--gold-soft);
+      flex: 0 0 auto;
+    }
+    .report-header .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .report-header .title .accent { color: var(--gold); }
+
+    .report-frame-shell {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+    #reportFrame {
+      display: block;
+      width: 100%;
+      min-height: 1400px;
+      border: 0;
+      background: #fff;
+    }
+
+    /* Sign / accept panel */
+    .panel {
+      margin-top: 28px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+    .panel h2 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      color: #fff;
+    }
+    .panel .sub { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .field label .req { color: var(--gold); }
+    .field input {
+      width: 100%;
+      padding: 13px 15px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input::placeholder { color: #64748b; }
+    .field input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-soft);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 15px 26px;
+      border-radius: 12px;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold) 0%, #f0d57a 100%);
+      color: var(--navy);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.28);
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 14px 36px rgba(212, 175, 55, 0.38); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-block { width: 100%; }
+
+    .form-error {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #fecaca;
+      background: var(--red-soft);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 11px;
+    }
+    .form-error.is-active { display: block; }
+
+    /* Accepted state */
+    .accepted {
+      text-align: center;
+    }
+    .accepted .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #bbf7d0;
+      background: var(--green-soft);
+      border: 1px solid rgba(22, 163, 74, 0.45);
+      border-radius: 999px;
+      padding: 11px 20px;
+      margin-bottom: 20px;
+    }
+    .accepted .badge .check {
+      width: 22px; height: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      flex: 0 0 auto;
+    }
+    .accepted .followup { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    @media (max-width: 560px) {
+      .field-row { grid-template-columns: 1fr; }
+      .wrap { padding: 20px 14px 56px; }
+      .panel { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark">TimeBroker<span class="gold">.AI</span></span>
+      <span class="tag">Proposal</span>
+    </div>
+
+    <!-- Loading -->
+    <section id="loadingState" class="state is-active" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Loading your proposal…</p>
+    </section>
+
+    <!-- Missing token -->
+    <section id="missingState" class="state" role="alert">
+      <div class="icon" aria-hidden="true">🔗</div>
+      <h2>This link is missing its proposal code.</h2>
+      <p>Please use the full link you were sent, or reach out to Delray for a fresh one.</p>
+    </section>
+
+    <!-- Error / not found -->
+    <section id="errorState" class="state" role="alert">
+      <div class="icon" aria-hidden="true">🔍</div>
+      <h2>We couldn't find this proposal.</h2>
+      <p>Please check your link or contact Delray, and we'll get you sorted out right away.</p>
+    </section>
+
+    <!-- Proposal -->
+    <section id="proposalView">
+      <div class="report-header">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="title"><span class="accent">TimeBroker.AI</span> — Proposal for <span id="clientNameHeader">your team</span></span>
+      </div>
+      <div class="report-frame-shell">
+        <iframe id="reportFrame" title="Proposal document" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
+      </div>
+
+      <!-- Sign / accept panel -->
+      <div id="signPanel" class="panel">
+        <!-- Populated by JS: either the accept form or the accepted state -->
+      </div>
+
+      <p class="footer-note">Secure proposal · TimeBroker.AI</p>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC88VdW3aeKSmupkYl98V54EpuX-9f53Bw",
+      authDomain: "ac-godmode-titan.firebaseapp.com",
+      projectId: "ac-godmode-titan",
+      storageBucket: "ac-godmode-titan.firebasestorage.app",
+      messagingSenderId: "1003983943137",
+      appId: "1:1003983943137:web:a281bfa187f99e1283cea0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const functions = getFunctions(app, 'us-central1');
+
+    const CAL_URL = 'https://cal.com/timebroker/15min';
+
+    // --- helpers ---------------------------------------------------------
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showOnly(id) {
+      ['loadingState', 'missingState', 'errorState'].forEach((sid) => {
+        document.getElementById(sid).classList.toggle('is-active', sid === id);
+      });
+      document.getElementById('proposalView').classList.toggle('is-active', id === 'proposalView');
+    }
+
+    function bookButton() {
+      return '<a class="btn btn-gold" href="' + CAL_URL + '" target="_blank" rel="noopener">Book your 15-minute call →</a>';
+    }
+
+    // --- render: already-signed / just-signed accepted state -------------
+    function renderAccepted(name, options) {
+      const opts = options || {};
+      const safeName = escapeHtml(name) || 'you';
+      const headline = opts.justSigned
+        ? '✓ Accepted — thank you, ' + safeName + '!'
+        : '✓ Accepted by ' + safeName;
+      const followup = opts.justSigned
+        ? '<p class="followup">Delray will follow up shortly.</p>'
+        : '';
+      const panel = document.getElementById('signPanel');
+      panel.classList.add('accepted');
+      panel.innerHTML =
+        '<div class="badge"><span class="check" aria-hidden="true">✓</span><span>' + headline + '</span></div>' +
+        '<div>' + bookButton() + '</div>' +
+        followup;
+    }
+
+    // --- render: accept form ---------------------------------------------
+    function renderForm(token) {
+      const panel = document.getElementById('signPanel');
+      panel.classList.remove('accepted');
+      panel.innerHTML =
+        '<h2>Accept this proposal</h2>' +
+        '<p class="sub">Add your name to accept. We’ll take it from there.</p>' +
+        '<form id="signForm" novalidate>' +
+          '<div class="field">' +
+            '<label for="signerName">Full name <span class="req" aria-hidden="true">*</span></label>' +
+            '<input id="signerName" name="signerName" type="text" autocomplete="name" required aria-required="true" aria-label="Full name (required)" placeholder="Jane Doe" />' +
+          '</div>' +
+          '<div class="field-row">' +
+            '<div class="field">' +
+              '<label for="signerEmail">Email</label>' +
+              '<input id="signerEmail" name="signerEmail" type="email" autocomplete="email" aria-label="Email address" placeholder="jane@company.com" />' +
+            '</div>' +
+            '<div class="field">' +
+              '<label for="signerTitle">Title</label>' +
+              '<input id="signerTitle" name="signerTitle" type="text" autocomplete="organization-title" aria-label="Job title" placeholder="CEO" />' +
+            '</div>' +
+          '</div>' +
+          '<button id="signBtn" class="btn btn-gold btn-block" type="submit">Accept &amp; Sign</button>' +
+          '<div id="signError" class="form-error" role="alert"></div>' +
+        '</form>';
+
+      const form = document.getElementById('signForm');
+      const nameInput = document.getElementById('signerName');
+      const emailInput = document.getElementById('signerEmail');
+      const titleInput = document.getElementById('signerTitle');
+      const btn = document.getElementById('signBtn');
+      const errorBox = document.getElementById('signError');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorBox.classList.remove('is-active');
+        errorBox.textContent = '';
+
+        const signerName = nameInput.value.trim();
+        if (!signerName) {
+          errorBox.textContent = 'Please enter your full name to accept.';
+          errorBox.classList.add('is-active');
+          nameInput.focus();
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Submitting…';
+
+        try {
+          const signProposal = httpsCallable(functions, 'tbSignProposalV1');
+          const res = await signProposal({
+            token,
+            signerName,
+            signerEmail: emailInput.value.trim(),
+            signerTitle: titleInput.value.trim()
+          });
+          const data = (res && res.data) || {};
+          if (data.ok === false) {
+            throw new Error('Server declined the signature.');
+          }
+          renderAccepted(signerName, { justSigned: true });
+        } catch (err) {
+          errorBox.textContent = 'We couldn’t record your acceptance just now. Please try again, or contact Delray.';
+          errorBox.classList.add('is-active');
+          btn.disabled = false;
+          btn.textContent = 'Accept & Sign';
+        }
+      });
+    }
+
+    // --- boot ------------------------------------------------------------
+    async function boot() {
+      const token = new URLSearchParams(window.location.search).get('t');
+
+      if (!token) {
+        showOnly('missingState');
+        return;
+      }
+
+      try {
+        const getProposal = httpsCallable(functions, 'tbGetProposalV1');
+        const res = await getProposal({ token });
+        const data = (res && res.data) || {};
+
+        if (data.ok === false || !data.proposal) {
+          showOnly('errorState');
+          return;
+        }
+
+        const proposal = data.proposal || {};
+        const clientName = proposal.clientName || '';
+
+        // Header
+        document.getElementById('clientNameHeader').textContent = clientName || 'your team';
+
+        // Report into an isolated iframe. The source proposals fade content in via JS we don't
+        // run here, so inject a force-reveal style (content shows immediately), then auto-size
+        // the frame to the full report height so the whole document is visible in page flow.
+        const frame = document.getElementById('reportFrame');
+        var forceReveal = '<style>.reveal,[class*="reveal"],.fade,.fade-in,.animate,[data-reveal],[data-animate],[style*="opacity:0"],[style*="opacity: 0"]{opacity:1 !important;transform:none !important;filter:none !important;visibility:visible !important}</style>';
+        var html = String(proposal.reportHtml || '');
+        html = /<\/head>/i.test(html) ? html.replace(/<\/head>/i, forceReveal + '</head>') : (forceReveal + html);
+        frame.setAttribute('srcdoc', html);
+        function sizeReportFrame() {
+          try {
+            var doc = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
+            if (!doc) return;
+            var h = Math.max(doc.body ? doc.body.scrollHeight : 0, doc.documentElement ? doc.documentElement.scrollHeight : 0);
+            if (h > 200) frame.style.height = (h + 60) + 'px';
+          } catch (e) { /* fall back to CSS min-height */ }
+        }
+        frame.addEventListener('load', function () { sizeReportFrame(); setTimeout(sizeReportFrame, 500); setTimeout(sizeReportFrame, 1800); });
+
+        // Sign panel
+        if (proposal.signed) {
+          renderAccepted(proposal.signerName || '', { justSigned: false });
+        } else {
+          renderForm(token);
+        }
+
+        showOnly('proposalView');
+      } catch (err) {
+        showOnly('errorState');
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

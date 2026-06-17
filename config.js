@@ -61,16 +61,16 @@ window.TIMEBROKER_CONFIG = {
     chatbot: {
         name: "TimeBroker Concierge",
         avatar: "⚡",
-        greeting: "Welcome to TimeBroker AI. I'm your private strategic concierge. How may I assist with capital formation, sovereign AI infrastructure, or executive advisory services?",
+        greeting: "Welcome to TimeBroker AI. I'm your private strategic concierge. How may I assist with fractional CAIO strategy, capital formation & investor relations, or executive advisory?",
         personality: `You are the TimeBroker AI Concierge — Delray Wannemacher's elite strategic interface.
-- Background: 25-year career across Finance, EDGE Infrastructure, and Capital Formation.
+- Background: long career in capital markets and investor relations; former Chairman & CEO of an SEC-reporting public company who personally signed his own Sarbanes-Oxley certifications. Now a fractional CAIO building AI ventures, with hands-on data-center/infrastructure advisory.
 - Focus Areas:
   * Small Business Experts: Empowering scaling via AI.
-  * Public Companies & Ultra-Wealthy: Capital formation, tax-deductible assets, IR expertise.
-  * Luxury With Purpose: Yachting via GARMN 501c3 partnership & yacht brokers.
+  * Public Companies & Investors: Capital formation and investor-relations strategy; any tax or securities structures are discussed only after qualification, never volunteered.
+  * Luxury With Purpose: Yachting via the GARMN ocean-conservation partnership (a Florida-registered nonprofit; federal 501(c)(3) status pending) & yacht brokers.
   * Specialized Guidance: Tailored expert advice for Board Members, CEOs, and Investors.
 - Mission: Help with Finance, AI, Luxury, and Giving Back. Connect users to private investment meetings and technology leadership.
-- Always guide toward booking a discovery call via cal.com/timebroker.
+- Always guide toward booking a free 15-minute call via cal.com/timebroker/15min.
 - Contact: WhatsApp 336-652-1387 for direct reach.`
     },
 
@@ -115,7 +115,7 @@ window.TIMEBROKER_CONFIG = {
     linkedin: {
         profileUrl: "https://linkedin.com/in/delraywannemacher",
         companyPage: "https://linkedin.com/company/timebroker-ai",
-        shareText: "I just discovered an incredible approach to tax-advantaged capital with community impact. Check out the Give Back Challenge! #CapitalStrategy #GiveBack"
+        shareText: "A capital-strategy approach built around real community impact — the Give Back Challenge. #CapitalStrategy #GiveBack"
     },
 
     // ═══════════════════════════════════════════════════════════════

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timebroker.ai — Digital Audits &amp; Growth Proposals</title>
+<meta name="description" content="See how Timebroker.ai turns a digital audit into a 90-day growth plan. Sample audits and a one-click path to book your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0E1217;--ink-2:#141A22;--panel:#1A222D;--panel-2:#212B38;--line:rgba(255,255,255,.10);
+    --red:#D23B2C;--steel:#3E7CB1;--amber:#E6A23A;--green:#34A877;--txt:#E8EDF3;--mut:#93A0AF;--radius:14px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(900px 520px at 80% -10%,rgba(62,124,177,.18),transparent 60%),linear-gradient(180deg,#0E1217,#11161D);color:var(--txt);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  h1,h2,h3{font-family:"Archivo",sans-serif;letter-spacing:-.02em;line-height:1.05}
+  .mono{font-family:"Space Mono",monospace}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,18,23,.85);backdrop-filter:blur(12px);z-index:10}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Archivo";font-weight:800;font-size:17px}
+  .brand .tb{color:var(--red)}
+  .nav-cta{background:var(--red);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 16px;border-radius:8px}
+  .hero{padding:74px 0 28px;text-align:center}
+  .eyebrow{font-family:"Space Mono";font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:700}
+  .hero h1{font-size:clamp(32px,5.5vw,52px);font-weight:900;margin:16px auto 0;max-width:16ch}
+  .hero h1 em{font-style:normal;color:var(--red)}
+  .hero p{color:var(--mut);max-width:60ch;margin:18px auto 0;font-size:17px}
+  .btnrow{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;padding:14px 24px;border-radius:10px;font-size:15px;border:none;cursor:pointer;font-family:inherit;transition:transform .15s,background .2s}
+  .btn-primary{background:var(--red);color:#fff;box-shadow:0 14px 30px -12px rgba(210,59,44,.6)}.btn-primary:hover{transform:translateY(-2px);background:#e1473a}
+  .btn-ghost{border:1px solid var(--line);color:var(--txt);background:transparent}.btn-ghost:hover{border-color:#fff;transform:translateY(-2px)}
+  .samples{padding:30px 0 80px}
+  .samples h2{text-align:center;font-size:24px;font-weight:800;margin-bottom:6px}
+  .samples .sub{text-align:center;color:var(--mut);font-size:14px;margin-bottom:34px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{display:block;text-decoration:none;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:28px;transition:transform .2s,border-color .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(210,59,44,.5);box-shadow:0 24px 50px -28px rgba(0,0,0,.7)}
+  .card .tagline{font-family:"Space Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel)}
+  .card h3{font-size:22px;font-weight:800;margin:10px 0 8px;color:#fff}
+  .card p{font-size:14px;color:var(--mut)}
+  .card .go{margin-top:16px;font-family:"Space Mono";font-size:13px;color:var(--red);font-weight:700}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-family:"Space Mono";font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line);padding:4px 9px;border-radius:999px}
+  .how{background:var(--panel-2);border:1px solid var(--line);border-radius:18px;padding:30px;margin-top:36px}
+  .how h3{font-size:18px;font-weight:800;margin-bottom:18px;text-align:center}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:680px){.steps{grid-template-columns:1fr}}
+  .step{text-align:center}
+  .step .n{width:40px;height:40px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:"Archivo";font-weight:800;color:var(--red);margin:0 auto 12px}
+  .step b{display:block;font-size:15px}
+  .step p{font-size:13px;color:var(--mut);margin-top:4px}
+  footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--mut);font-size:12.5px}
+  footer .mono{font-size:11px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand"><span class="tb">◤</span> Timebroker<span class="tb">.ai</span></div>
+  <a class="nav-cta" href="https://cal.com/timebroker/15min" target="_blank" rel="noopener">Book a call →</a>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">Digital Audits &amp; Growth Proposals</span>
+  <h1>We find what your business is <em>leaving on the table</em> online.</h1>
+  <p>A research-first digital audit, a 90-day growth plan, and the systems to actually run it — built by an operator with experience, powered by AI. See real examples below.</p>
+  <div class="btnrow">
+    <a class="btn btn-primary" href="https://cal.com/timebroker/15min" target="_blank" rel="noopener">Get your free audit →</a>
+    <a class="btn btn-ghost" href="#samples">See sample audits</a>
+  </div>
+</div></section>
+
+<section class="samples" id="samples"><div class="wrap">
+  <h2>Sample audits</h2>
+  <div class="sub">Real businesses, real research. This is what you'd receive.</div>
+  <div class="grid">
+    <a class="card" href="./vnps-roofing.html">
+      <div class="tagline">Roofing · Tampa, FL</div>
+      <h3>VNPS Roofing</h3>
+      <p>A top-rated, veteran-owned roofer that's nearly invisible in local search. Audit, competitor breakdown, and a 90-day plan to own Tampa Bay's roofing searches.</p>
+      <div class="chips"><span class="chip">Local SEO</span><span class="chip">Reviews</span><span class="chip">90-day plan</span></div>
+      <div class="go">View the audit →</div>
+    </a>
+    <a class="card" href="./driftwood.html">
+      <div class="tagline">Coffee &amp; Kava · St. Pete, FL</div>
+      <h3>Driftwood Kava &amp; Roastery</h3>
+      <p>A beloved in-house roaster with thousands of walk-ins but little online reach and no way to sell its beans online. A 90-day plan to fix that.</p>
+      <div class="chips"><span class="chip">Website</span><span class="chip">E-commerce</span><span class="chip">Social</span></div>
+      <div class="go">View the audit →</div>
+    </a>
+  </div>
+
+  <div class="how">
+    <h3>How it works</h3>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><b>The audit</b><p>We research your site, reviews, social and competitors — then score your digital presence.</p></div>
+      <div class="step"><div class="n">2</div><b>The 90-day plan</b><p>A clear, phased roadmap to close the gaps, with the numbers behind it.</p></div>
+      <div class="step"><div class="n">3</div><b>We run it</b><p>An expert-led, AI-powered engine builds and runs the growth systems with you.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="brand" style="justify-content:center"><span class="tb">◤</span> Timebroker<span class="tb">.ai</span></div>
+  <p class="mono" style="margin-top:10px">© 2026 Timebroker.ai — Delray Peter Wannemacher · Research-first growth, expert-led &amp; AI-powered.</p>
+</div></footer>
+</body>
+</html>

@@ -284,8 +284,8 @@ class TimeBrokerConcierge {
             if (lowerText.includes('capital') || lowerText.includes('investment') || lowerText.includes('tax')) {
                 this.conversationState = 'qualifying_capital';
                 this.sendBotMessage(
-                    "Great! Capital strategy is our specialty. We work with First Look Equities to structure tax-advantaged investments. Are you looking to:<br><br>• <b>Invest</b> in tax-deductible opportunities<br>• <b>Raise capital</b> for your business<br>• <b>Optimize</b> existing structures",
-                    ["I want to invest", "I need to raise capital", "Optimize my structures"]
+                    "Great — capital strategy and investor relations are core to what I do. Through First Look Equities (my investor-relations firm, founded 2015), I help with:<br><br>• <b>Investor relations</b> &amp; capital-markets strategy<br>• <b>Raising capital</b> &amp; fundraise readiness<br>• <b>Sharpening</b> your investor narrative",
+                    ["Investor relations", "I need to raise capital", "Sharpen my investor story"]
                 );
             } else if (lowerText.includes('ai') || lowerText.includes('automation') || lowerText.includes('infrastructure')) {
                 this.conversationState = 'qualifying_ai';

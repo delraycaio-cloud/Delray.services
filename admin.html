@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>TimeBroker CRM — Admin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        gold: '#d4af37',
+                        ocean: '#0ea5e9',
+                        void: '#020617'
+                    },
+                    fontFamily: {
+                        display: ['"Playfair Display"', 'serif'],
+                        body: ['Montserrat', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #020617;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gold-grad {
+            background: linear-gradient(135deg, #d4af37 0%, #f0d57a 50%, #d4af37 100%);
+        }
+
+        ::-webkit-scrollbar {
+            height: 10px;
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.35);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.55);
+        }
+
+        input,
+        textarea,
+        select {
+            color-scheme: dark;
+        }
+
+        select option {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        .spinner {
+            border: 3px solid rgba(212, 175, 55, 0.2);
+            border-top-color: #d4af37;
+            border-radius: 9999px;
+            width: 2.25rem;
+            height: 2.25rem;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .focus-gold:focus {
+            outline: none;
+            border-color: rgba(212, 175, 55, 0.7);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-slate-100 antialiased">
+
+    <!-- ===================== GLOBAL ERROR BANNER ===================== -->
+    <div id="errorBanner" hidden
+        class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-2xl rounded-xl border border-red-500/40 bg-red-950/90 backdrop-blur px-4 py-3 shadow-2xl">
+        <div class="flex items-start gap-3">
+            <i class="fas fa-triangle-exclamation text-red-400 mt-0.5"></i>
+            <p id="errorBannerText" class="flex-1 text-sm text-red-100 leading-relaxed"></p>
+            <button id="errorBannerClose" type="button" aria-label="Dismiss error"
+                class="text-red-300 hover:text-white transition shrink-0">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================== GLOBAL SUCCESS TOAST ===================== -->
+    <div id="toastBanner" hidden
+        class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-2xl rounded-xl border border-emerald-500/40 bg-emerald-950/90 backdrop-blur px-4 py-3 shadow-2xl">
+        <div class="flex items-start gap-3">
+            <i class="fas fa-circle-check text-emerald-400 mt-0.5"></i>
+            <p id="toastBannerText" class="flex-1 text-sm text-emerald-100 leading-relaxed"></p>
+            <a id="toastBannerLink" hidden target="_blank" rel="noopener"
+                class="shrink-0 text-xs font-semibold text-emerald-300 hover:text-white underline transition">Open</a>
+            <button id="toastBannerClose" type="button" aria-label="Dismiss message"
+                class="text-emerald-300 hover:text-white transition shrink-0">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================== BOOT / FULL-PAGE SPINNER ===================== -->
+    <div id="bootScreen" class="fixed inset-0 z-50 grid place-items-center bg-void">
+        <div class="flex flex-col items-center gap-4">
+            <div class="spinner"></div>
+            <p class="text-sm text-slate-400 tracking-wide">Loading TimeBroker CRM…</p>
+        </div>
+    </div>
+
+    <!-- ===================== LOGIN SCREEN ===================== -->
+    <main id="loginScreen" hidden class="min-h-screen grid place-items-center px-4 py-10">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <div
+                    class="mx-auto mb-5 h-14 w-14 rounded-2xl gold-grad grid place-items-center shadow-lg shadow-gold/20">
+                    <i class="fas fa-clock text-navy text-2xl"></i>
+                </div>
+                <h1 class="font-display text-3xl font-bold tracking-tight">
+                    TimeBroker <span class="text-gold">CRM</span>
+                </h1>
+                <p class="mt-2 text-sm text-slate-400">Use your existing admin login.</p>
+            </div>
+
+            <div class="glass rounded-2xl p-7 shadow-2xl">
+                <form id="loginForm" class="space-y-4" novalidate>
+                    <div>
+                        <label for="loginEmail" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Email</label>
+                        <input id="loginEmail" name="email" type="email" autocomplete="email" required
+                            aria-label="Admin email address"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-navy/60 px-4 py-3 text-sm text-white placeholder-slate-500 transition"
+                            placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="loginPassword" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Password</label>
+                        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required
+                            aria-label="Admin password"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-navy/60 px-4 py-3 text-sm text-white placeholder-slate-500 transition"
+                            placeholder="••••••••">
+                    </div>
+
+                    <p id="loginError" hidden class="text-sm text-red-400 flex items-center gap-2">
+                        <i class="fas fa-circle-exclamation"></i><span id="loginErrorText"></span>
+                    </p>
+
+                    <button id="loginSubmit" type="submit"
+                        class="w-full rounded-xl gold-grad px-4 py-3 text-sm font-semibold text-navy transition hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <span id="loginSubmitLabel">Sign In</span>
+                    </button>
+                </form>
+
+                <div class="my-5 flex items-center gap-3 text-xs text-slate-500">
+                    <span class="h-px flex-1 bg-white/10"></span>OR<span class="h-px flex-1 bg-white/10"></span>
+                </div>
+
+                <button id="googleSignIn" type="button"
+                    class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/10 flex items-center justify-center gap-3">
+                    <i class="fab fa-google text-ocean"></i> Sign in with Google
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===================== NOT-AUTHORIZED SCREEN ===================== -->
+    <main id="deniedScreen" hidden class="min-h-screen grid place-items-center px-4 py-10">
+        <div class="glass w-full max-w-md rounded-2xl p-8 text-center shadow-2xl">
+            <div class="mx-auto mb-5 h-14 w-14 rounded-2xl bg-red-500/15 grid place-items-center">
+                <i class="fas fa-lock text-red-400 text-2xl"></i>
+            </div>
+            <h1 class="font-display text-2xl font-bold">Access restricted</h1>
+            <p class="mt-3 text-sm text-slate-400">This account isn't authorized for admin access.</p>
+            <p id="deniedEmail" class="mt-2 text-xs text-slate-500 break-all"></p>
+            <button id="deniedSignOut" type="button"
+                class="mt-6 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/10">
+                <i class="fas fa-right-from-bracket mr-2"></i>Sign out
+            </button>
+        </div>
+    </main>
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <div id="dashboard" hidden class="min-h-screen flex flex-col">
+        <!-- Top bar -->
+        <header class="sticky top-0 z-40 border-b border-white/10 bg-void/80 backdrop-blur">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="h-9 w-9 shrink-0 rounded-xl gold-grad grid place-items-center">
+                        <i class="fas fa-clock text-navy"></i>
+                    </div>
+                    <h1 class="font-display text-lg sm:text-xl font-bold truncate">
+                        TimeBroker <span class="text-gold">CRM</span>
+                    </h1>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <a href="https://timebroker.ai" target="_blank" rel="noopener"
+                        class="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-gold transition">
+                        <i class="fas fa-arrow-up-right-from-square text-[0.7rem]"></i> View site
+                    </a>
+                    <span id="userEmail" class="hidden md:inline text-xs text-slate-300 max-w-[14rem] truncate"></span>
+                    <button id="signOutBtn" type="button"
+                        class="rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10">
+                        <i class="fas fa-right-from-bracket mr-1.5"></i>Sign out
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <nav class="flex gap-6" role="tablist" aria-label="CRM sections">
+                    <button data-tab="pipeline" role="tab" aria-selected="true"
+                        class="tab-btn relative py-3 text-sm font-medium text-gold border-b-2 border-gold transition">
+                        <i class="fas fa-stream mr-2"></i>Pipeline
+                    </button>
+                    <button data-tab="proposals" role="tab" aria-selected="false"
+                        class="tab-btn relative py-3 text-sm font-medium text-slate-400 border-b-2 border-transparent hover:text-white transition">
+                        <i class="fas fa-file-invoice-dollar mr-2"></i>Proposals
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- ===== PIPELINE TAB ===== -->
+        <section id="tab-pipeline" role="tabpanel" class="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 py-6">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <h2 class="font-display text-2xl font-bold">Pipeline</h2>
+                    <p class="text-sm text-slate-400 mt-1">Leads from your AI-audit funnel, by stage.</p>
+                </div>
+                <button id="refreshLeads" type="button"
+                    class="rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-white/10">
+                    <i class="fas fa-rotate-right mr-1.5"></i>Refresh
+                </button>
+            </div>
+
+            <div id="leadsLoading" class="grid place-items-center py-20"><div class="spinner"></div></div>
+            <div id="leadsBoard" hidden class="flex gap-4 overflow-x-auto pb-4 snap-x"></div>
+        </section>
+
+        <!-- ===== PROPOSALS TAB ===== -->
+        <section id="tab-proposals" role="tabpanel" hidden class="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 py-6">
+            <div class="flex items-center justify-between mb-5 gap-4">
+                <div>
+                    <h2 class="font-display text-2xl font-bold">Proposals</h2>
+                    <p class="text-sm text-slate-400 mt-1">Draft, price, and track client proposals.</p>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap justify-end">
+                    <button id="importExamplesBtn" type="button"
+                        class="rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-white/10 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <i class="fas fa-download mr-1.5"></i><span id="importExamplesLabel">Import my 2 example proposals</span>
+                    </button>
+                    <button id="refreshProposals" type="button"
+                        class="rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-white/10">
+                        <i class="fas fa-rotate-right mr-1.5"></i>Refresh
+                    </button>
+                    <button id="newProposalBtn" type="button"
+                        class="rounded-lg gold-grad px-3.5 py-2 text-sm font-semibold text-navy transition hover:brightness-105">
+                        <i class="fas fa-plus mr-1.5"></i>New Proposal
+                    </button>
+                </div>
+            </div>
+
+            <div id="proposalsLoading" class="grid place-items-center py-20"><div class="spinner"></div></div>
+
+            <div id="proposalsEmpty" hidden class="glass rounded-2xl py-16 text-center">
+                <i class="fas fa-file-circle-plus text-3xl text-slate-600 mb-3"></i>
+                <p class="text-slate-400">No proposals yet.</p>
+                <button data-open-new-proposal type="button"
+                    class="mt-4 rounded-lg gold-grad px-4 py-2 text-sm font-semibold text-navy hover:brightness-105 transition">
+                    <i class="fas fa-plus mr-1.5"></i>Create your first proposal
+                </button>
+            </div>
+
+            <div id="proposalsTableWrap" hidden class="glass rounded-2xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-white/5 text-left text-xs uppercase tracking-wider text-slate-400">
+                            <tr>
+                                <th class="px-4 py-3 font-medium">Client</th>
+                                <th class="px-4 py-3 font-medium">Industry</th>
+                                <th class="px-4 py-3 font-medium">Stage</th>
+                                <th class="px-4 py-3 font-medium text-right">Total</th>
+                                <th class="px-4 py-3 font-medium">Updated</th>
+                                <th class="px-4 py-3 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="proposalsTbody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===================== PROPOSAL EDITOR (SLIDE-OVER) ===================== -->
+    <div id="proposalEditor" hidden class="fixed inset-0 z-[90]">
+        <div id="proposalBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <aside role="dialog" aria-modal="true" aria-labelledby="editorTitle"
+            class="absolute right-0 top-0 h-full w-full max-w-xl bg-navy border-l border-white/10 shadow-2xl flex flex-col">
+            <div class="flex items-center justify-between border-b border-white/10 px-6 py-4">
+                <h2 id="editorTitle" class="font-display text-xl font-bold">New Proposal</h2>
+                <button id="editorClose" type="button" aria-label="Close editor"
+                    class="text-slate-400 hover:text-white transition">
+                    <i class="fas fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="proposalForm" class="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+                <input type="hidden" id="propId">
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="propClientName" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Client name</label>
+                        <input id="propClientName" type="text" required aria-label="Client name"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition">
+                    </div>
+                    <div>
+                        <label for="propContactEmail" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Contact email</label>
+                        <input id="propContactEmail" type="email" aria-label="Contact email"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition">
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="propIndustry" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Industry</label>
+                        <input id="propIndustry" type="text" aria-label="Industry"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition">
+                    </div>
+                    <div>
+                        <label for="propStage" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Stage</label>
+                        <select id="propStage" aria-label="Proposal stage"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white transition"></select>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="propType" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Type</label>
+                        <select id="propType" aria-label="Proposal type"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white transition"></select>
+                    </div>
+                    <div>
+                        <label for="propReportType" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Report type</label>
+                        <input id="propReportType" type="text" aria-label="Report type" placeholder="e.g. AI Opportunity Audit"
+                            class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="propNotes" class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-1.5">Notes</label>
+                    <textarea id="propNotes" rows="3" aria-label="Proposal notes"
+                        class="focus-gold w-full rounded-xl border border-white/10 bg-void/60 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition resize-y"></textarea>
+                </div>
+
+                <!-- Pricing editor -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-xs font-medium uppercase tracking-wider text-slate-400">Pricing</label>
+                        <button id="addLineItem" type="button"
+                            class="text-xs font-medium text-gold hover:brightness-110 transition">
+                            <i class="fas fa-plus mr-1"></i>Add line item
+                        </button>
+                    </div>
+                    <div id="pricingRows" class="space-y-2"></div>
+                    <div class="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+                        <span class="text-sm font-medium text-slate-400">Total</span>
+                        <span id="pricingTotal" class="text-lg font-semibold text-gold">$0.00</span>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" disabled aria-disabled="true"
+                        title="Coming soon — secure per-client share links (Phase 3)."
+                        class="w-full rounded-xl border border-dashed border-white/15 bg-white/5 px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed flex items-center justify-center gap-2">
+                        <i class="fas fa-link"></i> Copy client share link
+                    </button>
+                    <p class="mt-1.5 text-center text-xs text-slate-600">Coming soon — secure per-client share links (Phase 3).</p>
+                </div>
+            </form>
+
+            <div class="border-t border-white/10 px-6 py-4 flex items-center justify-end gap-3">
+                <button id="editorCancel" type="button"
+                    class="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10">
+                    Cancel
+                </button>
+                <button id="editorSave" type="submit" form="proposalForm"
+                    class="rounded-xl gold-grad px-5 py-2.5 text-sm font-semibold text-navy transition hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed">
+                    <span id="editorSaveLabel">Save proposal</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ===================== APP SCRIPT (self-contained module) ===================== -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import {
+            getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+            onAuthStateChanged, signOut
+        } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+        import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
+
+        /* ---------- Firebase ---------- */
+        const firebaseConfig = {
+            apiKey: "AIzaSyC88VdW3aeKSmupkYl98V54EpuX-9f53Bw",
+            authDomain: "ac-godmode-titan.firebaseapp.com",
+            projectId: "ac-godmode-titan",
+            storageBucket: "ac-godmode-titan.firebasestorage.app",
+            messagingSenderId: "1003983943137",
+            appId: "1:1003983943137:web:a281bfa187f99e1283cea0"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const functions = getFunctions(app, 'us-central1');
+        const tbAdmin = httpsCallable(functions, 'tbAdminV1');
+
+        /* ---------- Constants ---------- */
+        const ADMIN_EMAILS = ['delraycaio@gmail.com'];
+        const REPORT_TYPES = [
+            { value: 'caio', label: 'Fractional CAIO' },
+            { value: 'ir', label: 'Investor Relations' },
+            { value: 'growth', label: 'Growth / Local' },
+            { value: 'ecommerce', label: 'E-commerce' },
+            { value: 'general', label: 'General' }
+        ];
+        const REPORT_TYPE_LABELS = Object.fromEntries(REPORT_TYPES.map(t => [t.value, t.label]));
+        const STAGES = ['New', 'Audited', 'Proposal Sent', 'Negotiating', 'Won', 'Lost'];
+        const STAGE_STYLES = {
+            'New': 'bg-blue-500/15 text-blue-300 border-blue-500/30',
+            'Audited': 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+            'Proposal Sent': 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+            'Negotiating': 'bg-orange-500/15 text-orange-300 border-orange-500/30',
+            'Won': 'bg-green-500/15 text-green-300 border-green-500/30',
+            'Lost': 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+        };
+        const USD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+        /* ---------- DOM helpers ---------- */
+        const $ = (id) => document.getElementById(id);
+        const show = (el) => { if (el) el.hidden = false; };
+        const hide = (el) => { if (el) el.hidden = true; };
+        const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const escAttr = (s) => esc(s);
+
+        function fmtDate(ts) {
+            // Firestore timestamps come back as { _seconds, _nanoseconds }; guard everything.
+            if (!ts) return '—';
+            let ms = null;
+            if (typeof ts === 'object' && typeof ts._seconds === 'number') ms = ts._seconds * 1000;
+            else if (typeof ts === 'object' && typeof ts.seconds === 'number') ms = ts.seconds * 1000;
+            else if (typeof ts === 'number') ms = ts;
+            else if (typeof ts === 'string') { const d = Date.parse(ts); if (!isNaN(d)) ms = d; }
+            if (ms == null) return '—';
+            const d = new Date(ms);
+            return isNaN(d.getTime()) ? '—' : d.toLocaleDateString();
+        }
+
+        function stageBadge(stage) {
+            const s = STAGES.includes(stage) ? stage : 'New';
+            const cls = STAGE_STYLES[s] || STAGE_STYLES['New'];
+            return `<span class="inline-block rounded-full border px-2.5 py-0.5 text-xs font-medium ${cls}">${esc(s)}</span>`;
+        }
+
+        function normStage(stage) {
+            return STAGES.includes(stage) ? stage : 'New';
+        }
+
+        /* ---------- Error banner ---------- */
+        let bannerTimer = null;
+        function showError(msg) {
+            $('errorBannerText').textContent = msg || 'Something went wrong. Please try again.';
+            show($('errorBanner'));
+            if (bannerTimer) clearTimeout(bannerTimer);
+            bannerTimer = setTimeout(() => hide($('errorBanner')), 9000);
+        }
+        $('errorBannerClose').addEventListener('click', () => hide($('errorBanner')));
+
+        /* ---------- Success toast (mirrors error banner) ---------- */
+        let toastTimer = null;
+        function showToast(msg, opts = {}) {
+            $('toastBannerText').textContent = msg || 'Done.';
+            const link = $('toastBannerLink');
+            if (opts.linkUrl) {
+                link.href = opts.linkUrl;
+                link.textContent = opts.linkLabel || 'Open';
+                show(link);
+            } else {
+                link.removeAttribute('href');
+                hide(link);
+            }
+            show($('toastBanner'));
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => hide($('toastBanner')), opts.linkUrl ? 12000 : 6000);
+        }
+        $('toastBannerClose').addEventListener('click', () => hide($('toastBanner')));
+
+        function errMessage(e) {
+            return (e && (e.message || e.code)) ? (e.message || e.code) : 'Unexpected error.';
+        }
+
+        /* ---------- Callable wrapper (ONLY data path) ---------- */
+        async function callAdmin(payload) {
+            const res = await tbAdmin(payload);
+            const data = res && res.data ? res.data : {};
+            if (data.ok === false) throw new Error(data.error || 'Request was rejected by the server.');
+            return data;
+        }
+
+        /* ---------- Generic callable wrapper (mirrors callAdmin) ---------- */
+        const fnCache = {};
+        async function callFn(name, data = {}) {
+            const fn = fnCache[name] || (fnCache[name] = httpsCallable(functions, name));
+            const res = await fn(data);
+            const out = res && res.data ? res.data : {};
+            if (out.ok === false) throw new Error(out.error || 'Request was rejected by the server.');
+            return out;
+        }
+
+        /* ============================================================
+           AUTH GATE
+           ============================================================ */
+        const screens = {
+            boot: $('bootScreen'),
+            login: $('loginScreen'),
+            denied: $('deniedScreen'),
+            dashboard: $('dashboard')
+        };
+        function showScreen(name) {
+            Object.entries(screens).forEach(([k, el]) => { el.hidden = (k !== name); });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                showScreen('login');
+                return;
+            }
+            const email = (user.email || '').toLowerCase();
+            if (!ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email)) {
+                $('deniedEmail').textContent = user.email || '';
+                showScreen('denied');
+                return;
+            }
+            $('userEmail').textContent = user.email || '';
+            showScreen('dashboard');
+            initDashboard();
+        });
+
+        /* ---------- Login form ---------- */
+        const loginForm = $('loginForm');
+        function setLoginError(msg) {
+            if (!msg) { hide($('loginError')); return; }
+            $('loginErrorText').textContent = msg;
+            show($('loginError'));
+        }
+        function friendlyAuthError(e) {
+            const code = (e && e.code) || '';
+            const map = {
+                'auth/invalid-email': 'That email address looks invalid.',
+                'auth/user-disabled': 'This account has been disabled.',
+                'auth/user-not-found': 'No account found with that email.',
+                'auth/wrong-password': 'Incorrect password. Please try again.',
+                'auth/invalid-credential': 'Incorrect email or password.',
+                'auth/too-many-requests': 'Too many attempts. Please wait a moment and try again.',
+                'auth/popup-closed-by-user': 'Sign-in was cancelled.',
+                'auth/popup-blocked': 'Pop-up was blocked. Allow pop-ups and try again.',
+                'auth/network-request-failed': 'Network error. Check your connection and retry.'
+            };
+            return map[code] || errMessage(e);
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            setLoginError('');
+            const email = $('loginEmail').value.trim();
+            const password = $('loginPassword').value;
+            if (!email || !password) { setLoginError('Enter your email and password.'); return; }
+            const btn = $('loginSubmit');
+            btn.disabled = true;
+            $('loginSubmitLabel').textContent = 'Signing in…';
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (err) {
+                setLoginError(friendlyAuthError(err));
+            } finally {
+                btn.disabled = false;
+                $('loginSubmitLabel').textContent = 'Sign In';
+            }
+        });
+
+        $('googleSignIn').addEventListener('click', async () => {
+            setLoginError('');
+            try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+            } catch (err) {
+                setLoginError(friendlyAuthError(err));
+            }
+        });
+
+        const doSignOut = () => signOut(auth).catch(err => showError(errMessage(err)));
+        $('signOutBtn').addEventListener('click', doSignOut);
+        $('deniedSignOut').addEventListener('click', doSignOut);
+
+        /* ============================================================
+           DASHBOARD
+           ============================================================ */
+        let dashboardReady = false;
+        function initDashboard() {
+            if (dashboardReady) return;
+            dashboardReady = true;
+            bindTabs();
+            bindPipeline();
+            bindProposals();
+            loadLeads();
+            loadProposals();
+        }
+
+        /* ---------- Tabs ---------- */
+        function bindTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+            });
+        }
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const active = btn.dataset.tab === tab;
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+                btn.classList.toggle('text-gold', active);
+                btn.classList.toggle('border-gold', active);
+                btn.classList.toggle('text-slate-400', !active);
+                btn.classList.toggle('border-transparent', !active);
+            });
+            $('tab-pipeline').hidden = tab !== 'pipeline';
+            $('tab-proposals').hidden = tab !== 'proposals';
+        }
+
+        /* ============================================================
+           PIPELINE
+           ============================================================ */
+        let leads = [];
+
+        function bindPipeline() {
+            $('refreshLeads').addEventListener('click', loadLeads);
+
+            // Event delegation for stage change + notes save inside the board.
+            $('leadsBoard').addEventListener('change', async (e) => {
+                const sel = e.target.closest('select[data-lead-stage]');
+                if (!sel) return;
+                const id = sel.dataset.leadStage;
+                const newStage = sel.value;
+                const lead = leads.find(l => l.id === id);
+                const prev = lead ? lead.stage : null;
+                if (lead) lead.stage = newStage; // optimistic
+                renderLeads();
+                try {
+                    await callAdmin({ action: 'updateLead', id, stage: newStage });
+                } catch (err) {
+                    if (lead) lead.stage = prev; // revert
+                    renderLeads();
+                    showError('Could not update stage: ' + errMessage(err));
+                }
+            });
+
+            $('leadsBoard').addEventListener('click', async (e) => {
+                const genBtn = e.target.closest('button[data-gen-proposal]');
+                if (genBtn) {
+                    if (genBtn.disabled) return;
+                    const id = genBtn.dataset.genProposal;
+                    const lead = leads.find(l => l.id === id);
+                    if (!lead || !lead.auditUrl) {
+                        showError('This lead has no website URL to audit.');
+                        return;
+                    }
+                    const typeSel = document.querySelector(`select[data-gen-type="${CSS.escape(id)}"]`);
+                    const type = typeSel ? typeSel.value : 'general';
+                    const label = genBtn.querySelector('span');
+                    const prevLabel = label ? label.textContent : '';
+                    genBtn.disabled = true;
+                    if (label) label.textContent = 'Generating…';
+                    try {
+                        const result = await callFn('tbGenerateProposalV1', {
+                            url: lead.auditUrl,
+                            type,
+                            leadId: lead.id,
+                            clientName: lead.name,
+                            contactEmail: lead.email
+                        });
+                        const who = result.clientName || lead.name || 'client';
+                        showToast(`Proposal generated for ${who}`,
+                            result.shareUrl ? { linkUrl: result.shareUrl, linkLabel: 'Open share link' } : {});
+                        await loadLeads();
+                    } catch (err) {
+                        showError('Could not generate proposal: ' + errMessage(err));
+                        genBtn.disabled = false;
+                        if (label) label.textContent = prevLabel || 'Generate Proposal';
+                    }
+                    return;
+                }
+                const toggle = e.target.closest('button[data-notes-toggle]');
+                if (toggle) {
+                    const box = $('notes-' + toggle.dataset.notesToggle);
+                    if (box) box.hidden = !box.hidden;
+                    return;
+                }
+                const saveBtn = e.target.closest('button[data-notes-save]');
+                if (saveBtn) {
+                    const id = saveBtn.dataset.notesSave;
+                    const ta = document.querySelector(`textarea[data-notes-field="${CSS.escape(id)}"]`);
+                    if (!ta) return;
+                    const label = saveBtn.querySelector('span');
+                    saveBtn.disabled = true;
+                    if (label) label.textContent = 'Saving…';
+                    try {
+                        await callAdmin({ action: 'updateLead', id, notes: ta.value });
+                        const lead = leads.find(l => l.id === id);
+                        if (lead) lead.notes = ta.value;
+                        if (label) label.textContent = 'Saved ✓';
+                        setTimeout(() => { if (label) label.textContent = 'Save'; }, 1500);
+                    } catch (err) {
+                        showError('Could not save notes: ' + errMessage(err));
+                        if (label) label.textContent = 'Save';
+                    } finally {
+                        saveBtn.disabled = false;
+                    }
+                }
+            });
+        }
+
+        async function loadLeads() {
+            show($('leadsLoading'));
+            hide($('leadsBoard'));
+            try {
+                const data = await callAdmin({ action: 'listLeads' });
+                leads = Array.isArray(data.leads) ? data.leads : [];
+                renderLeads();
+            } catch (err) {
+                leads = [];
+                renderLeads();
+                showError('Could not load leads: ' + errMessage(err));
+            } finally {
+                hide($('leadsLoading'));
+                show($('leadsBoard'));
+            }
+        }
+
+        function renderLeads() {
+            const board = $('leadsBoard');
+            const buckets = {};
+            STAGES.forEach(s => buckets[s] = []);
+            leads.forEach(l => { buckets[normStage(l.stage)].push(l); });
+
+            board.innerHTML = STAGES.map(stage => {
+                const items = buckets[stage];
+                const cards = items.length
+                    ? items.map(leadCard).join('')
+                    : `<p class="text-xs text-slate-600 italic px-1 py-6 text-center">No leads.</p>`;
+                return `
+                <div class="snap-start shrink-0 w-72">
+                    <div class="flex items-center justify-between mb-3 px-1">
+                        <h3 class="text-sm font-semibold text-slate-200">${esc(stage)}</h3>
+                        <span class="rounded-full bg-white/5 px-2 py-0.5 text-xs text-slate-400">${items.length}</span>
+                    </div>
+                    <div class="space-y-3">${cards}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function leadCard(l) {
+            const id = l.id;
+            const stageOptions = STAGES.map(s =>
+                `<option value="${escAttr(s)}"${normStage(l.stage) === s ? ' selected' : ''}>${esc(s)}</option>`).join('');
+            const audit = l.auditUrl
+                ? `<a href="${escAttr(l.auditUrl)}" target="_blank" rel="noopener"
+                      class="inline-flex items-center gap-1 text-xs text-ocean hover:underline break-all">
+                      <i class="fas fa-globe text-[0.65rem]"></i>${esc(l.auditUrl)}</a>`
+                : '';
+            const roleLabel = l.roleLabel || l.role;
+            return `
+            <div class="glass rounded-xl p-3.5 border border-white/10">
+                <div class="flex items-start justify-between gap-2">
+                    <p class="font-semibold text-sm text-white">${esc(l.name || '—')}</p>
+                    ${roleLabel ? `<span class="shrink-0 rounded bg-white/5 px-1.5 py-0.5 text-[0.65rem] text-slate-400">${esc(roleLabel)}</span>` : ''}
+                </div>
+                ${l.email ? `<p class="mt-0.5 text-xs text-slate-400 break-all">${esc(l.email)}</p>` : ''}
+                ${audit ? `<div class="mt-2">${audit}</div>` : ''}
+                <div class="mt-2 flex items-center justify-between gap-2 text-[0.7rem] text-slate-500">
+                    <span>${l.source ? esc(l.source) : '—'}</span>
+                    <span>${fmtDate(l.createdAt)}</span>
+                </div>
+                <div class="mt-3">
+                    <label class="sr-only" for="stage-${escAttr(id)}">Stage for ${esc(l.name || 'lead')}</label>
+                    <select id="stage-${escAttr(id)}" data-lead-stage="${escAttr(id)}"
+                        class="focus-gold w-full rounded-lg border border-white/10 bg-void/60 px-2.5 py-1.5 text-xs text-white transition">
+                        ${stageOptions}
+                    </select>
+                </div>
+                <div class="mt-3 border-t border-white/10 pt-3">
+                    <label class="sr-only" for="proptype-${escAttr(id)}">Proposal type for ${esc(l.name || 'lead')}</label>
+                    <div class="flex items-center gap-2">
+                        <select id="proptype-${escAttr(id)}" data-gen-type="${escAttr(id)}"
+                            class="focus-gold flex-1 min-w-0 rounded-lg border border-white/10 bg-void/60 px-2.5 py-1.5 text-xs text-white transition">
+                            ${REPORT_TYPES.map(t => `<option value="${escAttr(t.value)}"${t.value === 'general' ? ' selected' : ''}>${esc(t.label)}</option>`).join('')}
+                        </select>
+                    </div>
+                    <button type="button" data-gen-proposal="${escAttr(id)}"${l.auditUrl ? '' : ' disabled aria-disabled="true" title="No website URL on this lead."'}
+                        class="mt-2 w-full rounded-lg gold-grad px-3 py-1.5 text-xs font-semibold text-navy hover:brightness-105 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5">
+                        <i class="fas fa-wand-magic-sparkles"></i><span>Generate Proposal</span>
+                    </button>
+                </div>
+                <div class="mt-2">
+                    <button type="button" data-notes-toggle="${escAttr(id)}"
+                        class="text-[0.7rem] text-slate-400 hover:text-gold transition">
+                        <i class="fas fa-pen-to-square mr-1"></i>Notes
+                    </button>
+                    <div id="notes-${escAttr(id)}" hidden class="mt-2">
+                        <label class="sr-only" for="notesfield-${escAttr(id)}">Notes for ${esc(l.name || 'lead')}</label>
+                        <textarea id="notesfield-${escAttr(id)}" data-notes-field="${escAttr(id)}" rows="2"
+                            class="focus-gold w-full rounded-lg border border-white/10 bg-void/60 px-2.5 py-2 text-xs text-white placeholder-slate-500 transition resize-y"
+                            placeholder="Add a note…">${esc(l.notes || '')}</textarea>
+                        <button type="button" data-notes-save="${escAttr(id)}"
+                            class="mt-1.5 rounded-lg gold-grad px-3 py-1 text-xs font-semibold text-navy hover:brightness-105 transition disabled:opacity-60">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        /* ============================================================
+           PROPOSALS
+           ============================================================ */
+        let proposals = [];
+
+        function bindProposals() {
+            $('refreshProposals').addEventListener('click', loadProposals);
+            $('newProposalBtn').addEventListener('click', () => openEditor(null));
+            document.querySelectorAll('[data-open-new-proposal]').forEach(b =>
+                b.addEventListener('click', () => openEditor(null)));
+
+            // Import the 2 real example proposals (safe to run repeatedly — backend skips dupes)
+            $('importExamplesBtn').addEventListener('click', async () => {
+                if (!confirm('Import your 2 example proposals? Running this again is safe — duplicates are skipped.')) return;
+                const btn = $('importExamplesBtn');
+                const label = $('importExamplesLabel');
+                const prev = label.textContent;
+                btn.disabled = true;
+                label.textContent = 'Importing…';
+                try {
+                    const result = await callFn('tbImportExamplesV1', {});
+                    const created = Array.isArray(result.created) ? result.created : [];
+                    const names = created
+                        .map(c => (typeof c === 'string' ? c : (c && (c.clientName || c.name)) || ''))
+                        .filter(Boolean);
+                    showToast(names.length ? ('Imported: ' + names.join(', ')) : 'Examples already imported — nothing new to add.');
+                    await loadProposals();
+                } catch (err) {
+                    showError('Could not import examples: ' + errMessage(err));
+                } finally {
+                    btn.disabled = false;
+                    label.textContent = prev;
+                }
+            });
+
+            // Table actions (open report / copy link / email / edit / delete)
+            $('proposalsTbody').addEventListener('click', async (e) => {
+                const openBtn = e.target.closest('button[data-open-report]');
+                if (openBtn) {
+                    const token = openBtn.dataset.openReport;
+                    if (token) window.open('/proposal.html?t=' + encodeURIComponent(token), '_blank', 'noopener');
+                    return;
+                }
+                const copyBtn = e.target.closest('button[data-copy-link]');
+                if (copyBtn) {
+                    const token = copyBtn.dataset.copyLink;
+                    if (!token) return;
+                    const url = `${location.origin}/proposal.html?t=${encodeURIComponent(token)}`;
+                    const label = copyBtn.querySelector('span');
+                    const prev = label ? label.textContent : '';
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        if (label) { label.textContent = 'Copied!'; setTimeout(() => { if (label) label.textContent = prev || 'Copy link'; }, 1500); }
+                    } catch (err) {
+                        showError('Could not copy link — copy it manually: ' + url);
+                    }
+                    return;
+                }
+                const emailBtn = e.target.closest('button[data-email-proposal]');
+                if (emailBtn) {
+                    if (emailBtn.disabled) return;
+                    const id = emailBtn.dataset.emailProposal;
+                    const label = emailBtn.querySelector('span');
+                    const prev = label ? label.textContent : '';
+                    emailBtn.disabled = true;
+                    if (label) label.textContent = 'Sending…';
+                    try {
+                        const result = await callFn('tbEmailProposalV1', { id });
+                        showToast(`Emailed to ${result.to || 'client'}`,
+                            result.shareUrl ? { linkUrl: result.shareUrl, linkLabel: 'Open share link' } : {});
+                    } catch (err) {
+                        showError('Could not email proposal: ' + errMessage(err));
+                    } finally {
+                        emailBtn.disabled = false;
+                        if (label) label.textContent = prev || 'Email to client';
+                    }
+                    return;
+                }
+                const editBtn = e.target.closest('button[data-edit]');
+                if (editBtn) {
+                    const p = proposals.find(x => x.id === editBtn.dataset.edit);
+                    if (p) openEditor(p);
+                    return;
+                }
+                const delBtn = e.target.closest('button[data-delete]');
+                if (delBtn) {
+                    const id = delBtn.dataset.delete;
+                    const p = proposals.find(x => x.id === id);
+                    const who = p ? (p.clientName || 'this proposal') : 'this proposal';
+                    if (!confirm(`Delete proposal for ${who}? This cannot be undone.`)) return;
+                    delBtn.disabled = true;
+                    try {
+                        await callAdmin({ action: 'deleteProposal', id });
+                        await loadProposals();
+                    } catch (err) {
+                        showError('Could not delete proposal: ' + errMessage(err));
+                        delBtn.disabled = false;
+                    }
+                }
+            });
+
+            // Editor controls
+            $('editorClose').addEventListener('click', closeEditor);
+            $('editorCancel').addEventListener('click', closeEditor);
+            $('proposalBackdrop').addEventListener('click', closeEditor);
+            $('addLineItem').addEventListener('click', () => { addPricingRow(); recalcTotal(); });
+            $('pricingRows').addEventListener('input', recalcTotal);
+            $('pricingRows').addEventListener('click', (e) => {
+                const rm = e.target.closest('button[data-remove-row]');
+                if (rm) { rm.closest('[data-pricing-row]')?.remove(); recalcTotal(); }
+            });
+            $('proposalForm').addEventListener('submit', saveProposalHandler);
+
+            // populate stage select once
+            $('propStage').innerHTML = STAGES.map(s => `<option value="${escAttr(s)}">${esc(s)}</option>`).join('');
+            // populate type select once
+            $('propType').innerHTML = REPORT_TYPES.map(t => `<option value="${escAttr(t.value)}">${esc(t.label)}</option>`).join('');
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !$('proposalEditor').hidden) closeEditor();
+            });
+        }
+
+        function proposalTotal(items) {
+            if (!Array.isArray(items)) return 0;
+            return items.reduce((sum, it) => sum + (Number(it && it.amount) || 0), 0);
+        }
+
+        async function loadProposals() {
+            show($('proposalsLoading'));
+            hide($('proposalsEmpty'));
+            hide($('proposalsTableWrap'));
+            try {
+                const data = await callAdmin({ action: 'listProposals' });
+                proposals = Array.isArray(data.proposals) ? data.proposals : [];
+                renderProposals();
+            } catch (err) {
+                proposals = [];
+                renderProposals();
+                showError('Could not load proposals: ' + errMessage(err));
+            } finally {
+                hide($('proposalsLoading'));
+            }
+        }
+
+        function renderProposals() {
+            if (proposals.length === 0) {
+                show($('proposalsEmpty'));
+                hide($('proposalsTableWrap'));
+                return;
+            }
+            hide($('proposalsEmpty'));
+            show($('proposalsTableWrap'));
+            $('proposalsTbody').innerHTML = proposals.map(p => {
+                const total = proposalTotal(p.pricingItems);
+                const hasToken = !!p.shareToken;
+                const hasEmail = !!p.contactEmail;
+                const signed = p.signed === true;
+                const signerName = p.signerName || p.signedBy || '';
+                const noTokenTip = 'Generate or import this proposal first to get a shareable link.';
+                const openReportBtn = hasToken
+                    ? `<button type="button" data-open-report="${escAttr(p.shareToken)}"
+                            class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition">
+                            <i class="fas fa-arrow-up-right-from-square mr-1"></i>Open report
+                        </button>`
+                    : `<button type="button" disabled aria-disabled="true" title="${escAttr(noTokenTip)}"
+                            class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-slate-500 cursor-not-allowed">
+                            <i class="fas fa-arrow-up-right-from-square mr-1"></i>Open report
+                        </button>`;
+                const copyLinkBtn = hasToken
+                    ? `<button type="button" data-copy-link="${escAttr(p.shareToken)}"
+                            class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition">
+                            <i class="fas fa-link mr-1"></i><span>Copy link</span>
+                        </button>`
+                    : `<button type="button" disabled aria-disabled="true" title="${escAttr(noTokenTip)}"
+                            class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-slate-500 cursor-not-allowed">
+                            <i class="fas fa-link mr-1"></i>Copy link
+                        </button>`;
+                const emailBtn = hasEmail
+                    ? `<button type="button" data-email-proposal="${escAttr(p.id)}"
+                            class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition disabled:opacity-60">
+                            <i class="fas fa-paper-plane mr-1"></i><span>Email to client</span>
+                        </button>`
+                    : `<button type="button" disabled aria-disabled="true" title="No contact email on this proposal."
+                            class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-slate-500 cursor-not-allowed">
+                            <i class="fas fa-paper-plane mr-1"></i>Email to client
+                        </button>`;
+                return `
+                <tr class="hover:bg-white/[0.03] transition">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <p class="font-medium text-white">${esc(p.clientName || '—')}</p>
+                            ${signed ? `<span class="inline-flex items-center gap-1 rounded-full border border-green-500/30 bg-green-500/15 px-2 py-0.5 text-[0.65rem] font-medium text-green-300">
+                                <i class="fas fa-check"></i>Signed${signerName ? ' by ' + esc(signerName) : ''}</span>` : ''}
+                        </div>
+                        ${p.contactEmail ? `<p class="text-xs text-slate-500 break-all">${esc(p.contactEmail)}</p>` : ''}
+                    </td>
+                    <td class="px-4 py-3 text-slate-300">${p.industry ? esc(p.industry) : '—'}</td>
+                    <td class="px-4 py-3">${stageBadge(p.stage)}</td>
+                    <td class="px-4 py-3 text-right font-medium text-gold">${USD.format(total)}</td>
+                    <td class="px-4 py-3 text-slate-400">${fmtDate(p.updatedAt)}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center justify-end gap-2 flex-wrap">
+                            ${openReportBtn}
+                            ${copyLinkBtn}
+                            ${emailBtn}
+                            <button type="button" data-edit="${escAttr(p.id)}"
+                                class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition">
+                                <i class="fas fa-pen mr-1"></i>Edit
+                            </button>
+                            <button type="button" data-delete="${escAttr(p.id)}"
+                                class="rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-1.5 text-xs text-rose-300 hover:bg-rose-500/20 transition">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        /* ---------- Editor ---------- */
+        function addPricingRow(label = '', amount = '') {
+            const row = document.createElement('div');
+            row.dataset.pricingRow = '';
+            row.className = 'flex items-center gap-2';
+            row.innerHTML = `
+                <input type="text" data-row-label aria-label="Line item description" placeholder="Description"
+                    class="focus-gold flex-1 rounded-lg border border-white/10 bg-void/60 px-3 py-2 text-sm text-white placeholder-slate-500 transition"
+                    value="${escAttr(label)}">
+                <input type="number" data-row-amount aria-label="Line item amount" placeholder="0" step="0.01" min="0"
+                    class="focus-gold w-28 rounded-lg border border-white/10 bg-void/60 px-3 py-2 text-sm text-white placeholder-slate-500 transition"
+                    value="${escAttr(amount)}">
+                <button type="button" data-remove-row aria-label="Remove line item"
+                    class="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 text-slate-400 hover:text-rose-300 hover:border-rose-500/30 transition">
+                    <i class="fas fa-xmark"></i>
+                </button>`;
+            $('pricingRows').appendChild(row);
+        }
+
+        function recalcTotal() {
+            let total = 0;
+            $('pricingRows').querySelectorAll('[data-pricing-row]').forEach(row => {
+                total += Number(row.querySelector('[data-row-amount]').value) || 0;
+            });
+            $('pricingTotal').textContent = USD.format(total);
+        }
+
+        function collectPricingItems() {
+            const items = [];
+            $('pricingRows').querySelectorAll('[data-pricing-row]').forEach(row => {
+                const label = row.querySelector('[data-row-label]').value.trim();
+                const amountRaw = row.querySelector('[data-row-amount]').value;
+                const amount = Number(amountRaw) || 0;
+                if (label || amount) items.push({ label, amount });
+            });
+            return items;
+        }
+
+        function openEditor(p) {
+            $('editorTitle').textContent = p ? 'Edit Proposal' : 'New Proposal';
+            $('propId').value = p ? (p.id || '') : '';
+            $('propClientName').value = p ? (p.clientName || '') : '';
+            $('propContactEmail').value = p ? (p.contactEmail || '') : '';
+            $('propIndustry').value = p ? (p.industry || '') : '';
+            $('propStage').value = p ? normStage(p.stage) : 'New';
+            const typeVal = p && (p.type || p.reportType);
+            $('propType').value = (typeVal && REPORT_TYPE_LABELS[typeVal]) ? typeVal : 'general';
+            $('propReportType').value = p ? (p.reportType || '') : '';
+            $('propNotes').value = p ? (p.notes || '') : '';
+
+            $('pricingRows').innerHTML = '';
+            const items = p && Array.isArray(p.pricingItems) ? p.pricingItems : [];
+            if (items.length) items.forEach(it => addPricingRow(it.label || '', (it.amount ?? '')));
+            else addPricingRow();
+            recalcTotal();
+
+            show($('proposalEditor'));
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => $('propClientName').focus(), 50);
+        }
+
+        function closeEditor() {
+            hide($('proposalEditor'));
+            document.body.style.overflow = '';
+        }
+
+        async function saveProposalHandler(e) {
+            e.preventDefault();
+            const clientName = $('propClientName').value.trim();
+            if (!clientName) { showError('Client name is required.'); $('propClientName').focus(); return; }
+
+            const proposal = {
+                clientName,
+                contactEmail: $('propContactEmail').value.trim(),
+                industry: $('propIndustry').value.trim(),
+                stage: normStage($('propStage').value),
+                notes: $('propNotes').value.trim(),
+                type: $('propType').value,
+                reportType: $('propReportType').value.trim(),
+                pricingItems: collectPricingItems()
+            };
+            const id = $('propId').value;
+            if (id) proposal.id = id;
+
+            const btn = $('editorSave');
+            btn.disabled = true;
+            $('editorSaveLabel').textContent = 'Saving…';
+            try {
+                await callAdmin({ action: 'saveProposal', proposal });
+                closeEditor();
+                await loadProposals();
+            } catch (err) {
+                showError('Could not save proposal: ' + errMessage(err));
+            } finally {
+                btn.disabled = false;
+                $('editorSaveLabel').textContent = 'Save proposal';
+            }
+        }
+    </script>
+</body>
+
+</html>

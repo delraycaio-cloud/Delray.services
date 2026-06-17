@@ -1,0 +1,3 @@
+
+# Confidential client report originals - never commit or deploy
+.private-reports/

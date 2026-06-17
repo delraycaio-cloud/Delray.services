@@ -315,22 +315,18 @@
 
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">AI Automation Savings (30%)</span>
-                            <span class="text-2xl font-bold text-white" id="ai-savings">$15,000</span>
+                            <span class="text-gray-400">Illustrative Automation Savings</span>
+                            <span class="text-2xl font-bold text-white" id="ai-savings">—</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-gray-400">Time Recovered Monthly</span>
-                            <span class="text-2xl font-bold text-white" id="time-savings">80 hrs</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Tax Strategy Savings (Est.)</span>
-                            <span class="text-2xl font-bold text-white" id="tax-savings">$50,000</span>
+                            <span class="text-2xl font-bold text-white" id="time-savings">—</span>
                         </div>
 
                         <div class="border-t border-[#d4af37]/30 pt-4 mt-4">
                             <div class="flex justify-between items-center">
                                 <span class="text-lg font-bold text-[#d4af37]">First Year Value</span>
-                                <span class="text-3xl font-bold text-[#d4af37]" id="total-value">$230,000</span>
+                                <span class="text-3xl font-bold text-[#d4af37]" id="total-value">—</span>
                             </div>
                         </div>
                     </div>
@@ -338,7 +334,7 @@
                     <div class="mt-6 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                         <p class="text-xs text-green-300">
                             <i class="fas fa-hand-holding-heart mr-1"></i>
-                            Give Back: <strong>$23,000</strong> to Healthy People, Water, or Animals
+                            Illustrative estimate based on your inputs — not a guarantee of results. Actual outcomes depend on your operations and engagement scope.
                         </p>
                     </div>
                 </div>
@@ -486,11 +482,11 @@
                     </label>
                 </div>
 
-                <!-- Slots Remaining -->
-                <div class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-center">
-                    <p class="text-red-300">
-                        <i class="fas fa-fire mr-2"></i>
-                        Only <strong id="slots-remaining">3</strong> strategy session slots remaining this month
+                <!-- Engagement Capacity -->
+                <div class="p-4 bg-white/5 border border-gray-700 rounded-lg text-center">
+                    <p class="text-gray-300">
+                        <i class="fas fa-calendar-check mr-2"></i>
+                        Applications are reviewed personally; I take on a limited number of new engagements each quarter.
                     </p>
                 </div>
             </div>
@@ -610,13 +606,11 @@
             const hours = parseFloat(document.getElementById('manual-hours').value) || 20;
 
             const aiSavings = Math.round(opex * 0.3);
-            const timeSavings = hours * 4; // monthly
-            const taxSavings = Math.round(opex * 1.2); // estimated annual
-            const totalValue = (aiSavings * 12) + (timeSavings * 50) + taxSavings;
+            const timeSavings = hours * 4; // hours recovered per month
+            const totalValue = (aiSavings * 12) + (timeSavings * 50);
 
             document.getElementById('ai-savings').textContent = '$' + aiSavings.toLocaleString() + '/mo';
             document.getElementById('time-savings').textContent = timeSavings + ' hrs/mo';
-            document.getElementById('tax-savings').textContent = '$' + taxSavings.toLocaleString();
             document.getElementById('total-value').textContent = '$' + totalValue.toLocaleString();
 
             applicationData.estimatedValue = totalValue;
@@ -627,8 +621,6 @@
             document.getElementById('review-industry').textContent = document.getElementById('business-industry').value || '--';
             document.getElementById('review-value').textContent = document.getElementById('total-value').textContent || '--';
 
-            // Random slots remaining for urgency
-            document.getElementById('slots-remaining').textContent = Math.floor(Math.random() * 3) + 2;
         }
 
         async function submitApplication() {
