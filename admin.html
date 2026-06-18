@@ -964,14 +964,14 @@
                 const openBtn = e.target.closest('button[data-open-report]');
                 if (openBtn) {
                     const token = openBtn.dataset.openReport;
-                    if (token) window.open('/proposal.html?t=' + encodeURIComponent(token), '_blank', 'noopener');
+                    if (token) window.open('/audit.html?t=' + encodeURIComponent(token), '_blank', 'noopener');
                     return;
                 }
                 const copyBtn = e.target.closest('button[data-copy-link]');
                 if (copyBtn) {
                     const token = copyBtn.dataset.copyLink;
                     if (!token) return;
-                    const url = `${location.origin}/proposal.html?t=${encodeURIComponent(token)}`;
+                    const url = `${location.origin}/audit.html?t=${encodeURIComponent(token)}`;
                     const label = copyBtn.querySelector('span');
                     const prev = label ? label.textContent : '';
                     try {
@@ -986,7 +986,7 @@
                 if (mailtoBtn) {
                     const p = proposals.find(x => x.id === mailtoBtn.dataset.mailtoProposal);
                     if (!p || !p.shareToken) return;
-                    const url = `${location.origin}/proposal.html?t=${encodeURIComponent(p.shareToken)}`;
+                    const url = `${location.origin}/audit.html?t=${encodeURIComponent(p.shareToken)}`;
                     const subject = 'Your proposal from Timebroker.ai';
                     const body = `Hi${p.clientName ? ' ' + p.clientName : ''},\n\nYour proposal is ready to review here:\n${url}\n\nYou can read it, download it, and book a 15-minute call right from the page: https://cal.com/timebroker/15min\n\n— Delray`;
                     window.location.href = `mailto:${encodeURIComponent(p.contactEmail || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -1258,7 +1258,7 @@
             // client share link (backend creates the token on Generate / Email)
             const tok = p && p.shareToken;
             if (tok) {
-                const shareUrl = `${location.origin}/proposal.html?t=${encodeURIComponent(tok)}`;
+                const shareUrl = `${location.origin}/audit.html?t=${encodeURIComponent(tok)}`;
                 $('shareLinkUrl').value = shareUrl;
                 $('shareOpenBtn').href = shareUrl;
                 $('shareCopyBtn').dataset.copyLink = tok;
