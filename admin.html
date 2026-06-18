@@ -304,6 +304,27 @@
                 </div>
             </div>
 
+            <!-- Generate a proposal directly from any website URL -->
+            <div class="glass rounded-2xl p-4 mb-5">
+                <div class="flex items-center gap-2 mb-1">
+                    <i class="fas fa-wand-magic-sparkles text-gold"></i>
+                    <h3 class="font-medium">Generate from a website</h3>
+                </div>
+                <p class="text-xs text-slate-400 mb-3">Paste any company's website — the AI audits it and drafts a full proposal with a secure client share link. No lead required.</p>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input id="genUrlInput" type="url" inputmode="url" placeholder="https://company.com"
+                        class="flex-1 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-gold focus:outline-none" />
+                    <input id="genNameInput" type="text" placeholder="Company name (optional)"
+                        class="sm:w-52 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-gold focus:outline-none" />
+                    <select id="genTypeInput" aria-label="Audit type"
+                        class="sm:w-44 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 text-sm text-white focus:border-gold focus:outline-none"></select>
+                    <button id="genFromUrlBtn" type="button"
+                        class="rounded-xl gold-grad px-5 py-2.5 text-sm font-semibold text-navy transition hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap">
+                        <i class="fas fa-wand-magic-sparkles mr-1.5"></i><span id="genFromUrlLabel">Audit &amp; generate</span>
+                    </button>
+                </div>
+            </div>
+
             <div id="proposalsLoading" class="grid place-items-center py-20"><div class="spinner"></div></div>
 
             <div id="proposalsEmpty" hidden class="glass rounded-2xl py-16 text-center">
@@ -413,12 +434,25 @@
                 </div>
 
                 <div>
-                    <button type="button" disabled aria-disabled="true"
-                        title="Coming soon — secure per-client share links (Phase 3)."
-                        class="w-full rounded-xl border border-dashed border-white/15 bg-white/5 px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed flex items-center justify-center gap-2">
-                        <i class="fas fa-link"></i> Copy client share link
-                    </button>
-                    <p class="mt-1.5 text-center text-xs text-slate-600">Coming soon — secure per-client share links (Phase 3).</p>
+                    <label class="block text-xs font-medium uppercase tracking-wider text-slate-400 mb-2">Client share link</label>
+                    <div id="shareLinkActive" hidden class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <input id="shareLinkUrl" type="text" readonly
+                                class="flex-1 rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-slate-200" />
+                            <button id="shareCopyBtn" type="button" data-copy-link=""
+                                class="rounded-xl gold-grad px-4 py-2.5 text-sm font-semibold text-navy transition hover:brightness-105 whitespace-nowrap">
+                                <i class="fas fa-link mr-1"></i><span>Copy link</span>
+                            </button>
+                            <a id="shareOpenBtn" href="#" target="_blank" rel="noopener"
+                                class="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10 whitespace-nowrap">
+                                <i class="fas fa-arrow-up-right-from-square mr-1"></i>Open
+                            </a>
+                        </div>
+                        <p class="text-xs text-slate-500">Send this to the client — they can view, download, and e-sign it online.</p>
+                    </div>
+                    <p id="shareLinkPending" hidden class="text-center text-xs text-slate-500 rounded-xl border border-dashed border-white/15 bg-white/5 px-4 py-2.5">
+                        Generate or email this proposal first — the secure client share link appears here once it exists.
+                    </p>
                 </div>
             </form>
 
@@ -983,10 +1017,48 @@
             });
             $('proposalForm').addEventListener('submit', saveProposalHandler);
 
+            // editor: copy the client share link
+            $('shareCopyBtn').addEventListener('click', async () => {
+                const url = $('shareLinkUrl').value;
+                if (!url) return;
+                const label = $('shareCopyBtn').querySelector('span');
+                const prev = label ? label.textContent : '';
+                try {
+                    await navigator.clipboard.writeText(url);
+                    if (label) { label.textContent = 'Copied!'; setTimeout(() => { if (label) label.textContent = prev || 'Copy link'; }, 1500); }
+                } catch (err) { showError('Could not copy — copy it manually: ' + url); }
+            });
+
+            // generate a proposal directly from a typed website URL (no lead required)
+            $('genFromUrlBtn').addEventListener('click', async () => {
+                const url = $('genUrlInput').value.trim();
+                if (!url) { showError('Enter a website URL to audit.'); $('genUrlInput').focus(); return; }
+                const btn = $('genFromUrlBtn'), label = $('genFromUrlLabel');
+                const prev = label ? label.textContent : '';
+                btn.disabled = true; if (label) label.textContent = 'Auditing…';
+                try {
+                    const result = await callFn('tbGenerateProposalV1', {
+                        url,
+                        type: $('genTypeInput').value || 'general',
+                        clientName: $('genNameInput').value.trim()
+                    });
+                    showToast(`Proposal generated for ${result.clientName || 'client'}`,
+                        result.shareUrl ? { linkUrl: result.shareUrl, linkLabel: 'Open share link' } : {});
+                    $('genUrlInput').value = ''; $('genNameInput').value = '';
+                    await loadProposals();
+                } catch (err) {
+                    showError('Could not generate proposal: ' + errMessage(err));
+                } finally {
+                    btn.disabled = false; if (label) label.textContent = prev || 'Audit & generate';
+                }
+            });
+
             // populate stage select once
             $('propStage').innerHTML = STAGES.map(s => `<option value="${escAttr(s)}">${esc(s)}</option>`).join('');
             // populate type select once
             $('propType').innerHTML = REPORT_TYPES.map(t => `<option value="${escAttr(t.value)}">${esc(t.label)}</option>`).join('');
+            // populate the "generate from website" type select
+            $('genTypeInput').innerHTML = REPORT_TYPES.map(t => `<option value="${escAttr(t.value)}">${esc(t.label)}</option>`).join('');
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !$('proposalEditor').hidden) closeEditor();
@@ -1145,6 +1217,18 @@
             if (items.length) items.forEach(it => addPricingRow(it.label || '', (it.amount ?? '')));
             else addPricingRow();
             recalcTotal();
+
+            // client share link (backend creates the token on Generate / Email)
+            const tok = p && p.shareToken;
+            if (tok) {
+                const shareUrl = `${location.origin}/proposal.html?t=${encodeURIComponent(tok)}`;
+                $('shareLinkUrl').value = shareUrl;
+                $('shareOpenBtn').href = shareUrl;
+                $('shareCopyBtn').dataset.copyLink = tok;
+                show($('shareLinkActive')); hide($('shareLinkPending'));
+            } else {
+                hide($('shareLinkActive')); show($('shareLinkPending'));
+            }
 
             show($('proposalEditor'));
             document.body.style.overflow = 'hidden';
