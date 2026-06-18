@@ -23,8 +23,8 @@ class TimeBrokerConcierge {
         return {
             name: "TimeBroker Concierge",
             avatar: "⚡",
-            greeting: "Welcome to TimeBroker AI. I'm your strategic concierge. How may I assist with capital formation, AI infrastructure, or executive advisory?",
-            personality: "Sophisticated luxury concierge and strategic guide. Professional, subtle, and highly intelligent."
+            greeting: "Welcome to TimeBroker.AI — the strategic interface for Delray Wannemacher, a fractional Chief AI Officer and datacenter founder. How may I assist: AI infrastructure and governance, capital formation and investor relations, or board-level advisory?",
+            personality: "Authoritative, highly technical, and strategic — the register of a Chief AI Officer addressing peer C-suite and boards. Precise and senior; never folksy or sales-driven."
         };
     }
 
@@ -295,7 +295,7 @@ class TimeBrokerConcierge {
                 );
             } else if (lowerText.includes('give back') || lowerText.includes('challenge') || lowerText.includes('charity')) {
                 this.sendBotMessage(
-                    "The <b>Give Back Challenge</b> is our core philosophy:<br><br>🎁 I offer services at a <b>50% donated rate</b><br>🌊 You pledge <b>10%</b> of value created to Healthy People, Water, or Animals<br><br>It's capitalism with a conscience. Want to learn how you can participate?",
+                    "The Give Back Challenge is the firm's operating principle: engagements are delivered at a substantially reduced rate, and the client pledges 10% of the value created to a vetted initiative in human, ocean, or animal health. I can outline how it would apply to your organization.",
                     ["How do I join?", "Tell me more", "Book a call to discuss"]
                 );
             } else if (lowerText.includes('book') || lowerText.includes('session') || lowerText.includes('call') || lowerText.includes('meeting')) {
