@@ -540,7 +540,7 @@
         // run here, so inject a force-reveal style (content shows immediately), then auto-size
         // the frame to the full report height so the whole document is visible in page flow.
         const frame = document.getElementById('reportFrame');
-        var forceReveal = '<style>.reveal,[class*="reveal"],.fade,.fade-in,.animate,[data-reveal],[data-animate],[style*="opacity:0"],[style*="opacity: 0"]{opacity:1 !important;transform:none !important;filter:none !important;visibility:visible !important}</style>';
+        var forceReveal = '<style>.reveal,[class*="reveal"],.fade,.fade-in,.animate,[data-reveal],[data-animate],[style*="opacity:0"],[style*="opacity: 0"]{opacity:1 !important;transform:none !important;filter:none !important;visibility:visible !important} html,body{min-height:0 !important;height:auto !important} .hero,header,.cta,.cta-final,[class*="hero"]{min-height:0 !important}</style>';
         var html = String(proposal.reportHtml || '');
         html = /<\/head>/i.test(html) ? html.replace(/<\/head>/i, forceReveal + '</head>') : (forceReveal + html);
         frame.setAttribute('srcdoc', html);
