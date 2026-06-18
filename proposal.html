@@ -310,7 +310,7 @@
       <div class="share-bar" id="shareBar">
         <span class="sb-label">Your proposal</span>
         <button type="button" class="sb-btn" id="sbCopy"><span aria-hidden="true">🔗</span> Copy link</button>
-        <button type="button" class="sb-btn" id="sbDownload"><span aria-hidden="true">⬇</span> Download PDF</button>
+        <button type="button" class="sb-btn" id="sbDownload"><span aria-hidden="true">⬇</span> Download</button>
         <button type="button" class="sb-btn" id="sbShare" hidden><span aria-hidden="true">↗</span> Share</button>
       </div>
       <div class="report-header">
@@ -458,8 +458,18 @@
       });
     }
 
-    // --- share toolbar: copy link / download (print) / native share ------
-    function wireShareBar() {
+    // --- render: consult CTA for no-price (audit-only) proposals ---------
+    function renderConsult() {
+      const panel = document.getElementById('signPanel');
+      panel.classList.remove('accepted');
+      panel.innerHTML =
+        '<h2>Ready to talk it through?</h2>' +
+        '<p class="sub">This is a complimentary audit — no commitment. Book a 15-minute consult and we’ll walk the findings and the highest-ROI next steps together.</p>' +
+        '<div>' + bookButton() + '</div>';
+    }
+
+    // --- share toolbar: copy link / download (file) / native share ------
+    function wireShareBar(reportHtml, clientName) {
       const copyBtn = document.getElementById('sbCopy');
       const dlBtn = document.getElementById('sbDownload');
       const shareBtn = document.getElementById('sbShare');
@@ -479,7 +489,20 @@
         copyBtn.innerHTML = '<span aria-hidden="true">✓</span> Copied';
         setTimeout(() => { copyBtn.classList.remove('ok'); copyBtn.innerHTML = prev; }, 1800);
       });
-      if (dlBtn) dlBtn.addEventListener('click', () => window.print());
+      if (dlBtn) dlBtn.addEventListener('click', () => {
+        try {
+          const blob = new Blob([String(reportHtml || '')], { type: 'text/html;charset=utf-8' });
+          const a = document.createElement('a');
+          const safe = (String(clientName || 'proposal').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-')) || 'proposal';
+          a.href = URL.createObjectURL(blob);
+          a.download = safe + '-proposal.html';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+        } catch (e) {
+          window.print(); // fallback to print-to-PDF
+        }
+      });
       if (shareBtn && navigator.share) {
         shareBtn.hidden = false;
         shareBtn.addEventListener('click', () => {
@@ -531,14 +554,16 @@
         }
         frame.addEventListener('load', function () { sizeReportFrame(); setTimeout(sizeReportFrame, 500); setTimeout(sizeReportFrame, 1800); });
 
-        // Sign panel
+        // Sign panel — accept/sign only on PRICED proposals; audit-only proposals get a Book CTA
         if (proposal.signed) {
           renderAccepted(proposal.signerName || '', { justSigned: false });
-        } else {
+        } else if (proposal.priced) {
           renderForm(token);
+        } else {
+          renderConsult();
         }
 
-        wireShareBar();
+        wireShareBar(proposal.reportHtml, clientName);
         showOnly('proposalView');
       } catch (err) {
         showOnly('errorState');

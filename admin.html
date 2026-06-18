@@ -740,6 +740,22 @@
             });
 
             $('leadsBoard').addEventListener('click', async (e) => {
+                const rmLead = e.target.closest('button[data-remove-lead]');
+                if (rmLead) {
+                    const id = rmLead.dataset.removeLead;
+                    const lead = leads.find(l => l.id === id);
+                    const who = lead ? (lead.name || lead.email || 'this lead') : 'this lead';
+                    if (!confirm(`Remove ${who} from the pipeline? This cannot be undone.`)) return;
+                    rmLead.disabled = true;
+                    try {
+                        await callAdmin({ action: 'deleteLead', id });
+                        await loadLeads();
+                    } catch (err) {
+                        showError('Could not remove lead: ' + errMessage(err));
+                        rmLead.disabled = false;
+                    }
+                    return;
+                }
                 const genBtn = e.target.closest('button[data-gen-proposal]');
                 if (genBtn) {
                     if (genBtn.disabled) return;
@@ -890,6 +906,10 @@
                         class="text-[0.7rem] text-slate-400 hover:text-gold transition">
                         <i class="fas fa-pen-to-square mr-1"></i>Notes
                     </button>
+                    <button type="button" data-remove-lead="${escAttr(id)}" title="Remove from pipeline"
+                        class="ml-3 text-[0.7rem] text-slate-500 hover:text-red-400 transition">
+                        <i class="fas fa-trash-can mr-1"></i>Remove
+                    </button>
                     <div id="notes-${escAttr(id)}" hidden class="mt-2">
                         <label class="sr-only" for="notesfield-${escAttr(id)}">Notes for ${esc(l.name || 'lead')}</label>
                         <textarea id="notesfield-${escAttr(id)}" data-notes-field="${escAttr(id)}" rows="2"
@@ -960,6 +980,16 @@
                     } catch (err) {
                         showError('Could not copy link — copy it manually: ' + url);
                     }
+                    return;
+                }
+                const mailtoBtn = e.target.closest('button[data-mailto-proposal]');
+                if (mailtoBtn) {
+                    const p = proposals.find(x => x.id === mailtoBtn.dataset.mailtoProposal);
+                    if (!p || !p.shareToken) return;
+                    const url = `${location.origin}/proposal.html?t=${encodeURIComponent(p.shareToken)}`;
+                    const subject = 'Your proposal from Timebroker.ai';
+                    const body = `Hi${p.clientName ? ' ' + p.clientName : ''},\n\nYour proposal is ready to review here:\n${url}\n\nYou can read it, download it, and book a 15-minute call right from the page: https://cal.com/timebroker/15min\n\n— Delray`;
+                    window.location.href = `mailto:${encodeURIComponent(p.contactEmail || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                     return;
                 }
                 const emailBtn = e.target.closest('button[data-email-proposal]');
@@ -1129,6 +1159,12 @@
                             class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-slate-500 cursor-not-allowed">
                             <i class="fas fa-paper-plane mr-1"></i>Email to client
                         </button>`;
+                const mailtoBtn = hasToken
+                    ? `<button type="button" data-mailto-proposal="${escAttr(p.id)}" title="Compose in your own email app with the share link — no SendGrid needed"
+                            class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition">
+                            <i class="fas fa-envelope mr-1"></i>Email via your app
+                        </button>`
+                    : '';
                 return `
                 <tr class="hover:bg-white/[0.03] transition">
                     <td class="px-4 py-3">
@@ -1147,6 +1183,7 @@
                         <div class="flex items-center justify-end gap-2 flex-wrap">
                             ${openReportBtn}
                             ${copyLinkBtn}
+                            ${mailtoBtn}
                             ${emailBtn}
                             <button type="button" data-edit="${escAttr(p.id)}"
                                 class="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs text-white hover:bg-white/10 transition">
