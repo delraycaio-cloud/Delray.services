@@ -4,7 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Your Proposal — TimeBroker.AI</title>
+  <title>Timebroker.ai Report</title>
+  <meta property="og:title" content="Timebroker.ai Report" />
+  <meta property="og:description" content="A confidential Timebroker.ai report, prepared by Delray P. Wannemacher." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Timebroker.ai" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Timebroker.ai Report" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
@@ -315,7 +321,7 @@
       </div>
       <div class="report-header">
         <span class="dot" aria-hidden="true"></span>
-        <span class="title"><span class="accent">TimeBroker.AI</span> — Proposal for <span id="clientNameHeader">your team</span></span>
+        <span class="title"><span class="accent">Timebroker.ai</span> Report · <span id="clientNameHeader">your team</span></span>
       </div>
       <div class="report-frame-shell">
         <iframe id="reportFrame" title="Proposal document" sandbox="allow-same-origin allow-scripts" referrerpolicy="no-referrer"></iframe>
@@ -495,7 +501,7 @@
           const a = document.createElement('a');
           const safe = (String(clientName || 'proposal').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-')) || 'proposal';
           a.href = URL.createObjectURL(blob);
-          a.download = safe + '-proposal.html';
+          a.download = 'Timebroker.ai Report - ' + safe + '.html';
           document.body.appendChild(a);
           a.click();
           setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
@@ -506,7 +512,7 @@
       if (shareBtn && navigator.share) {
         shareBtn.hidden = false;
         shareBtn.addEventListener('click', () => {
-          navigator.share({ title: document.title, url }).catch(() => { /* user cancelled */ });
+          navigator.share({ title: 'Timebroker.ai Report', text: 'Timebroker.ai Report', url }).catch(() => { /* user cancelled */ });
         });
       }
     }
