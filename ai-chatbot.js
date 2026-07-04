@@ -16,6 +16,7 @@ class TimeBrokerConcierge {
         this.conversationState = 'greeting';
         this.leadData = {};
         this.firebaseReady = false;
+        this.sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
         this.init();
     }
 
@@ -340,8 +341,9 @@ class TimeBrokerConcierge {
             const omniConcierge = httpsCallable(functions, 'omniConciergeV1');
 
             const result = await omniConcierge({
-                message: text,
-                persona: 'ORACLE',
+                utterance: text,
+                sessionId: this.sessionId,
+                route: window.location.pathname,
                 context: 'timebroker-consulting',
                 conversationHistory: this.messages.slice(-6).map(m => ({
                     role: m.type === 'user' ? 'user' : 'model',

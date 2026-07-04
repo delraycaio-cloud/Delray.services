@@ -12,7 +12,7 @@ const CONFIG = {
   ADMIN_EMAIL: "firstlookequities2@gmail.com", // Your Google Account
   
   // 🤖 AI CONFIGURATION (Gemini)
-  GEMINI_API_KEY: "AIzaSyBCai4mzC3nTrr84NetvqxK-E4kVo-TG4k", // Hardcoded for server-side stability or use PropertiesService
+  GEMINI_API_KEY: "REDACTED_KEY_ROTATE_IN_GOOGLE_CONSOLE", // Hardcoded for server-side stability or use PropertiesService
   
   // 🌿 ASSETS
   NOTEBOOKLM_VIDEO_URL: "", // Optional: Link to general company overview if available

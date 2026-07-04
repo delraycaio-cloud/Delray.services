@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for Discovery Call | TimeBroker.AI</title>
+    <title>Apply for Discovery Call | TimeBroker.ai</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
@@ -15,12 +15,12 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
         import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
         const app = initializeApp({
-            apiKey: "AIzaSyBgCn1OPJqbQM3K3nR0VzX8kL_QuA2GBCQ",
+            apiKey: "AIzaSyC88VdW3aeKSmupkYl98V54EpuX-9f53Bw",
             authDomain: "ac-godmode-titan.firebaseapp.com",
             projectId: "ac-godmode-titan",
             storageBucket: "ac-godmode-titan.firebasestorage.app",
-            messagingSenderId: "844071898498",
-            appId: "1:844071898498:web:delray-services"
+            messagingSenderId: "1003983943137",
+            appId: "1:1003983943137:web:a281bfa187f99e1283cea0"
         });
         const db = getFirestore(app);
         window._firebase = { db, collection, addDoc, serverTimestamp };
@@ -68,15 +68,21 @@
         }
 
         @keyframes pulse {
-
             0%,
             100% {
                 box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.3);
             }
-
             50% {
                 box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.1);
             }
+        }
+
+        .step-indicator.active + span {
+            color: #d4af37;
+        }
+
+        .step-indicator.complete + span {
+            color: #10b981;
         }
     </style>
 </head>
@@ -89,36 +95,40 @@
             <i class="fas fa-shield-alt mr-2"></i>Verified Business Applications Only
         </div>
         <h1 class="text-3xl md:text-4xl font-display font-bold">
-            Apply for a <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-white">Strategy
-                Session</span>
+            Apply for an <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-white">IR and/or Funding Consult</span>
         </h1>
         <p class="text-gray-400 mt-3 text-sm">Engagements are accepted selectively following a brief qualification review.</p>
     </div>
 
     <!-- Progress Steps -->
-    <div class="max-w-4xl mx-auto mb-8">
-        <div class="flex justify-between items-center relative">
-            <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-700 -translate-y-1/2"></div>
-            <div class="absolute top-1/2 left-0 h-1 bg-[#d4af37] -translate-y-1/2 transition-all duration-500"
+    <div class="max-w-4xl mx-auto mb-8 px-4">
+        <div class="relative flex justify-between items-center">
+            <!-- Line in background -->
+            <div class="absolute top-5 left-0 right-0 h-1 bg-gray-700 -translate-y-1/2 z-0"></div>
+            <div class="absolute top-5 left-0 h-1 bg-[#d4af37] -translate-y-1/2 transition-all duration-500 z-0"
                 id="progress-bar" style="width: 0%"></div>
 
-            <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold relative z-10"
-                id="step-ind-1">1</div>
-            <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold relative z-10"
-                id="step-ind-2">2</div>
-            <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold relative z-10"
-                id="step-ind-3">3</div>
-            <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold relative z-10"
-                id="step-ind-4">4</div>
-            <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold relative z-10"
-                id="step-ind-5">5</div>
-        </div>
-        <div class="flex justify-between mt-2 text-[10px] text-gray-500 uppercase tracking-wider">
-            <span>Business</span>
-            <span>Verify</span>
-            <span>Value</span>
-            <span>Schedule</span>
-            <span>Confirm</span>
+            <!-- Steps -->
+            <div class="flex flex-col items-center relative z-10">
+                <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-ind-1">1</div>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-2 font-semibold transition-colors duration-300">Business</span>
+            </div>
+            <div class="flex flex-col items-center relative z-10">
+                <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-ind-2">2</div>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-2 font-semibold transition-colors duration-300">Verify</span>
+            </div>
+            <div class="flex flex-col items-center relative z-10">
+                <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-ind-3">3</div>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-2 font-semibold transition-colors duration-300">Value</span>
+            </div>
+            <div class="flex flex-col items-center relative z-10">
+                <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-ind-4">4</div>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-2 font-semibold transition-colors duration-300">Schedule</span>
+            </div>
+            <div class="flex flex-col items-center relative z-10">
+                <div class="step-indicator bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-ind-5">5</div>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-2 font-semibold transition-colors duration-300">Confirm</span>
+            </div>
         </div>
     </div>
 
@@ -127,8 +137,7 @@
 
         <!-- STEP 1: Business Information -->
         <div id="step1" class="step-content">
-            <h2 class="text-xl font-bold mb-6"><i class="fas fa-building text-[#d4af37] mr-3"></i>Tell Us About Your
-                Business</h2>
+            <h2 class="text-xl font-bold mb-6"><i class="fas fa-building text-[#d4af37] mr-3"></i>Tell Us About Your Business</h2>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
@@ -306,6 +315,18 @@
                             class="w-full p-4 bg-black/30 border border-gray-700 rounded-lg text-white"
                             placeholder="Describe your biggest operational challenge..."></textarea>
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Top 3 AI / Operational Needs *</label>
+                        <input type="text" id="need-1" required
+                            class="w-full p-4 mb-2 bg-black/30 border border-gray-700 rounded-lg text-white"
+                            placeholder="Need 1 (e.g., Automate grant proposal prospecting)">
+                        <input type="text" id="need-2" required
+                            class="w-full p-4 mb-2 bg-black/30 border border-gray-700 rounded-lg text-white"
+                            placeholder="Need 2 (e.g., AI donor/investor messaging)">
+                        <input type="text" id="need-3" required
+                            class="w-full p-4 bg-black/30 border border-gray-700 rounded-lg text-white"
+                            placeholder="Need 3 (e.g., Auto-capturing lead pipeline)">
+                    </div>
                 </div>
 
                 <!-- Value Results -->
@@ -347,15 +368,14 @@
                 </button>
                 <button onclick="nextStep(4)"
                     class="px-8 py-4 bg-[#d4af37] text-[#0f172a] font-bold rounded-lg hover:bg-white transition">
-                    Next: Schedule Call <i class="fas fa-arrow-right ml-2"></i>
+                    Next: Book Briefing <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
 
         <!-- STEP 4: Schedule & Contact -->
         <div id="step4" class="step-content hidden">
-            <h2 class="text-xl font-bold mb-6"><i class="fas fa-calendar text-[#d4af37] mr-3"></i>Schedule Your Strategy
-                Session</h2>
+            <h2 class="text-xl font-bold mb-6"><i class="fas fa-calendar text-[#d4af37] mr-3"></i>Book Your 15-Minute Strategic Briefing</h2>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
@@ -393,8 +413,7 @@
                     <input type="checkbox" id="partner-referral" class="mt-1 w-5 h-5 accent-[#d4af37]"
                         onchange="togglePartnerOption()">
                     <div>
-                        <p class="font-bold text-orange-300">TimeBroker's calendar is full? Connect me with a qualified
-                            partner</p>
+                        <p class="font-bold text-orange-300">TimeBroker.ai's calendar is full? Connect me with a qualified partner</p>
                         <p class="text-xs text-gray-400 mt-1">By checking this, you agree to sign an NDA and we may
                             forward your info to a vetted partner consultant.</p>
                     </div>
@@ -530,7 +549,7 @@
     <!-- Trust Footer -->
     <div class="max-w-4xl mx-auto mt-8 text-center text-xs text-gray-500">
         <p><i class="fas fa-lock mr-1"></i> 256-bit SSL Encrypted | Your data is secure</p>
-        <p class="mt-2">TimeBroker.AI | Give Back Challenge | © 2026</p>
+        <p class="mt-2">TimeBroker.ai | Give Back Challenge | © 2026</p>
     </div>
 
     <script>
@@ -570,6 +589,15 @@
                 for (const id of required) {
                     if (!document.getElementById(id).value) {
                         alert('Please fill in all required fields');
+                        return false;
+                    }
+                }
+            }
+            if (step === 3) {
+                const required = ['need-1', 'need-2', 'need-3'];
+                for (const id of required) {
+                    if (!document.getElementById(id).value) {
+                        alert('Please enter your top 3 needs');
                         return false;
                     }
                 }
@@ -646,6 +674,9 @@
                 sosNumber: document.getElementById('sos-number').value,
                 einNumber: document.getElementById('ein-number').value,
                 bottleneck: document.getElementById('bottleneck').value,
+                need1: document.getElementById('need-1').value,
+                need2: document.getElementById('need-2').value,
+                need3: document.getElementById('need-3').value,
                 contactName: document.getElementById('contact-name').value,
                 contactEmail: document.getElementById('contact-email').value,
                 contactPhone: document.getElementById('contact-phone').value,
@@ -680,6 +711,7 @@
                     state: applicationData.state,
                     role: applicationData.role,
                     bottleneck: applicationData.bottleneck,
+                    topNeeds: [applicationData.need1, applicationData.need2, applicationData.need3],
                     estimatedValue: applicationData.estimatedValue || 0,
                     preferredTime: applicationData.preferredTime,
                     partnerReferral: applicationData.partnerReferral,
@@ -689,7 +721,7 @@
                     status: 'new',
                     crmStatus: 'new',
                     priority: 'high',
-                    notes: `Verified Application | SOS: ${applicationData.sosNumber || 'N/A'} | EIN: ${applicationData.einNumber || 'N/A'} | Est. Value: $${applicationData.estimatedValue?.toLocaleString() || 'TBD'}`,
+                    notes: `Verified Application | SOS: ${applicationData.sosNumber || 'N/A'} | EIN: ${applicationData.einNumber || 'N/A'} | Est. Value: $${applicationData.estimatedValue?.toLocaleString() || 'TBD'} | Needs: 1. ${applicationData.need1} 2. ${applicationData.need2} 3. ${applicationData.need3}`,
                     createdAt: serverTimestamp(),
                     assignedTo: 'delray'
                 });

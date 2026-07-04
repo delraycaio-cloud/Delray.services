@@ -348,7 +348,7 @@
 
             // Check Bitrix24
             try {
-                const bitrix = await fetch('https://b24-9o23fs.bitrix24.com/rest/1/s1u82w02apaja3fi/profile', { method: 'POST' });
+                const bitrix = await fetch('https://b24-9o23fs.bitrix24.com/rest/1/REDACTED_TOKEN/profile', { method: 'POST' });
                 const data = await bitrix.json();
                 if (data.result) {
                     document.getElementById('status-crm').innerHTML = '● Connected';

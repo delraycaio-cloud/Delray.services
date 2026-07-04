@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Timebroker.ai Report</title>
-  <meta property="og:title" content="Timebroker.ai Report" />
-  <meta property="og:description" content="A confidential Timebroker.ai report, prepared by Delray P. Wannemacher." />
+  <title>TimeBroker.ai Report</title>
+  <meta property="og:title" content="TimeBroker.ai Report" />
+  <meta property="og:description" content="A confidential TimeBroker.ai report, prepared by Delray P. Wannemacher." />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Timebroker.ai" />
+  <meta property="og:site_name" content="TimeBroker.ai" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Timebroker.ai Report" />
+  <meta name="twitter:title" content="TimeBroker.ai Report" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
@@ -287,7 +287,7 @@
 <body>
   <div class="wrap">
     <div class="brand">
-      <span class="mark">TimeBroker<span class="gold">.AI</span></span>
+      <span class="mark">TimeBroker<span class="gold">.ai</span></span>
       <span class="tag">Proposal</span>
     </div>
 
@@ -321,10 +321,10 @@
       </div>
       <div class="report-header">
         <span class="dot" aria-hidden="true"></span>
-        <span class="title"><span class="accent">Timebroker.ai</span> Report · <span id="clientNameHeader">your team</span></span>
+        <span class="title"><span class="accent">TimeBroker.ai</span> Report · <span id="clientNameHeader">your team</span></span>
       </div>
       <div class="report-frame-shell">
-        <iframe id="reportFrame" title="Proposal document" sandbox="allow-same-origin allow-scripts" referrerpolicy="no-referrer"></iframe>
+        <iframe id="reportFrame" title="Proposal document" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer"></iframe>
       </div>
 
       <!-- Sign / accept panel -->
@@ -332,7 +332,7 @@
         <!-- Populated by JS: either the accept form or the accepted state -->
       </div>
 
-      <p class="footer-note">Secure proposal · TimeBroker.AI</p>
+      <p class="footer-note">Secure proposal · TimeBroker.ai</p>
     </section>
   </div>
 
@@ -560,8 +560,12 @@
         }
         frame.addEventListener('load', function () { sizeReportFrame(); setTimeout(sizeReportFrame, 500); setTimeout(sizeReportFrame, 1800); });
 
-        // Sign panel — accept/sign only on PRICED proposals; audit-only proposals get a Book CTA
-        if (proposal.signed) {
+        // Sign panel — self-contained decks carry their own (NDA-gated) CTA, so suppress the page-level panel.
+        var selfContainedCta = /TB_SELF_CONTAINED_CTA/.test(html);
+        if (selfContainedCta) {
+          var sp = document.getElementById('signPanel');
+          if (sp) { sp.style.display = 'none'; sp.innerHTML = ''; }
+        } else if (proposal.signed) {
           renderAccepted(proposal.signerName || '', { justSigned: false });
         } else if (proposal.priced) {
           renderForm(token);

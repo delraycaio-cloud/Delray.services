@@ -37,7 +37,7 @@
         "authentication": "headerAuth",
         "headerAuth": {
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZmViMGExOS1iODM1LTRkZmEtOGJlNi1lYmNjNTNlNzQ2MWMiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjNjYzU0ZDRiLTJmOTItNGQ3OC04OTNjLTNjZjA0Y2Q5NzE1YSIsImlhdCI6MTc2Njk3NjY5Mn0.9MF9xrU0t20MQPgZpebVq3QVO-Mv2bPy1JQPLhpNS0w"
+          "value": "Bearer REDACTED_JWT_ROTATED"
         },
         "jsonParameters": true,
         "bodyParametersJson": "{\n  \"task\": \"Analyze this lead and suggest a quick win.\",\n  \"context\": {\n    \"name\": \"{{ $node['Webhook - Lead Capture'].json.body.name }}\",\n    \"interest\": \"{{ $node['Webhook - Lead Capture'].json.body.interest }}\"\n  }\n}"

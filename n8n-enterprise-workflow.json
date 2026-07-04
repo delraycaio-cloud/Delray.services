@@ -50,7 +50,7 @@
                 "authentication": "headerAuth",
                 "headerAuth": {
                     "name": "Authorization",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZmViMGExOS1iODM1LTRkZmEtOGJlNi1lYmNjNTNlNzQ2MWMiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjNjYzU0ZDRiLTJmOTItNGQ3OC04OTNjLTNjZjA0Y2Q5NzE1YSIsImlhdCI6MTc2Njk3NjY5Mn0.9MF9xrU0t20MQPgZpebVq3QVO-Mv2bPy1JQPLhpNS0w"
+                    "value": "Bearer REDACTED_JWT_ROTATED"
                 },
                 "jsonParameters": true,
                 "bodyParametersJson": "{\n  \"task\": \"Analyze this business for Delray.Services context (Capital, AI, Marine). Return full assessment.\",\n  \"context\": {\n    \"business\": \"{{ $node['Application Webhook'].json.body.businessName }}\",\n    \"industry\": \"{{ $node['Application Webhook'].json.body.industry }}\",\n    \"revenue\": \"{{ $node['Application Webhook'].json.body.revenue }}\"\n  }\n}"
